@@ -22,7 +22,7 @@ export default function Navbar() {
                 <div className="flex h-16 items-center justify-between">
                     <Link href="/" className="flex items-center gap-2 text-xl font-semibold tracking-tight text-gray-900">
                         <Image
-                            src="/mvg-removebg.png"
+                            src="/mvg-removebg.webp"
                             alt="Logo MVG"
                             width={80}
                             height={80}

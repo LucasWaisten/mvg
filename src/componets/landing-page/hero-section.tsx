@@ -32,7 +32,7 @@ export default function HeroSection() {
                     Movimiento de Vida en Gracia
                 </h2>
                 <Image
-                    src="/mvg-removebg.png"
+                    src="/mvg-removebg.webp"
                     alt="Logo MVG"
                     width={500}
                     height={500}
