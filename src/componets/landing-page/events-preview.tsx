@@ -44,7 +44,7 @@ type DateDisplay = {
     label: string;
 };
 
-function formatEventDateRange(event: Event, type: string): DateDisplay {
+function formatEventDateRange(event: Event, type: any): DateDisplay {
     const isAllDay = !!event.start.date && !event.start.dateTime;
     const startDate = new Date(event.start.dateTime || event.start.date!);
     const endDate = new Date(event.end?.dateTime || event.end?.date || event.start.dateTime || event.start.date!);
