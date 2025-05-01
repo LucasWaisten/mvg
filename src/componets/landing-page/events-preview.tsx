@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation } from "swiper/modules";
+import {FreeMode, Navigation} from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -13,17 +13,17 @@ function cn(...classes: (string | undefined | false | null)[]) {
 }
 
 const eventColors: { [key: string]: string } = {
-    noche: "from-yellow-200 to-white",
-    ultreya: "from-pink-300 to-white",
-    jornada: "from-blue-200 to-white",
-    cumple: "from-green-200 to-white",
-    asamblea: "from-purple-300 to-white",
-    default: "from-gray-300 to-white",
+    noche: "from-amber-400 to-white",
+    ultreya: "from-rose-400 to-white",
+    jornada: "from-indigo-400 to-white",
+    cumple: "from-green-400 to-white",
+    asamblea: "from-purple-400 to-white",
+    default: "from-slate-400 to-white",
 };
 
 function getEventType(summary: string): keyof typeof eventColors {
     const lower = summary.toLowerCase();
-    if (lower.includes("noche de caridad")) return "noche";
+    if (lower.includes("noche de la caridad")) return "noche";
     if (lower.includes("ultreya")) return "ultreya";
     if (lower.includes("convivencia") || lower.match(/j\d{3}[mv]/i) || lower.includes("jornada")) return "jornada";
     if (lower.includes("cumple")) return "cumple";
@@ -35,24 +35,73 @@ type Event = {
     id: string;
     summary: string;
     description?: string;
-    start: { dateTime?: string; date?: string };
-    end: { dateTime?: string; date?: string };
+    start: { dateTime: string; date: string };
+    end: { dateTime: string; date: string };
 };
 
-function getTimeDisplay(event: Event, type: string) {
-    const hasTime = event.start.dateTime && event.end?.dateTime;
-    if (hasTime) {
-        const start = new Date(event.start.dateTime!);
-        const end = new Date(event.end.dateTime!);
-        return `${start.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })} - ${end.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}`;
-    } else {
-        return type === "cumple" ? "" : "Todo el día";
+type DateDisplay = {
+    day: number;
+    month: string;
+    label: string;
+};
+
+function formatEventDateRange(event: Event, type: string): DateDisplay {
+    const isAllDay = !!event.start.date && !!event.end.date;
+    const startDate = new Date(event.start.dateTime || event.start.date);
+    const endDate = new Date(event.end.dateTime || event.end.date || event.start.dateTime || event.start.date);
+
+    if (isAllDay) {
+        startDate.setDate(startDate.getDate() + 1);
+        endDate.setDate(endDate.getDate());
+
+        const isMultiDay = endDate.getTime() - startDate.getTime() > 86400000;
+
+        if (type !== "cumple") {
+            if (isMultiDay) {
+                const startStr = startDate.getDate();
+                const endStr = endDate.getDate() - 1;
+                const month = startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
+                return {
+                    day: startDate.getDate(),
+                    month,
+                    label: `${startStr} - ${endStr} ${month}`,
+                };
+            }
+            return {
+                day: startDate.getDate(),
+                month: startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
+                label: "Todo el día",
+            };
+        }
     }
+
+    // Si tiene horario
+    if (event.start.dateTime && event.end?.dateTime) {
+        const startTime = new Date(event.start.dateTime).toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        const endTime = new Date(event.end.dateTime).toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+
+        return {
+            day: startDate.getDate(),
+            month: startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
+            label: `${startTime} - ${endTime}`,
+        };
+    }
+
+    return {
+        day: startDate.getDate(),
+        month: startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
+        label: "",
+    };
 }
 
 export default function EventsPreview() {
     const [events, setEvents] = useState<Event[]>([]);
-    const [expandedId, setExpandedId] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -87,65 +136,37 @@ export default function EventsPreview() {
                         1024: { slidesPerView: 3.1 },
                     }}
                     freeMode
-                    modules={[Navigation, FreeMode]}
+                    modules={[ Navigation, FreeMode]}
                 >
                     {events.map((event) => {
                         const type = getEventType(event.summary);
-                        const isExpanded = expandedId === event.id;
-                        const date = new Date(event.start.dateTime || event.start.date);
-                        const month = date.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
-                        const day = date.getDate();
-                        const time = event.start.dateTime
-                            ? date.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })
-                            : null;
+                        const { day, month, label } = formatEventDateRange(event, type);
 
                         return (
                             <SwiperSlide key={event.id} className="overflow-visible">
-                                <div className="flex min-h-[200px] rounded-lg shadow-md transition-shadow duration-300 hover:shadow-[0_0_20px_4px_rgba(0,255,255,0.4)] overflow-hidden">
-                                    {/* Sección A: Fecha y hora */}
+                                <div className="flex h-full min-h-[220px] rounded-xl shadow-lg transition-all duration-300 overflow-hidden">
+                                    {/* Sección A: Fecha */}
                                     <div
                                         className={cn(
-                                            "w-1/4 flex flex-col justify-center items-center text-center text-white p-2",
+                                            "w-1/5 flex flex-col justify-center items-center text-main text-center p-2",
                                             "bg-gradient-to-b",
-                                            {
-                                                noche: "from-yellow-300 to-yellow-100",
-                                                ultreya: "from-pink-400 to-pink-200",
-                                                jornada: "from-blue-300 to-blue-100",
-                                                cumple: "from-green-400 to-green-200",
-                                                asamblea: "from-purple-400 to-purple-200",
-                                                default: "from-gray-400 to-gray-200",
-                                            }[type]
+                                            eventColors[type]
                                         )}
                                     >
-                                        <span className="text-sm uppercase font-semibold">
-                                            {new Date(event.start.dateTime || event.start.date).toLocaleDateString("es-AR", {
-                                                month: "short",
-                                            })}
-                                        </span>
-                                        <span className="text-3xl font-bold">
-                                            {new Date(event.start.dateTime || event.start.date).getDate()}
-                                        </span>
-                                        <span className="text-xs mt-1">{getTimeDisplay(event, type)}</span>
+                                        <span className="text-sm uppercase font-semibold">{month}</span>
+                                        <span className="text-3xl font-bold leading-none">{day}</span>
+                                        {label && <span className="text-xs mt-1">{label}</span>}
                                     </div>
 
-                                    {/* Contenido */}
-                                    <div className="w-[80%] bg-white p-4 flex flex-col">
-                                        <h3 className="text-base font-semibold mb-1 line-clamp-2">{event.summary}</h3>
-                                        <p className="text-sm text-gray-600 mb-2">{formatDate(event.start.dateTime || event.start.date)}</p>
-
-                                        {isExpanded && (
-                                            <div className="text-sm text-gray-800">
-                                                <p>{event.description || "Sin descripción adicional."}</p>
-                                                <p className="mt-2 font-semibold">Contacto: secretaria@mvg.org</p>
-                                            </div>
-                                        )}
-
-                                        <button
-                                            className="text-blue-600 underline text-sm mt-auto text-left"
-                                            onClick={() => setExpandedId(isExpanded ? null : event.id)}
-                                        >
-                                            {isExpanded ? "Cerrar" : "Ver más"}
-                                        </button>
+                                    {/* Sección B: Contenido */}
+                                    <div className="w-4/5 bg-white p-4 flex flex-col">
+                                        <h3 className="text-lg font-semibold mb-1 line-clamp-2">{event.summary}</h3>
+                                        <p className="text-sm text-gray-700 mb-2">
+                                            {event.description?.split("\n")[0] || "Evento sin descripción."}
+                                        </p>
+                                        <div className="mt-2 text-sm text-gray-800">
+                                            <p className="mt-2 font-semibold">Contacto: secretaria@mvg.org</p>
+                                        </div>
                                     </div>
                                 </div>
                             </SwiperSlide>
@@ -155,13 +176,4 @@ export default function EventsPreview() {
             </div>
         </section>
     );
-}
-
-function formatDate(dateStr: string) {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("es-AR", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-    });
 }
