@@ -1,9 +1,13 @@
-export default function Page(){
-    return(
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-4">Apostolados</h1>
-            <p className="mb-4">Aquí puedes encontrar información sobre nuestros apostolados y cómo puedes involucrarte.</p>
-            <p className="mb-4">Si deseas más información, no dudes en contactarnos.</p>
+export default function Page() {
+    return (
+        <div className="container mx-auto px-4 py-20 text-center">
+            <h1 className="text-4xl font-bold mb-6 text-main">¡Próximamente!</h1>
+            <p className="text-lg text-main mb-4">
+                Estamos preparando esta sección para que puedas conocer más sobre nuestros apostolados y cómo participar.
+            </p>
+            <p className="text-md text-main">
+                Próximamente estará disponible. ¡Gracias por tu paciencia!
+            </p>
         </div>
-    )
+    );
 }

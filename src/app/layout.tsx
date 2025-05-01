@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Movimiento Vida en Gracia",
+  title: "Movimiento de Vida en Gracia",
   description: "Jóvenes evangelizando jóvenes",
 };
 

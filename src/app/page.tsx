@@ -14,8 +14,8 @@ export default function HomePage() {
         <AboutSection />
         <EventsPreview />
         <ApostoladosSection />
-        <ComunidadGallery />
-        <Footer />
+        {/*<ComunidadGallery />*/}
+       {/* <Footer />*/}
       </main>
   );
 }

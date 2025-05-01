@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {FreeMode, Navigation} from "swiper/modules";
-
+import { FreeMode, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
@@ -35,8 +34,8 @@ type Event = {
     id: string;
     summary: string;
     description?: string;
-    start: { dateTime: string; date: string };
-    end: { dateTime: string; date: string };
+    start: { dateTime?: string; date?: string };
+    end: { dateTime?: string; date?: string };
 };
 
 type DateDisplay = {
@@ -46,30 +45,27 @@ type DateDisplay = {
 };
 
 function formatEventDateRange(event: Event, type: string): DateDisplay {
-    const isAllDay = !!event.start.date && !!event.end.date;
-    const startDate = new Date(event.start.dateTime || event.start.date);
-    const endDate = new Date(event.end.dateTime || event.end.date || event.start.dateTime || event.start.date);
+    const isAllDay = !!event.start.date && !event.start.dateTime;
+    const startDate = new Date(event.start.dateTime || event.start.date!);
+    const endDate = new Date(event.end?.dateTime || event.end?.date || event.start.dateTime || event.start.date!);
 
     if (isAllDay) {
-        startDate.setDate(startDate.getDate() + 1);
-        endDate.setDate(endDate.getDate());
-
-        const isMultiDay = endDate.getTime() - startDate.getTime() > 86400000;
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const isMultiDay = (end.getTime() - start.getTime()) > 86400000;
 
         if (type !== "cumple") {
             if (isMultiDay) {
-                const startStr = startDate.getDate();
-                const endStr = endDate.getDate() - 1;
-                const month = startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
+                const month = start.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
                 return {
-                    day: startDate.getDate(),
+                    day: start.getDate(),
                     month,
-                    label: `${startStr} - ${endStr} ${month}`,
+                    label: `${start.getDate()} - ${end.getDate() - 1} ${month}`,
                 };
             }
             return {
-                day: startDate.getDate(),
-                month: startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
+                day: start.getDate(),
+                month: start.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
                 label: "Todo el día",
             };
         }
@@ -102,6 +98,8 @@ function formatEventDateRange(event: Event, type: string): DateDisplay {
 
 export default function EventsPreview() {
     const [events, setEvents] = useState<Event[]>([]);
+    const [initialSlide, setInitialSlide] = useState(0);
+    const [isReady, setIsReady] = useState(false);
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -115,7 +113,37 @@ export default function EventsPreview() {
                     `${process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_URL}/events?orderBy=startTime&singleEvents=true&timeMin=${start}&timeMax=${end}&key=${process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY}`
                 );
                 const data = await res.json();
-                setEvents(data.items || []);
+                const items: Event[] = data.items || [];
+
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                console.log("🔍 Fecha actual (local, sin hora):", today.toString());
+
+                items.forEach((ev, i) => {
+                    const startRaw = ev.start.dateTime || ev.start.date!;
+                    const startDate = new Date(startRaw);
+                    startDate.setHours(0, 0, 0, 0);
+                    console.log(`📅 Evento[${i}]:`, {
+                        summary: ev.summary,
+                        raw: startRaw,
+                        parsed: startDate.toString(),
+                    });
+                });
+
+                const index = items.findIndex((ev) => {
+                    const start = new Date(ev.start.dateTime || ev.start.date!);
+                    start.setHours(0, 0, 0, 0);
+                    return start >= today;
+                });
+
+                console.log("🎯 Índice del próximo evento:", index);
+                if (index !== -1) {
+                    console.log("✅ Evento elegido:", items[index].summary);
+                }
+
+                setInitialSlide(index !== -1 ? index : 0);
+                setEvents(items);
+                setIsReady(true);
             } catch (e) {
                 console.error("Error fetching events", e);
             }
@@ -124,27 +152,29 @@ export default function EventsPreview() {
     }, []);
 
     return (
-        <section className="w-full py-16">
+        <section className="w-full pb-8">
             <div className="container mx-auto px-4">
                 <h2 className="text-3xl font-bold text-center mb-8">Eventos Destacados</h2>
-                <Swiper
+                {isReady && <Swiper
+                    initialSlide={initialSlide}
                     slidesPerView={1.2}
                     spaceBetween={10}
                     breakpoints={{
-                        640: { slidesPerView: 1.1 },
-                        768: { slidesPerView: 2.1 },
-                        1024: { slidesPerView: 3.1 },
+                        640: {slidesPerView: 1.1},
+                        768: {slidesPerView: 2.1},
+                        1024: {slidesPerView: 3.1},
                     }}
                     freeMode
-                    modules={[ Navigation, FreeMode]}
+                    modules={[Navigation, FreeMode]}
                 >
                     {events.map((event) => {
                         const type = getEventType(event.summary);
-                        const { day, month, label } = formatEventDateRange(event, type);
+                        const {day, month, label} = formatEventDateRange(event, type);
 
                         return (
                             <SwiperSlide key={event.id} className="overflow-visible">
-                                <div className="flex h-full min-h-[220px] rounded-xl shadow-lg transition-all duration-300 overflow-hidden">
+                                <div
+                                    className="flex h-full min-h-[220px] rounded-xl shadow-lg transition-all duration-300 overflow-hidden">
                                     {/* Sección A: Fecha */}
                                     <div
                                         className={cn(
@@ -165,14 +195,15 @@ export default function EventsPreview() {
                                             {event.description?.split("\n")[0] || "Evento sin descripción."}
                                         </p>
                                         <div className="mt-2 text-sm text-gray-800">
-                                            <p className="mt-2 font-semibold">Contacto: secretaria@mvg.org</p>
+                                            <p className="mt-2 font-semibold">Email: secretaria.mvg@gmail.com</p>
+                                            <p className="font-semibold">Instagram: difusion.mvg</p>
                                         </div>
                                     </div>
                                 </div>
                             </SwiperSlide>
                         );
                     })}
-                </Swiper>
+                </Swiper>}
             </div>
         </section>
     );
