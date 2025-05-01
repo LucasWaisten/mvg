@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 export default function HeroSection() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -27,9 +28,16 @@ export default function HeroSection() {
 
             {/* Contenido */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-                <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-[--color-neutral-soft] drop-shadow-lg">
-                    Movimiento Vida en Gracia
-                </h1>
+                <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-[--color-neutral-soft] drop-shadow-lg">
+                    Movimiento de Vida en Gracia
+                </h2>
+                <Image
+                    src="/mvg-removebg.png"
+                    alt="Logo MVG"
+                    width={500}
+                    height={500}
+                    className="h-100 w-auto object-contain"
+                />
                 <p className="mt-4 text-xl sm:text-2xl text-[--color-neutral-soft] font-medium tracking-wide">
                     Jóvenes evangelizando jóvenes
                 </p>

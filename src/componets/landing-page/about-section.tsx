@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AboutSection() {
     return (
-        <section className="relative w-full bg-background py-36 mb-32">
+        <section className="relative w-full bg-background py-32">
             {/* Franja con fondo secundario */}
             <div className="relative bg-secondary rounded-xl shadow-lg w-full flex flex-col lg:flex-row items-center lg:items-stretch px-6 lg:px-16 py-12">
 
