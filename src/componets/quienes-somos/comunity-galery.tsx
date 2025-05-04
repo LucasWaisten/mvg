@@ -18,9 +18,6 @@ const images = [
     "/images/image9.webp",
     "/images/image10.webp",
     "/images/image11.webp",
-    "/images/image12.webp",
-    "/images/image13.webp",
-    "/images/image14.webp",
 ];
 
 export default function ComunidadGallery() {
@@ -35,7 +32,7 @@ export default function ComunidadGallery() {
                     disableOnInteraction: false,
                 }}
                 modules={[EffectCards, Autoplay]}
-                className="mySwiper w-72 h-96"
+                className="mySwiper w-[360px] h-[450px]"
             >
                 {images.map((src, index) => (
                     <SwiperSlide key={index}>
