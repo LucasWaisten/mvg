@@ -28,9 +28,9 @@ export default function HeroSection() {
 
             {/* Contenido */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-                <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-[--color-neutral-soft] drop-shadow-lg">
+                <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-[--color-neutral-soft] drop-shadow-lg">
                     Movimiento de Vida en Gracia
-                </h2>
+                </h1>
                 <Image
                     src="/mvg-removebg.webp"
                     alt="Logo MVG"
@@ -38,24 +38,24 @@ export default function HeroSection() {
                     height={500}
                     className="h-100 w-auto object-contain"
                 />
-                <p className="mt-4 text-xl sm:text-2xl text-[--color-neutral-soft] font-medium tracking-wide">
+                <p className="mt-4 text-5xl text-[--color-neutral-soft] font-medium tracking-wide">
                     Jóvenes evangelizando jóvenes
                 </p>
-                <p className="mt-2 text-base sm:text-lg italic text-[--color-neutral-soft] max-w-xl">
-                    “De su plenitud todos hemos recibido gracia sobre gracia” – Jn 1,16
+                <p className="mt-2 text-4xl italic text-[--color-neutral-soft] max-w-xl">
+                    De su plenitud todos hemos recibido gracia sobre gracia – Jn 1,16
                 </p>
 
                 {/* CTA buttons */}
                 <div className="mt-8 flex flex-col sm:flex-row gap-4">
                     <a
                         href="contacto"
-                        className="bg-[--color-accent] text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition"
+                        className="bg-[--color-accent] text-2xl text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition"
                     >
                         Quiero participar
                     </a>
                     <a
                             href="quienes-somos"
-                        className="bg-transparent border border-[--color-accent] text-[--color-accent] font-semibold px-6 py-3 rounded-full hover:bg-[--color-accent]/10 transition"
+                        className="bg-transparent border border-[--color-accent] text-2xl text-[--color-accent] font-semibold px-6 py-3 rounded-full hover:bg-[--color-accent]/10 transition"
                     >
                         Conocé más
                     </a>
