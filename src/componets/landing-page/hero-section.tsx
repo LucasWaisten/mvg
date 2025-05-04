@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import {TitlePage} from "@/componets/common/title";
 
 export default function HeroSection() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -28,9 +29,7 @@ export default function HeroSection() {
 
             {/* Contenido */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-                <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-[--color-neutral-soft] drop-shadow-lg">
-                    Movimiento de Vida en Gracia
-                </h1>
+                <TitlePage />
                 <Image
                     src="/mvg-removebg.webp"
                     alt="Logo MVG"

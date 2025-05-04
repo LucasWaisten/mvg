@@ -1,4 +1,5 @@
 import Image from "next/image";
+import {Subtitle} from "@/componets/common/title";
 
 export default function AboutSection() {
     return (
@@ -21,9 +22,7 @@ export default function AboutSection() {
 
                 {/* Texto */}
                 <div className="w-full lg:pl-[360px] z-10">
-                    <h2 className="text-4xl font-bold text-[--color-text] mb-6">
-                        Sobre Nosotros
-                    </h2>
+                    <Subtitle subtitle={"Sobre Nosotros"}/>
                     <p className="text-2xl text-[--color-text] leading-6 mb-4">
                         Somos una comunidad de jóvenes que <i>hemos conocido el amor que Dios nos tiene y hemos creído en él</i> (1 Jn 4, 16), y desde ahí queremos vivir y anunciar lo vivido.
                     </p>
