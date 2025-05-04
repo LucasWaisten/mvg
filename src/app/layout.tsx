@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/componets/nav-bar";
+import {Shantell_Sans, Zain} from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const shantell = Shantell_Sans({
+  variable: "--font-shantell",
   subsets: ["latin"],
+  weight: ["300", "400", "700", "800"], // los pesos que vas a usar
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const zain = Zain({
+  variable: "--font-zain",
   subsets: ["latin"],
+  weight: ["200", "300", "400", "700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +32,7 @@ export default function RootLayout({
           suppressHydrationWarning={true}
     >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${shantell.variable} ${zain.variable} antialiased`}
       >
       <Navbar />
       <div className="pt-16">{children}</div>
