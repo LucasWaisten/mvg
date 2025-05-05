@@ -6,6 +6,7 @@ import { FreeMode, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
+import {Subtitle} from "@/componets/common/title";
 
 function cn(...classes: (string | undefined | false | null)[]) {
     return classes.filter(Boolean).join(" ");
@@ -153,8 +154,8 @@ export default function EventsPreview() {
 
     return (
         <section className="w-full pb-8">
-            <div className="container mx-auto px-4">
-                <h2 className="text-3xl font-bold text-center mb-8">Eventos Destacados</h2>
+            <div className="container mx-auto px-4 text-center">
+                <Subtitle subtitle={"Eventos Destacados"}/>
                 {isReady && <Swiper
                     initialSlide={initialSlide}
                     slidesPerView={1.2}
