@@ -45,34 +45,39 @@ type DateDisplay = {
     label: string;
 };
 
-function formatEventDateRange(event: Event, type: any): DateDisplay {
+function formatEventDateRange(event: Event, type: string | number): DateDisplay {
     const isAllDay = !!event.start.date && !event.start.dateTime;
     const startDate = new Date(event.start.dateTime || event.start.date!);
-    const endDate = new Date(event.end?.dateTime || event.end?.date || event.start.dateTime || event.start.date!);
+    const endDateRaw = event.end?.dateTime || event.end?.date || event.start.dateTime || event.start.date!;
+    const endDate = new Date(endDateRaw);
 
     if (isAllDay) {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        const isMultiDay = (end.getTime() - start.getTime()) > 86400000;
+        endDate.setDate(endDate.getDate() - 1);
 
-        if (type !== "cumple") {
-            if (isMultiDay) {
-                const month = start.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
-                return {
-                    day: start.getDate(),
-                    month,
-                    label: `${start.getDate()} - ${end.getDate() - 1} ${month}`,
-                };
-            }
+        const sameDay = startDate.toDateString() === endDate.toDateString();
+
+        const month = startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
+
+        if (sameDay || type === "cumple") {
             return {
-                day: start.getDate(),
-                month: start.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
+                day: endDate.getDate() + 1,
+                month,
                 label: "Todo el día",
+            };
+        } else {
+            const endMonth = endDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
+            const sameMonth = month === endMonth;
+
+            return {
+                day: startDate.getDate() + 1,
+                month,
+                label: sameMonth
+                    ? `${startDate.getDate() + 1} - ${endDate.getDate() + 1} ${month}`
+                    : `${startDate.getDate() + 1} ${month} - ${endDate.getDate() + 1} ${endMonth}`,
             };
         }
     }
 
-    // Si tiene horario
     if (event.start.dateTime && event.end?.dateTime) {
         const startTime = new Date(event.start.dateTime).toLocaleTimeString("es-AR", {
             hour: "2-digit",
@@ -96,7 +101,6 @@ function formatEventDateRange(event: Event, type: any): DateDisplay {
         label: "",
     };
 }
-
 export default function EventsPreview() {
     const [events, setEvents] = useState<Event[]>([]);
     const [initialSlide, setInitialSlide] = useState(0);
