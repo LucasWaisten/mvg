@@ -8,8 +8,8 @@ import Image from "next/image";
 const navItems = [
     { label: "Inicio", href: "/" },
     { label: "¿Quiénes somos?", href: "quienes-somos" },
-    { label: "Retiros", href: "retiros" },
-    { label: "Apostolados", href: "apostolados" },
+/*    { label: "Retiros", href: "retiros" },
+    { label: "Apostolados", href: "apostolados" },*/
     { label: "Contacto", href: "contacto" },
 ];
 
