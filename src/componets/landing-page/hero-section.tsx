@@ -13,17 +13,17 @@ export default function HeroSection() {
 
     return (
         <section className="relative h-[100vh] w-full overflow-hidden">
-            {/* Video de fondo 
+            {/* Video de fondo */}
             <video
                 ref={videoRef}
                 className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
-                src="/videos/vida-en-gracia.mp4"
+                src="https://www.op.org.ar/wp-content/uploads/2025/05/0416.mp4"
                 autoPlay
                 loop
                 muted
                 playsInline
             />
-            */}
+            
             {/* Overlay neoclásico con gradiente */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-0" />
 
