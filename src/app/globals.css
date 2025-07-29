@@ -109,8 +109,55 @@ h1, h2, h3, h4, h5, h6 {
   right: -10px;
 }
 
+/* Estilos específicos para el navbar neoclásico */
 nav {
   font-family: var(--font-display);
+}
+
+.navbar-neoclassical {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--color-primary);
+  box-shadow: 
+    0 4px 6px -1px rgba(44, 24, 16, 0.1),
+    0 2px 4px -1px rgba(44, 24, 16, 0.06);
+}
+
+.nav-link-neoclassical {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--color-text-main);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link-neoclassical:hover {
+  color: var(--color-primary);
+}
+
+.nav-link-neoclassical::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--color-primary), var(--color-accent));
+  transition: width 0.3s ease;
+}
+
+.nav-link-neoclassical:hover::after {
+  width: 100%;
+}
+
+.nav-dropdown-neoclassical {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  box-shadow: 
+    0 10px 25px -5px rgba(44, 24, 16, 0.1),
+    0 4px 6px -1px rgba(44, 24, 16, 0.06);
 }
 
 /* Scrollbar neoclásica */
