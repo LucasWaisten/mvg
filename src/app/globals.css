@@ -1,50 +1,132 @@
 @import "tailwindcss";
 
-/* Definición de colores claros */
+/* Paleta de colores neoclásica inspirada en el Convento Santo Domingo */
 :root {
-  --background: #ded3ca; /* fondo principal claro */
-  --foreground: #631400; /* texto principal bordó profundo */
-  --color-primary: #ded3ca; /* redundante para claridad semántica */
-  --color-secondary: #d4c3af; /* fondo secciones */
-  --color-text-main: #631400; /* texto principal */
-  --color-accent: #ab832b; /* dorado envejecido */
-  --color-neutral-soft: #f5f1ec; /* beige casi blanco */
-  --color-dark-soft: #2e2e2e; /* negro suave */
+  --background: #f8f6f3; /* Fondo principal - mármol blanco */
+  --foreground: #2c1810; /* Texto principal - marrón oscuro */
+  --color-primary: #d4af37; /* Dorado neoclásico */
+  --color-secondary: #e8e0d5; /* Beige mármol */
+  --color-text-main: #2c1810; /* Texto principal */
+  --color-accent: #b8860b; /* Dorado envejecido */
+  --color-neutral-soft: #faf9f7; /* Blanco hueso */
+  --color-dark-soft: #1a1a1a; /* Negro suave */
+  --color-marble: #f5f2ed; /* Mármol claro */
+  --color-stone: #8b7355; /* Piedra */
+  --color-bronze: #cd7f32; /* Bronce */
+  --color-ivory: #fffff0; /* Marfil */
 
-  --font-sans: var(--font-shantell);
-  --font-mono: var(--font-zain);
+  --font-sans: var(--font-lora);
+  --font-display: var(--font-playfair);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-text-main: var(--color-text-main);
   --color-accent: var(--color-accent);
   --color-neutral-soft: var(--color-neutral-soft);
   --color-dark-soft: var(--color-dark-soft);
+  --color-marble: var(--color-marble);
+  --color-stone: var(--color-stone);
+  --color-bronze: var(--color-bronze);
+  --color-ivory: var(--color-ivory);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1a1a1a;
+    --foreground: #f8f6f3;
   }
 }
 
 body {
   background: var(--color-background);
   color: var(--color-text-main);
-  font-family: var(--font-zain);
+  font-family: var(--font-sans);
+  line-height: 1.6;
 }
 
-h1,h2,h3,h4,h5,h6 {
-  font-family: var(--font-shantell);
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Estilos neoclásicos para elementos decorativos */
+.neoclassical-border {
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  position: relative;
+}
+
+.neoclassical-border::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px solid var(--color-accent);
+  border-radius: 12px;
+  z-index: -1;
+}
+
+.neoclassical-shadow {
+  box-shadow: 
+    0 4px 6px -1px rgba(44, 24, 16, 0.1),
+    0 2px 4px -1px rgba(44, 24, 16, 0.06),
+    0 0 0 1px rgba(212, 175, 55, 0.1);
+}
+
+.neoclassical-gradient {
+  background: linear-gradient(135deg, var(--color-marble) 0%, var(--color-neutral-soft) 100%);
+}
+
+/* Decoraciones neoclásicas */
+.corner-decoration {
+  position: relative;
+}
+
+.corner-decoration::before,
+.corner-decoration::after {
+  content: '❦';
+  position: absolute;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+}
+
+.corner-decoration::before {
+  top: -10px;
+  left: -10px;
+}
+
+.corner-decoration::after {
+  bottom: -10px;
+  right: -10px;
 }
 
 nav {
-  font-family: var(--font-shantell);
+  font-family: var(--font-display);
+}
+
+/* Scrollbar neoclásica */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-marble);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
 }

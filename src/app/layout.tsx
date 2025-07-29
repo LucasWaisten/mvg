@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/componets/nav-bar";
-import {Shantell_Sans, Zain} from "next/font/google";
+import { Playfair_Display, Lora } from "next/font/google";
 
-const shantell = Shantell_Sans({
-  variable: "--font-shantell",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
-  weight: ["300", "400", "700", "800"], // los pesos que vas a usar
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
-const zain = Zain({
-  variable: "--font-zain",
+const lora = Lora({
+  variable: "--font-lora",
   subsets: ["latin"],
-  weight: ["200", "300", "400", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Movimiento de Vida en Gracia",
-  description: "Jóvenes evangelizando jóvenes",
+  description: "Jóvenes evangelizando jóvenes - Comunidad de jóvenes laicos católicos animados por el carisma dominicano",
 };
 
 export default function RootLayout({
@@ -28,11 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en"
+    <html lang="es"
           suppressHydrationWarning={true}
     >
       <body
-        className={`${shantell.variable} ${zain.variable} antialiased`}
+        className={`${playfair.variable} ${lora.variable} antialiased`}
       >
       <Navbar />
       <div className="pt-16">{children}</div>

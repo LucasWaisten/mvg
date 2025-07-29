@@ -5,7 +5,7 @@ import {cn} from "@/componets/common/utils";
 
 type ButtonProps = {
     children: React.ReactNode;
-    variant?: 'primary' | 'secondary' | 'danger';
+    variant?: 'primary' | 'secondary' | 'outline' | 'danger';
     loading?: boolean;
     disabled?: boolean;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -23,15 +23,17 @@ export const Button: React.FC<ButtonProps> = ({
                                                   className = '',
                                               }) => {
     const baseStyles =
-        'inline-flex items-center justify-center rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+        'inline-flex items-center justify-center rounded-lg font-display font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-1 shadow-lg hover:shadow-xl';
 
     const variants: Record<string, string> = {
         primary:
-            'bg-text-main text-white hover:bg-text-main/80 focus:ring-text-main',
+            'bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white hover:from-[#b8860b] hover:to-[#d4af37] focus:ring-[#d4af37]/50',
         secondary:
-            'bg-secondary text-gray-900 hover:bg-secondary/90 focus:ring-secondary',
+            'bg-gradient-to-r from-[#8b7355] to-[#cd7f32] text-white hover:from-[#cd7f32] hover:to-[#8b7355] focus:ring-[#8b7355]/50',
+        outline:
+            'bg-transparent border-2 border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-white focus:ring-[#d4af37]/50',
         danger:
-            'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
+            'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-600 focus:ring-red-500/50',
     };
 
     return (
@@ -39,9 +41,9 @@ export const Button: React.FC<ButtonProps> = ({
             type={type}
             onClick={onClick}
             disabled={disabled || loading}
-            className={cn(baseStyles, variants[variant], className, 'px-4 py-2')}
+            className={cn(baseStyles, variants[variant], className, 'px-6 py-3 text-lg')}
         >
-            {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
+            {loading && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
             {children}
         </button>
     );
