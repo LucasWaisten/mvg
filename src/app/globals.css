@@ -1,9 +1,65 @@
 @import "tailwindcss";
 
-/* Paleta de colores neoclásica inspirada en el Convento Santo Domingo */
+/* Declaraciones de fuentes locales */
+@font-face {
+  font-family: 'Nefelibata Script';
+  src: url('/nefelibata-script.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Belleza';
+  src: url('/belleza.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Now';
+  src: url('/now/Now-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Now Medium';
+  src: url('/now/Now-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Now Bold';
+  src: url('/now/Now-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Now Black';
+  src: url('/now/Now-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Paleta de colores según la guía de estilo FLYERS x Canva */
 :root {
   --background: #f8f6f3; /* Fondo principal - mármol blanco */
   --foreground: #2c1810; /* Texto principal - marrón oscuro */
+  
+  /* Nuevos colores de la guía de estilo */
+  --color-red-dark: #681200; /* Rojo oscuro */
+  --color-brown-dark: #492402; /* Marrón oscuro */
+  --color-beige-light: #D3C3AF; /* Beige claro */
+  
+  /* Colores existentes mantenidos para compatibilidad */
   --color-primary: #d4af37; /* Dorado neoclásico */
   --color-secondary: #e8e0d5; /* Beige mármol */
   --color-text-main: #2c1810; /* Texto principal */
@@ -15,15 +71,31 @@
   --color-bronze: #cd7f32; /* Bronce */
   --color-ivory: #fffff0; /* Marfil */
 
-  --font-sans: var(--font-lora);
-  --font-display: var(--font-playfair);
+  /* Nuevas tipografías según la guía de estilo */
+  --font-title: 'Nefelibata Script', serif; /* Nefelibata Script para títulos */
+  --font-subtitle: 'Now', sans-serif; /* Now para subtítulos */
+  --font-subtitle-bold: 'Now Bold', sans-serif;
+  --font-subtitle-black: 'Now Black', sans-serif;
+  --font-text: 'Belleza', sans-serif; /* Belleza para textos */
+  
+  /* Mantener compatibilidad con fuentes existentes */
+  --font-sans: 'Belleza', sans-serif;
+  --font-display: 'Nefelibata Script', serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
+  --font-sans: var(--font-text);
+  --font-display: var(--font-title);
+  --font-subtitle: var(--font-subtitle);
+  
+  /* Nuevos colores */
+  --color-red-dark: var(--color-red-dark);
+  --color-brown-dark: var(--color-brown-dark);
+  --color-beige-light: var(--color-beige-light);
+  
+  /* Colores existentes */
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-text-main: var(--color-text-main);
@@ -46,14 +118,46 @@
 body {
   background: var(--color-background);
   color: var(--color-text-main);
-  font-family: var(--font-sans);
+  font-family: var(--font-text);
   line-height: 1.6;
 }
 
+/* Tipografías según la guía de estilo */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
+  font-family: var(--font-title);
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+/* Clases específicas para cada tipo de texto */
+.text-title {
+  font-family: var(--font-title);
+  font-weight: 600;
+  color: var(--color-brown-dark);
+}
+
+.text-subtitle {
+  font-family: var(--font-subtitle);
+  font-weight: 400;
+  color: var(--color-red-dark);
+}
+
+.text-subtitle-bold {
+  font-family: var(--font-subtitle-bold);
+  font-weight: 700;
+  color: var(--color-red-dark);
+}
+
+.text-subtitle-black {
+  font-family: var(--font-subtitle-black);
+  font-weight: 900;
+  color: var(--color-red-dark);
+}
+
+.text-body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  color: var(--color-text-main);
 }
 
 /* Estilos neoclásicos para elementos decorativos */
@@ -111,7 +215,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Estilos específicos para el navbar neoclásico */
 nav {
-  font-family: var(--font-display);
+  font-family: var(--font-subtitle);
 }
 
 .navbar-neoclassical {
@@ -124,7 +228,7 @@ nav {
 }
 
 .nav-link-neoclassical {
-  font-family: var(--font-display);
+  font-family: var(--font-subtitle);
   font-weight: 600;
   color: var(--color-text-main);
   transition: all 0.3s ease;

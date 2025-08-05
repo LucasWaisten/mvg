@@ -1,214 +1,366 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/free-mode";
-import {Subtitle} from "@/componets/common/title";
+import { useState } from "react";
+import { Subtitle2 } from "@/componets/common/title";
+import { X, Calendar, Clock, MapPin, Users, Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEvents, type CalendarEvent } from "@/hooks/useEvents";
+import { eventTypes, getEventType, formatEventTime, monthNames, weekDays } from "@/utils/eventUtils";
 
-function cn(...classes: (string | undefined | false | null)[]) {
-    return classes.filter(Boolean).join(" ");
-}
-
-const eventColors: { [key: string]: string } = {
-    noche: "from-amber-400 to-white",
-    ultreya: "from-rose-400 to-white",
-    jornada: "from-indigo-400 to-white",
-    cumple: "from-green-400 to-white",
-    asamblea: "from-purple-400 to-white",
-    default: "from-slate-400 to-white",
-};
-
-function getEventType(summary: string): keyof typeof eventColors {
-    const lower = summary.toLowerCase();
-    if (lower.includes("noche de la caridad")) return "noche";
-    if (lower.includes("ultreya")) return "ultreya";
-    if (lower.includes("convivencia") || lower.match(/j\d{3}[mv]/i) || lower.includes("jornada")) return "jornada";
-    if (lower.includes("cumple")) return "cumple";
-    if (lower.includes("asamblea")) return "asamblea";
-    return "default";
-}
-
-type Event = {
-    id: string;
-    summary: string;
-    description?: string;
-    start: { dateTime?: string; date?: string };
-    end: { dateTime?: string; date?: string };
-};
-
-type DateDisplay = {
-    day: number;
-    month: string;
-    label: string;
-};
-
-function formatEventDateRange(event: Event, type: string | number): DateDisplay {
-    const isAllDay = !!event.start.date && !event.start.dateTime;
-    const startDate = new Date(event.start.dateTime || event.start.date!);
-    const endDateRaw = event.end?.dateTime || event.end?.date || event.start.dateTime || event.start.date!;
-    const endDate = new Date(endDateRaw);
-
-    if (isAllDay) {
-        endDate.setDate(endDate.getDate() - 1);
-
-        const sameDay = startDate.toDateString() === endDate.toDateString();
-
-        const month = startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
-
-        if (sameDay || type === "cumple") {
-            return {
-                day: endDate.getDate() + 1,
-                month,
-                label: "Todo el día",
-            };
-        } else {
-            const endMonth = endDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
-            const sameMonth = month === endMonth;
-
-            return {
-                day: startDate.getDate() + 1,
-                month,
-                label: sameMonth
-                    ? `${startDate.getDate() + 1} - ${endDate.getDate() + 1} ${month}`
-                    : `${startDate.getDate() + 1} ${month} - ${endDate.getDate() + 1} ${endMonth}`,
-            };
-        }
-    }
-
-    if (event.start.dateTime && event.end?.dateTime) {
-        const startTime = new Date(event.start.dateTime).toLocaleTimeString("es-AR", {
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-        const endTime = new Date(event.end.dateTime).toLocaleTimeString("es-AR", {
-            hour: "2-digit",
-            minute: "2-digit",
-        });
-
-        return {
-            day: startDate.getDate(),
-            month: startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
-            label: `${startTime} - ${endTime}`,
-        };
-    }
-
-    return {
-        day: startDate.getDate(),
-        month: startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
-        label: "",
-    };
-}
 export default function EventsPreview() {
-    const [events, setEvents] = useState<Event[]>([]);
-    const [initialSlide, setInitialSlide] = useState(0);
-    const [isReady, setIsReady] = useState(false);
+    const { events, isLoading, error, generateCalendarDays } = useEvents();
+    const [selectedDay, setSelectedDay] = useState<CalendarEvent | null>(null);
+    const [currentEventIndex, setCurrentEventIndex] = useState(0);
+    const [currentMonth, setCurrentMonth] = useState(new Date(2025, 7, 1)); // Agosto 2025
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                const now = new Date();
-                const year = now.getFullYear();
-                const start = new Date(year, 0, 1).toISOString();
-                const end = new Date(year, 11, 31, 23, 59, 59).toISOString();
+    const handleDayClick = (day: CalendarEvent) => {
+        if (day.events.length > 0) {
+            setSelectedDay(day);
+            setCurrentEventIndex(0);
+        }
+    };
 
-                const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_URL}/events?orderBy=startTime&singleEvents=true&timeMin=${start}&timeMax=${end}&key=${process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY}`
-                );
-                const data = await res.json();
-                const items: Event[] = data.items || [];
+    const nextEvent = () => {
+        if (selectedDay && currentEventIndex < selectedDay.events.length - 1) {
+            setCurrentEventIndex(currentEventIndex + 1);
+        }
+    };
 
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                console.log("🔍 Fecha actual (local, sin hora):", today.toString());
+    const prevEvent = () => {
+        if (selectedDay && currentEventIndex > 0) {
+            setCurrentEventIndex(currentEventIndex - 1);
+        }
+    };
 
-                items.forEach((ev, i) => {
-                    const startRaw = ev.start.dateTime || ev.start.date!;
-                    const startDate = new Date(startRaw);
-                    startDate.setHours(0, 0, 0, 0);
-                    console.log(`📅 Evento[${i}]:`, {
-                        summary: ev.summary,
-                        raw: startRaw,
-                        parsed: startDate.toString(),
-                    });
-                });
+    const closeModal = () => {
+        setSelectedDay(null);
+        setCurrentEventIndex(0);
+    };
 
-                const index = items.findIndex((ev) => {
-                    const start = new Date(ev.start.dateTime || ev.start.date!);
-                    start.setHours(0, 0, 0, 0);
-                    return start >= today;
-                });
+    const selectedEvent = selectedDay?.events[currentEventIndex];
 
-                console.log("🎯 Índice del próximo evento:", index);
-                if (index !== -1) {
-                    console.log("✅ Evento elegido:", items[index].summary);
-                }
+    if (isLoading) {
+        return (
+            <section className="w-full py-16 bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
+                <div className="container mx-auto px-4">
+                    <div className="text-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#d4af37] mx-auto"></div>
+                        <p className="mt-4 text-[#8b7355]">Cargando eventos...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
-                setInitialSlide(index !== -1 ? index : 0);
-                setEvents(items);
-                setIsReady(true);
-            } catch (e) {
-                console.error("Error fetching events", e);
-            }
-        };
-        fetchEvents();
-    }, []);
+    if (error) {
+        return (
+            <section className="w-full py-16 bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
+                <div className="container mx-auto px-4">
+                    <div className="text-center">
+                        <p className="text-[#8b7355]">Error: {error}</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
-        <section className="w-full pb-8">
-            <div className="container mx-auto px-4 text-center">
-                <Subtitle subtitle={"Eventos Destacados"}/>
-                {isReady && <Swiper
-                    initialSlide={initialSlide}
-                    slidesPerView={1.2}
-                    spaceBetween={10}
-                    breakpoints={{
-                        640: {slidesPerView: 1.1},
-                        768: {slidesPerView: 2.1},
-                        1024: {slidesPerView: 3.1},
-                    }}
-                    freeMode
-                    modules={[Navigation, FreeMode]}
-                >
-                    {events.map((event) => {
-                        const type = getEventType(event.summary);
-                        const {day, month, label} = formatEventDateRange(event, type);
-
-                        return (
-                            <SwiperSlide key={event.id} className="overflow-visible">
-                                <div
-                                    className="flex h-full min-h-[220px] rounded-xl shadow-lg transition-all duration-300 overflow-hidden">
-                                    {/* Sección A: Fecha */}
+        <section id='calendario-mensual' className="w-full py-16 bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
+            <div className="container mx-auto px-4">
+                
+                                {/* Sección de Próximos Eventos */}
+                <div id="proximos" className="mb-16">
+                    <div className="text-center mb-8">
+                        <Subtitle2 subtitle="Próximos Eventos" />
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {events
+                            .filter(event => {
+                                const eventDate = new Date(event.start.dateTime || event.start.date!);
+                                const today = new Date();
+                                return eventDate >= today;
+                            })
+                            .slice(0, 6)
+                            .map((event, index) => {
+                                const type = getEventType(event);
+                                const eventType = eventTypes[type];
+                                return (
                                     <div
-                                        className={cn(
-                                            "w-1/5 flex flex-col justify-center items-center text-main text-center p-2",
-                                            "bg-gradient-to-b",
-                                            eventColors[type]
-                                        )}
+                                        key={index}
+                                        className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-[#d4af37]/20 p-6 hover:shadow-xl transition-all duration-300"
                                     >
-                                        <span className="text-sm uppercase font-semibold">{month}</span>
-                                        <span className="text-3xl font-bold leading-none">{day}</span>
-                                        {label && <span className="text-xs mt-1">{label}</span>}
+                                        <div className="flex items-center mb-4">
+                                            <div className={`p-2 rounded-lg ${eventType.color} mr-3`}>
+                                                <span className="text-white text-lg">{eventType.icon}</span>
+                                            </div>
+                                            <div>
+                                                <h4 className=" text-subtitle-bold text-[#2c1810] text-lg">
+                                                    {event.summary}
+                                                </h4>
+                                                <p className="text-sm  text-[#8b7355]">
+                                                    {new Date(event.start.dateTime || event.start.date!).toLocaleDateString("es-AR", {
+                                                        weekday: "long",
+                                                        month: "long",
+                                                        day: "numeric"
+                                                    })}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="space-y-2 text-sm text-[#8b7355]">
+                                            <div className="flex items-center">
+                                                <Clock className="w-4 h-4 mr-2" />
+                                                <span>{formatEventTime(event)}</span>
+                                            </div>
+                                            <div className="flex items-center">
+                                                <MapPin className="w-4 h-4 mr-2" />
+                                                <span>{event.location}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        {event.description && (
+                                            <p className="mt-4 text-sm text-[#2c1810] leading-relaxed">
+                                                {event.description.length > 100 
+                                                    ? event.description.substring(0, 100) + '...' 
+                                                    : event.description}
+                                            </p>
+                                        )}
+                                        
+                                        {event.registrationRequired && event.formLink && (
+                                            <a
+                                                href={event.formLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-block  mt-4 bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white font-text font-semibold  py-2 px-4 rounded-lg hover:from-[#b8860b] hover:to-[#d4af37] transition-all duration-300 text-sm"
+                                            >
+                                                Inscribirse
+                                            </a>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                    </div>
+                    
+                    {events.filter(event => {
+                        const eventDate = new Date(event.start.dateTime || event.start.date!);
+                        const today = new Date();
+                        return eventDate >= today;
+                    }).length === 0 && (
+                        <div className="text-center py-12">
+                            <p className="text-[#8b7355] text-lg">No hay eventos próximos programados.</p>
+                            <p className="text-[#8b7355] text-sm mt-2">¡Mantente atento a nuestras redes sociales para nuevas actividades!</p>
+                        </div>
+                    )}
+                </div>
+                
+                
+                <div className="text-center mb-12">
+                    <Subtitle2 subtitle="Calendario de Eventos" />
+                </div>
+
+                <div className="max-w-6xl mx-auto">
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8">
+                        <div className="flex justify-between items-center mb-8">
+                            <button
+                                onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
+                                className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#d4af37] hover:text-white transition-colors duration-300"
+                            >
+                                ←
+                            </button>
+                            <h2 className="text-3xl text-subtitle-bold  text-[#2c1810]">
+                                {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+                            </h2>
+                            <button
+                                onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
+                                className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#d4af37] hover:text-white transition-colors duration-300"
+                            >
+                                →
+                            </button>
+                        </div>
+
+                        <div className="grid grid-cols-7 gap-2 mb-4">
+                            {weekDays.map(day => (
+                                <div key={day} className="text-center p-3 font-sans font-semibold text-[#8b7355]">
+                                    {day}
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="grid grid-cols-7 gap-2">
+                            {generateCalendarDays(currentMonth).map((day, index) => (
+                                <div
+                                    key={index}
+                                    className={`min-h-[100px] p-2 rounded-lg border transition-all duration-300 ${
+                                        day.isToday 
+                                            ? 'bg-gradient-to-br from-[#d4af37] to-[#b8860b] text-white border-[#d4af37]' 
+                                            : day.isPast 
+                                                ? 'bg-[#f5f2ed] text-[#8b7355] border-[#e8e0d5]' 
+                                                : day.isCurrentMonth
+                                                    ? 'bg-white hover:bg-[#faf9f7] text-[#2c1810] border-[#e8e0d5] hover:border-[#d4af37]'
+                                                    : 'bg-[#faf9f7] text-[#8b7355] border-[#e8e0d5]'
+                                    } ${day.events.length > 0 ? 'cursor-pointer' : ''}`}
+                                    onClick={() => handleDayClick(day)}
+                                >
+                                    <div className="text-sm font-semibold mb-1">{day.day}</div>
+                                    <div className="space-y-1">
+                                        {day.events.slice(0, 2).map((event, eventIndex) => {
+                                            const type = getEventType(event);
+                                            const eventType = eventTypes[type];
+                                            return (
+                                                <div
+                                                    key={eventIndex}
+                                                    className={`text-xs p-1 rounded bg-gradient-to-r ${eventType.color} text-white font-medium truncate`}
+                                                    title={event.summary}
+                                                >
+                                                    <span className="mr-1">{eventType.icon}</span>
+                                                    {event.summary.length > 12 ? event.summary.substring(0, 12) + '...' : event.summary}
+                                                </div>
+                                            );
+                                        })}
+                                        {day.events.length > 2 && (
+                                            <div className="text-xs p-1 rounded bg-gradient-to-r from-[#8b7355] to-[#cd7f32] text-white font-medium text-center">
+                                                +{day.events.length - 2} más
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                {selectedDay && selectedEvent && (
+                    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-y-auto">
+                            <div className="p-6">
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className="flex-1">
+                                        <h3 className="text-2xl font-sans font-bold text-[#2c1810] mb-2">
+                                            {selectedEvent.summary}
+                                        </h3>
+                                        <div className="flex items-center text-[#8b7355] text-sm">
+                                            <Calendar className="w-4 h-4 mr-2" />
+                                            {new Date(selectedEvent.start.dateTime || selectedEvent.start.date!).toLocaleDateString("es-AR", {
+                                                weekday: "long",
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric"
+                                            })}
+                                        </div>
+                                        {selectedDay.events.length > 1 && (
+                                            <div className="flex items-center mt-2 text-sm text-[#8b7355]">
+                                                <span>Evento {currentEventIndex + 1} de {selectedDay.events.length}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <button
+                                        onClick={closeModal}
+                                        className="p-2 rounded-lg hover:bg-[#f5f2ed] transition-colors duration-200"
+                                    >
+                                        <X className="w-6 h-6 text-[#8b7355]" />
+                                    </button>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="flex items-center text-[#8b7355]">
+                                        <Clock className="w-4 h-4 mr-3" />
+                                        <span>{formatEventTime(selectedEvent)}</span>
                                     </div>
 
-                                    {/* Sección B: Contenido */}
-                                    <div className="w-4/5 bg-white p-4 flex flex-col">
-                                        <h3 className="text-lg font-semibold mb-1 line-clamp-2">{event.summary}</h3>
-                                        <p className="text-sm text-gray-700 mb-2">
-                                            {event.description?.split("\n")[0] || "Evento sin descripción."}
-                                        </p>
-                                        <div className="mt-2 text-sm text-gray-800">
-                                            <p className="mt-2 font-semibold">Email: secretaria.mvg@gmail.com</p>
-                                            <p className="font-semibold">Instagram: difusion.mvg</p>
+                                    <div className="flex items-center text-[#8b7355]">
+                                        <MapPin className="w-4 h-4 mr-3" />
+                                        <span>{selectedEvent.location}</span>
+                                    </div>
+
+                                    {selectedEvent.description && (
+                                        <div className="bg-[#faf9f7] rounded-lg p-4">
+                                            <p className="text-[#2c1810] leading-relaxed">
+                                                {selectedEvent.description}
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {selectedEvent.registrationRequired && (
+                                        <div className="bg-gradient-to-r from-[#d4af37]/10 to-[#b8860b]/10 border border-[#d4af37]/20 rounded-lg p-4">
+                                            <div className="flex items-center mb-2">
+                                                <Users className="w-5 h-5 text-[#d4af37] mr-2" />
+                                                <span className="font-semibold text-[#2c1810]">Inscripción requerida</span>
+                                            </div>
+                                            <p className="text-sm text-[#8b7355] mb-3">
+                                                Este evento requiere inscripción previa.
+                                            </p>
+                                            {selectedEvent.formLink && (
+                                                <a
+                                                    href={selectedEvent.formLink}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-block bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white font-sans font-semibold py-2 px-4 rounded-lg hover:from-[#b8860b] hover:to-[#d4af37] transition-all duration-300"
+                                                >
+                                                    Inscribirse
+                                                </a>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    <div className="bg-[#f5f2ed] rounded-lg p-4">
+                                        <div className="flex items-center mb-2">
+                                            <Heart className="w-5 h-5 text-[#d4af37] mr-2" />
+                                            <span className="font-semibold text-[#2c1810]">Más información</span>
+                                        </div>
+                                        <div className="text-sm text-[#8b7355] space-y-1">
+                                            <p>📧 secretaria.mvg@gmail.com</p>
+                                            <p>📱 Instagram: @difusion.mvg</p>
                                         </div>
                                     </div>
                                 </div>
-                            </SwiperSlide>
-                        );
-                    })}
-                </Swiper>}
+
+                                {selectedDay.events.length > 1 && (
+                                    <div className="flex justify-between items-center mt-6 pt-4 border-t border-[#e8e0d5]">
+                                        <button
+                                            onClick={prevEvent}
+                                            disabled={currentEventIndex === 0}
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                                                currentEventIndex === 0
+                                                    ? 'text-[#8b7355] cursor-not-allowed'
+                                                    : 'text-[#d4af37] hover:bg-[#f5f2ed]'
+                                            }`}
+                                        >
+                                            <ChevronLeft className="w-4 h-4" />
+                                            Anterior
+                                        </button>
+                                        
+                                        <div className="flex gap-2">
+                                            {selectedDay.events.map((_, index) => (
+                                                <button
+                                                    key={index}
+                                                    onClick={() => setCurrentEventIndex(index)}
+                                                    className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                                                        index === currentEventIndex
+                                                            ? 'bg-[#d4af37]'
+                                                            : 'bg-[#e8e0d5] hover:bg-[#d4af37]/50'
+                                                    }`}
+                                                />
+                                            ))}
+                                        </div>
+                                        
+                                        <button
+                                            onClick={nextEvent}
+                                            disabled={currentEventIndex === selectedDay.events.length - 1}
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                                                currentEventIndex === selectedDay.events.length - 1
+                                                    ? 'text-[#8b7355] cursor-not-allowed'
+                                                    : 'text-[#d4af37] hover:bg-[#f5f2ed]'
+                                            }`}
+                                        >
+                                            Siguiente
+                                            <ChevronRight className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </section>
     );

@@ -19,12 +19,24 @@ module.exports = {
                 stone: 'var(--color-stone)',
                 bronze: 'var(--color-bronze)',
                 ivory: 'var(--color-ivory)',
+                
+                // Nuevos colores de la guía de estilo
+                'red-dark': 'var(--color-red-dark)',
+                'brown-dark': 'var(--color-brown-dark)',
+                'beige-light': 'var(--color-beige-light)',
             },
             fontFamily: {
-                sans: ['var(--font-sans)'],
-                display: ['var(--font-display)'],
-                playfair: ['var(--font-playfair)'],
-                lora: ['var(--font-lora)'],
+                sans: ['Belleza', 'sans-serif'],
+                display: ['Nefelibata Script', 'serif'],
+                subtitle: ['Now', 'sans-serif'],
+                subtitleBold: ['Now Bold', 'sans-serif'],
+                subtitleBlack: ['Now Black', 'sans-serif'],
+                title: ['Nefelibata Script', 'serif'],
+                text: ['Belleza', 'sans-serif'],
+                
+                // Mantener compatibilidad con fuentes existentes
+                playfair: ['Nefelibata Script', 'serif'],
+                lora: ['Belleza', 'sans-serif'],
             },
             boxShadow: {
                 '3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.25)',

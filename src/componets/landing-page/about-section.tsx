@@ -1,12 +1,12 @@
 import Image from "next/image";
-import {Subtitle} from "@/componets/common/title";
+import {Subtitle2 } from "@/componets/common/title";
 
 export default function AboutSection() {
     return (
-        <section className="relative w-full bg-background py-32">
+        <section id="sobre-nosotros" className="relative w-full bg-[#492402] py-32">
             <div className="relative bg-secondary rounded-xl shadow-lg w-full flex flex-col lg:flex-row items-center lg:items-stretch px-6 lg:px-16 py-12 gap-8">
-
-                {/* Imagen */}
+                
+                
                 <div className="relative lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-8 w-60 sm:w-72 md:w-80 lg:w-[320px] max-w-full z-20 mx-auto lg:mx-0 mb-8 lg:mb-0">
                     <div className="overflow-hidden rounded-xl shadow-xl">
                         <Image
@@ -19,10 +19,9 @@ export default function AboutSection() {
                         />
                     </div>
                 </div>
-
-                {/* Texto */}
-                <div className="w-full lg:pl-[360px] z-10">
-                    <Subtitle subtitle={"Sobre Nosotros"}/>
+                
+                <div className="w-full text-body lg:pl-[360px] z-10">
+                    <Subtitle2 subtitle={"Sobre Nosotros"}/>
                     <p className="text-2xl text-[--color-text] leading-6 mb-4">
                         Somos una comunidad de jóvenes que <i>hemos conocido el amor que Dios nos tiene y hemos creído en él</i> (1 Jn 4, 16), y desde ahí queremos vivir y anunciar lo vivido.
                     </p>

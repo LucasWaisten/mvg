@@ -6,7 +6,15 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
 const navItems = [
-    { label: "inicio", href: "/" },
+    {   
+        label: "inicio",
+        href: "/" ,
+        submenu:[
+            { label: "sobre nosotros", href: "#sobre-nosotros" },
+            { label: "nuestros apostolados", href: "#apostolados" },
+            { label: "calendario mensual", href: "#calendario-mensual" },
+            { label: "proximos eventos", href: "#proximos" },
+        ]},
     { 
         label: "nosotros", 
         href: "quienes-somos",

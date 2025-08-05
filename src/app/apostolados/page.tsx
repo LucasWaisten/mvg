@@ -102,9 +102,6 @@ export default function Page(){
                     {/* Título principal */}
                     <div className="text-center mb-16">
                         <Title title="Nuestros Apostolados" />
-                        <div className="mt-8 text-center">
-                            <span className="text-[#d4af37] text-6xl">❦</span>
-                        </div>
                     </div>
 
                     {/* Introducción */}
@@ -122,37 +119,8 @@ export default function Page(){
                         </div>
                     </div>
 
-                    {/* Apostolados principales */}
-                    <div className="mb-20">
-                        <h2 className="text-3xl font-display font-bold text-[#2c1810] text-center mb-12">
-                            Apostolados Principales
-                        </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {apostolados.map((apostolado, index) => (
-                                <div key={index} className="group">
-                                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8 h-full hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
-                                        <div className="text-center mb-6">
-                                            <div className={`w-20 h-20 bg-gradient-to-r ${apostolado.color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                                                <span className="text-white text-3xl">{apostolado.icono}</span>
-                                            </div>
-                                            <h3 className="text-2xl font-display font-bold text-[#2c1810] mb-3">
-                                                {apostolado.titulo}
-                                            </h3>
-                                        </div>
-                                        <p className="text-[#8b7355] leading-relaxed text-center">
-                                            {apostolado.descripcion}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
                     {/* Apostolados detallados */}
                     <div className="mb-20">
-                        <h2 className="text-3xl font-display font-bold text-[#2c1810] text-center mb-12">
-                            Apostolados Específicos
-                        </h2>
                         <div className="space-y-12">
                             {apostoladosDetallados.map((apostolado, index) => (
                                 <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8">

@@ -1,21 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/componets/nav-bar";
-import { Playfair_Display, Lora } from "next/font/google";
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  display: "swap",
-});
-
-const lora = Lora({
-  variable: "--font-lora",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
+import Footer from "@/componets/landing-page/footer";
 
 export const metadata: Metadata = {
   title: "Movimiento de Vida en Gracia",
@@ -31,11 +17,10 @@ export default function RootLayout({
     <html lang="es"
           suppressHydrationWarning={true}
     >
-      <body
-        className={`${playfair.variable} ${lora.variable} antialiased`}
-      >
+      <body className="antialiased">
       <Navbar />
       <div className="pt-16">{children}</div>
+      <Footer />
       </body>
     </html>
   );

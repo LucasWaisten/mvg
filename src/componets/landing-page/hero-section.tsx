@@ -12,8 +12,7 @@ export default function HeroSection() {
     }, []);
 
     return (
-        <section className="relative h-[100vh] w-full overflow-hidden">
-            {/* Video de fondo */}
+        <section id="inicio" className="relative h-[100vh] w-full overflow-hidden">
             <video
                 ref={videoRef}
                 className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
@@ -24,27 +23,23 @@ export default function HeroSection() {
                 playsInline
             />
             
-            {/* Overlay neoclásico con gradiente */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-0" />
 
-            {/* Decoraciones neoclásicas en las esquinas */}
             <div className="absolute top-8 left-8 text-[#d4af37] text-4xl z-10 opacity-60">❦</div>
             <div className="absolute top-8 right-8 text-[#d4af37] text-4xl z-10 opacity-60">❦</div>
             <div className="absolute bottom-8 left-8 text-[#d4af37] text-4xl z-10 opacity-60">❦</div>
             <div className="absolute bottom-8 right-8 text-[#d4af37] text-4xl z-10 opacity-60">❦</div>
 
-            {/* Contenido principal */}
             <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
                 <div className="mb-8">
                     <TitlePage />
                 </div>
                 
-                {/* Logo con marco neoclásico */}
                 <div className="relative mb-8">
                     <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37] via-[#b8860b] to-[#d4af37] rounded-full blur-sm opacity-30"></div>
                     <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-4 border-2 border-[#d4af37] shadow-2xl">
                         <Image
-                            src="/mvg-removebg.webp"
+                            src="/mvg-white.svg"
                             alt="Logo MVG"
                             width={400}
                             height={400}
@@ -53,7 +48,6 @@ export default function HeroSection() {
                     </div>
                 </div>
 
-                {/* Texto principal */}
                 <div className="space-y-6 max-w-4xl">
                     <h2 className="text-5xl md:text-6xl text-[#faf9f7] font-display font-bold tracking-wide leading-tight">
                         Jóvenes evangelizando jóvenes
@@ -69,7 +63,7 @@ export default function HeroSection() {
                     </div>
                 </div>
 
-                {/* Botones CTA neoclásicos */}
+                {/*
                 <div className="mt-12 flex flex-col sm:flex-row gap-6">
                     <a
                         href="contacto"
@@ -86,6 +80,7 @@ export default function HeroSection() {
                         Conocé más
                     </a>
                 </div>
+                */}
             </div>
         </section>
     );

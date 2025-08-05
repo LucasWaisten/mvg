@@ -49,7 +49,7 @@ function cn(...classes: (string | undefined | false | null)[]) {
 
 export default function ApostoladosSection() {
     return (
-        <section className="w-full py-16 bg-gray-100">
+        <section id="apostolados" className="w-full py-16 bg-gray-100">
             <div className="container mx-auto px-4">
                 <div className={"text-center"}>
                     <Subtitle2 subtitle={"Nuestros Apostolados"}/>
@@ -65,9 +65,9 @@ export default function ApostoladosSection() {
                         >
                             <img src={a.imagen} alt={a.nombre} className="w-full h-40 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold mb-1">{a.nombre}</h3>
-                                <p className="text-sm text-gray-600 mb-2">{a.descripcion}</p>
-                                <p className="text-sm text-gray-800 font-medium">{a.horarios}</p>
+                                <h3 className="text-xl text-subtitle-bold text-red-dark mb-1">{a.nombre}</h3>
+                                <p className="text-sm text-body text-gray-600 mb-2">{a.descripcion}</p>
+                                <p className="text-sm text-body text-gray-800 ">{a.horarios}</p>
                             </div>
                         </div>
                     ))}
