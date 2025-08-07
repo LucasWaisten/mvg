@@ -9,6 +9,7 @@ export interface Proyecto {
 
 export interface FormaDonacion {
     titulo: string;
+    descripcion: string;
     datos: string[];
     icono: string;
     color: string;
@@ -44,6 +45,7 @@ export const proyectos: Proyecto[] = [
 export const formasDonacion: FormaDonacion[] = [
     {
         titulo: "Transferencia ",
+        descripcion: "Realizá tu donación de forma rápida y segura mediante transferencia bancaria.",
         datos: [
             "Alias: mvg.2025 ",
             "Datos: Michel Antonio Stavropulos"
@@ -53,6 +55,7 @@ export const formasDonacion: FormaDonacion[] = [
     },
     {
         titulo: "Efectivo",
+        descripcion: "Visitá nuestra sede para realizar tu donación en efectivo y conocer más sobre nuestros proyectos.",
         datos: [
             "Dirección: Pasaje 5 de Julio 425, CABA",
             "Horarios: Miercoles 17:00 - 20:00",

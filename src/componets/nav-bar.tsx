@@ -79,7 +79,7 @@ export default function Navbar() {
                                                     <Link
                                                         key={subItem.href}
                                                         href={subItem.href}
-                                                        className="block px-4 py-3 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 font-display"
+                                                        className="block px-4 py-3 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 font-sans"
                                                         onClick={() => setSubmenuOpen(null)}
                                                     >
                                                         {subItem.label}
@@ -120,7 +120,7 @@ export default function Navbar() {
                                     <div>
                                         <button
                                             onClick={() => toggleSubmenu(item.label)}
-                                            className="w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-display font-semibold flex items-center justify-between"
+                                            className="w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold flex items-center justify-between"
                                         >
                                             {item.label}
                                             <ChevronDown className={`w-4 h-4 text-[#d4af37] transition-transform duration-200 ${submenuOpen === item.label ? 'rotate-180' : ''}`} />
@@ -131,7 +131,7 @@ export default function Navbar() {
                                                     <Link
                                                         key={subItem.href}
                                                         href={subItem.href}
-                                                        className="block py-2 px-4 text-[#8b7355] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-display"
+                                                        className="block py-2 px-4 text-[#8b7355] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans"
                                                         onClick={() => {
                                                             setMenuOpen(false);
                                                             setSubmenuOpen(null);
@@ -146,7 +146,7 @@ export default function Navbar() {
                                 ) : (
                                     <Link
                                         href={item.href}
-                                        className="block py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-display font-semibold"
+                                        className="block py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold"
                                         onClick={() => setMenuOpen(false)}
                                     >
                                         {item.label}

@@ -6,23 +6,15 @@ export default function Page() {
             titulo: "Jornadas de Vida en Gracia",
             descripcion: "Retiros para jóvenes de 18 a 35 años donde se vive un triple encuentro: con Dios, con uno mismo y con los demás.",
             duracion: "3 días",
-            frecuencia: "Trimestral",
+            frecuencia: "Semestral",
             icono: "✝",
             destacado: true
         },
         {
-            titulo: "Retiros de Formación",
-            descripcion: "Espacios de profundización en la fe, la espiritualidad dominicana y el carisma del Movimiento.",
-            duracion: "2 días",
-            frecuencia: "Bimestral",
-            icono: "📚",
-            destacado: false
-        },
-        {
             titulo: "Retiros de Oración",
             descripcion: "Momentos de silencio y contemplación para fortalecer la vida espiritual y la relación con Dios.",
-            duracion: "1 día",
-            frecuencia: "Mensual",
+            duracion: "3 día",
+            frecuencia: "Fechas importantes del año",
             icono: "🙏",
             destacado: false
         }
@@ -35,9 +27,6 @@ export default function Page() {
                     {/* Título principal */}
                     <div className="text-center mb-16">
                         <Title title="Retiros y Jornadas" />
-                        <div className="mt-8 text-center">
-                            <span className="text-[#d4af37] text-6xl">❦</span>
-                        </div>
                     </div>
 
                     {/* Introducción */}
@@ -88,7 +77,7 @@ export default function Page() {
                                         </div>
                                         <div className="flex items-center space-x-3">
                                             <span className="text-2xl">📅</span>
-                                            <span>Frecuencia: Trimestral</span>
+                                            <span>Frecuencia: Semestral</span>
                                         </div>
                                         <div className="flex items-center space-x-3">
                                             <span className="text-2xl">👥</span>
@@ -128,7 +117,7 @@ export default function Page() {
                     </div>
 
                     {/* Otros retiros */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    <div className="grid grid-cols-1  gap-8 mb-16">
                         {retiros.slice(1).map((retiro, index) => (
                             <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
                                 <div className="text-center mb-6">
@@ -150,29 +139,6 @@ export default function Page() {
                         ))}
                     </div>
 
-                    {/* CTA */}
-                    <div className="bg-gradient-to-br from-[#faf9f7] to-[#e8e0d5] rounded-2xl shadow-2xl border border-[#d4af37]/30 p-16 text-center">
-                        <h3 className="text-3xl font-display font-bold text-[#2c1810] mb-6">
-                            ¿Te animás a vivir esta experiencia?
-                        </h3>
-                        <p className="text-xl leading-relaxed text-[#2c1810] mb-8 max-w-3xl mx-auto">
-                            Si tenés entre 18 y 35 años y querés vivir una experiencia distinta, profunda y llena de gracia... ¡te invitamos!
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                            <a
-                                href="contacto"
-                                className="inline-block bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white font-display font-semibold py-4 px-8 rounded-lg text-xl hover:from-[#b8860b] hover:to-[#d4af37] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                            >
-                                Quiero participar
-                            </a>
-                            <a
-                                href="quienes-somos"
-                                className="inline-block bg-transparent border-2 border-[#d4af37] text-[#d4af37] font-display font-semibold py-4 px-8 rounded-lg text-xl hover:bg-[#d4af37] hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                            >
-                                Conocer más
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

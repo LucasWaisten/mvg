@@ -1,18 +1,248 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/free-mode";
 import { Subtitle2 } from "@/componets/common/title";
 import { X, Calendar, Clock, MapPin, Users, Heart, ChevronLeft, ChevronRight } from "lucide-react";
-import { useEvents, type CalendarEvent } from "@/hooks/useEvents";
-import { eventTypes, getEventType, formatEventTime, monthNames, weekDays } from "@/utils/eventUtils";
+
+function cn(...classes: (string | undefined | false | null)[]) {
+    return classes.filter(Boolean).join(" ");
+}
+
+const eventColors: { [key: string]: string } = {
+    noche: "from-amber-400 to-white",
+    ultreya: "from-rose-400 to-white",
+    jornada: "from-indigo-400 to-white",
+    cumple: "from-green-400 to-white",
+    asamblea: "from-purple-400 to-white",
+    default: "from-slate-400 to-white",
+};
+
+const eventTypes = {
+    noche: { icon: "🕯️", color: "from-amber-400 to-amber-600" },
+    ultreya: { icon: "🌟", color: "from-rose-400 to-rose-600" },
+    jornada: { icon: "👥", color: "from-indigo-400 to-indigo-600" },
+    cumple: { icon: "🎂", color: "from-green-400 to-green-600" },
+    asamblea: { icon: "🏛️", color: "from-purple-400 to-purple-600" },
+    default: { icon: "📅", color: "from-slate-400 to-slate-600" },
+};
+
+const monthNames = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+];
+
+const weekDays = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+
+function getEventType(event: Event | { summary: string }): keyof typeof eventColors {
+    const lower = event.summary.toLowerCase();
+    if (lower.includes("noche de la caridad")) return "noche";
+    if (lower.includes("ultreya")) return "ultreya";
+    if (lower.includes("convivencia") || lower.match(/j\d{3}[mv]/i) || lower.includes("jornada")) return "jornada";
+    if (lower.includes("cumple")) return "cumple";
+    if (lower.includes("asamblea")) return "asamblea";
+    return "default";
+}
+
+function formatEventTime(event: Event): string {
+    if (event.start.date && !event.start.dateTime) {
+        return "Todo el día";
+    }
+    
+    if (event.start.dateTime && event.end?.dateTime) {
+        const startTime = new Date(event.start.dateTime).toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        const endTime = new Date(event.end.dateTime).toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        return `${startTime} - ${endTime}`;
+    }
+    
+    if (event.start.dateTime) {
+        return new Date(event.start.dateTime).toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }
+    
+    return "Hora por confirmar";
+}
+
+type Event = {
+    id: string;
+    summary: string;
+    description?: string;
+    start: { dateTime?: string; date?: string };
+    end: { dateTime?: string; date?: string };
+    location?: string;
+    registrationRequired?: boolean;
+    formLink?: string;
+};
+
+type DateDisplay = {
+    day: number;
+    month: string;
+    label: string;
+};
+
+type CalendarDay = {
+    day: number;
+    isCurrentMonth: boolean;
+    isToday: boolean;
+    isPast: boolean;
+    events: Event[];
+};
+
+function formatEventDateRange(event: Event, type: string | number): DateDisplay {
+    const isAllDay = !!event.start.date && !event.start.dateTime;
+    const startDate = new Date(event.start.dateTime || event.start.date!);
+    const endDateRaw = event.end?.dateTime || event.end?.date || event.start.dateTime || event.start.date!;
+    const endDate = new Date(endDateRaw);
+
+    if (isAllDay) {
+        endDate.setDate(endDate.getDate() - 1);
+
+        const sameDay = startDate.toDateString() === endDate.toDateString();
+
+        const month = startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
+
+        if (sameDay || type === "cumple") {
+            return {
+                day: endDate.getDate() + 1,
+                month,
+                label: "Todo el día",
+            };
+        } else {
+            const endMonth = endDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase();
+            const sameMonth = month === endMonth;
+
+            return {
+                day: startDate.getDate() + 1,
+                month,
+                label: sameMonth
+                    ? `${startDate.getDate() + 1} - ${endDate.getDate() + 1} ${month}`
+                    : `${startDate.getDate() + 1} ${month} - ${endDate.getDate() + 1} ${endMonth}`,
+            };
+        }
+    }
+
+    if (event.start.dateTime && event.end?.dateTime) {
+        const startTime = new Date(event.start.dateTime).toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        const endTime = new Date(event.end.dateTime).toLocaleTimeString("es-AR", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+
+        return {
+            day: startDate.getDate(),
+            month: startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
+            label: `${startTime} - ${endTime}`,
+        };
+    }
+
+    return {
+        day: startDate.getDate(),
+        month: startDate.toLocaleDateString("es-AR", { month: "short" }).toUpperCase(),
+        label: "",
+    };
+}
+
+function generateCalendarDays(month: Date, events: Event[]): CalendarDay[] {
+    const year = month.getFullYear();
+    const monthIndex = month.getMonth();
+    
+    const firstDay = new Date(year, monthIndex, 1);
+    const lastDay = new Date(year, monthIndex + 1, 0);
+    const startDate = new Date(firstDay);
+    startDate.setDate(startDate.getDate() - firstDay.getDay());
+    
+    const endDate = new Date(lastDay);
+    endDate.setDate(endDate.getDate() + (6 - lastDay.getDay()));
+    
+    const days: CalendarDay[] = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        const dayEvents = events.filter(event => {
+            const eventDate = new Date(event.start.dateTime || event.start.date!);
+            eventDate.setHours(0, 0, 0, 0);
+            const currentDate = new Date(d);
+            currentDate.setHours(0, 0, 0, 0);
+            return eventDate.getTime() === currentDate.getTime();
+        });
+        
+        days.push({
+            day: d.getDate(),
+            isCurrentMonth: d.getMonth() === monthIndex,
+            isToday: d.getTime() === today.getTime(),
+            isPast: d < today,
+            events: dayEvents,
+        });
+    }
+    
+    return days;
+}
 
 export default function EventsPreview() {
-    const { events, isLoading, error, generateCalendarDays } = useEvents();
-    const [selectedDay, setSelectedDay] = useState<CalendarEvent | null>(null);
+    const [events, setEvents] = useState<Event[]>([]);
+    const [isReady, setIsReady] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    
+    // Calendar state
+    const [selectedDay, setSelectedDay] = useState<CalendarDay | null>(null);
     const [currentEventIndex, setCurrentEventIndex] = useState(0);
-    const [currentMonth, setCurrentMonth] = useState(new Date(2025, 7, 1)); // Agosto 2025
+    const [currentMonth, setCurrentMonth] = useState(new Date());
 
-    const handleDayClick = (day: CalendarEvent) => {
+    useEffect(() => {
+        const fetchEvents = async () => {
+            try {
+                setIsLoading(true);
+                setError(null);
+                
+                const now = new Date();
+                const year = now.getFullYear();
+                const start = new Date(year, 0, 1).toISOString();
+                const end = new Date(year, 11, 31, 23, 59, 59).toISOString();
+
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_URL}/events?orderBy=startTime&singleEvents=true&timeMin=${start}&timeMax=${end}&key=${process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY}`
+                );
+                
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                
+                const data = await res.json();
+                const items: Event[] = data.items || [];
+
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                setEvents(items);
+                setIsReady(true);
+            } catch (e) {
+                console.error("Error fetching events", e);
+                setError(e instanceof Error ? e.message : "Error al cargar eventos");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchEvents();
+    }, []);
+
+    const handleDayClick = (day: CalendarDay) => {
         if (day.events.length > 0) {
             setSelectedDay(day);
             setCurrentEventIndex(0);
@@ -67,85 +297,88 @@ export default function EventsPreview() {
         <section id='calendario-mensual' className="w-full py-16 bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
             <div className="container mx-auto px-4">
                 
-                                {/* Sección de Próximos Eventos */}
+                {/* Sección de Próximos Eventos */}
                 <div id="proximos" className="mb-16">
                     <div className="text-center mb-8">
                         <Subtitle2 subtitle="Próximos Eventos" />
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {events
-                            .filter(event => {
-                                const eventDate = new Date(event.start.dateTime || event.start.date!);
-                                const today = new Date();
-                                return eventDate >= today;
-                            })
-                            .slice(0, 6)
-                            .map((event, index) => {
-                                const type = getEventType(event);
-                                const eventType = eventTypes[type];
-                                return (
-                                    <div
-                                        key={index}
-                                        className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg border border-[#d4af37]/20 p-6 hover:shadow-xl transition-all duration-300"
-                                    >
-                                        <div className="flex items-center mb-4">
-                                            <div className={`p-2 rounded-lg ${eventType.color} mr-3`}>
-                                                <span className="text-white text-lg">{eventType.icon}</span>
-                                            </div>
-                                            <div>
-                                                <h4 className=" text-subtitle-bold text-[#2c1810] text-lg">
-                                                    {event.summary}
-                                                </h4>
-                                                <p className="text-sm  text-[#8b7355]">
-                                                    {new Date(event.start.dateTime || event.start.date!).toLocaleDateString("es-AR", {
-                                                        weekday: "long",
-                                                        month: "long",
-                                                        day: "numeric"
-                                                    })}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="space-y-2 text-sm text-[#8b7355]">
-                                            <div className="flex items-center">
-                                                <Clock className="w-4 h-4 mr-2" />
-                                                <span>{formatEventTime(event)}</span>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <MapPin className="w-4 h-4 mr-2" />
-                                                <span>{event.location}</span>
-                                            </div>
-                                        </div>
-                                        
-                                        {event.description && (
-                                            <p className="mt-4 text-sm text-[#2c1810] leading-relaxed">
-                                                {event.description.length > 100 
-                                                    ? event.description.substring(0, 100) + '...' 
-                                                    : event.description}
-                                            </p>
-                                        )}
-                                        
-                                        {event.registrationRequired && event.formLink && (
-                                            <a
-                                                href={event.formLink}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-block  mt-4 bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white font-text font-semibold  py-2 px-4 rounded-lg hover:from-[#b8860b] hover:to-[#d4af37] transition-all duration-300 text-sm"
-                                            >
-                                                Inscribirse
-                                            </a>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                    </div>
-                    
-                    {events.filter(event => {
-                        const eventDate = new Date(event.start.dateTime || event.start.date!);
+                        {isReady && events.length > 0 && (() => {
                         const today = new Date();
-                        return eventDate >= today;
-                    }).length === 0 && (
+                        today.setHours(0, 0, 0, 0);
+                        
+                        const futureEvents = events.filter(event => {
+                            const eventDate = new Date(event.start.dateTime || event.start.date!);
+                            eventDate.setHours(0, 0, 0, 0);
+                            const todayTime = today.getTime();
+                            const eventTime = eventDate.getTime();
+                            return eventTime >= todayTime;
+                        });
+
+                        if (futureEvents.length === 0) {
+                            return (
+                                <div className="text-center py-12">
+                                    <p className="text-[#8b7355] text-lg">No hay eventos próximos programados.</p>
+                                    <p className="text-[#8b7355] text-sm mt-2">¡Mantente atento a nuestras redes sociales para nuevas actividades!</p>
+                                </div>
+                            );
+                        }
+
+                        return (
+                            <Swiper
+                                initialSlide={0}
+                                slidesPerView={1.2}
+                                spaceBetween={10}
+                                breakpoints={{
+                                    640: { slidesPerView: 1.1 },
+                                    768: { slidesPerView: 2.1 },
+                                    1024: { slidesPerView: 3.1 },
+                                }}
+                                freeMode
+                                modules={[Navigation, FreeMode]}
+                            >
+                                {futureEvents.map((event) => {
+                                    const type = getEventType(event);
+                                    const { day, month, label } = formatEventDateRange(event, type);
+
+                                    return (
+                                        <SwiperSlide key={event.id} className="overflow-visible">
+                                            <div className="flex h-full min-h-[220px] rounded-xl shadow-lg transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm border border-[#d4af37]/20">
+                                                {/* Sección A: Fecha */}
+                                                <div
+                                                    className={cn(
+                                                        "w-1/5 flex flex-col justify-center items-center text-main text-center p-2",
+                                                        "bg-gradient-to-b",
+                                                        eventColors[type]
+                                                    )}
+                                                >
+                                                    <span className="text-sm uppercase font-semibold">{month}</span>
+                                                    <span className="text-3xl font-bold leading-none">{day}</span>
+                                                    {label && <span className="text-xs mt-1">{label}</span>}
+                                                </div>
+
+                                                {/* Sección B: Contenido */}
+                                                <div className="w-4/5 bg-white p-4 flex flex-col">
+                                                    <h3 className="text-subtitle-bold text-[#2c1810] text-lg mb-1 line-clamp-2">
+                                                        {event.summary}
+                                                    </h3>
+                                                    <p className="text-sm text-[#8b7355] mb-2">
+                                                        {event.description?.split("\n")[0] || "Evento sin descripción."}
+                                                    </p>
+                                                    <div className="mt-auto text-sm text-[#8b7355]">
+                                                        <p className="mt-2 font-semibold">📧 secretaria.mvg@gmail.com</p>
+                                                        <p className="font-semibold">📱 Instagram: @difusion.mvg</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </SwiperSlide>
+                                    );
+                                })}
+                            </Swiper>
+                        );
+                    })()}
+                    
+                    {isReady && events.length === 0 && (
                         <div className="text-center py-12">
                             <p className="text-[#8b7355] text-lg">No hay eventos próximos programados.</p>
                             <p className="text-[#8b7355] text-sm mt-2">¡Mantente atento a nuestras redes sociales para nuevas actividades!</p>
@@ -153,7 +386,7 @@ export default function EventsPreview() {
                     )}
                 </div>
                 
-                
+                {/* Sección del Calendario Mensual */}
                 <div className="text-center mb-12">
                     <Subtitle2 subtitle="Calendario de Eventos" />
                 </div>
@@ -167,7 +400,7 @@ export default function EventsPreview() {
                             >
                                 ←
                             </button>
-                            <h2 className="text-3xl text-subtitle-bold  text-[#2c1810]">
+                            <h2 className="text-3xl text-subtitle-bold text-[#2c1810]">
                                 {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
                             </h2>
                             <button
@@ -187,7 +420,7 @@ export default function EventsPreview() {
                         </div>
 
                         <div className="grid grid-cols-7 gap-2">
-                            {generateCalendarDays(currentMonth).map((day, index) => (
+                            {generateCalendarDays(currentMonth, events).map((day, index) => (
                                 <div
                                     key={index}
                                     className={`min-h-[100px] p-2 rounded-lg border transition-all duration-300 ${
@@ -203,10 +436,10 @@ export default function EventsPreview() {
                                 >
                                     <div className="text-sm font-semibold mb-1">{day.day}</div>
                                     <div className="space-y-1">
-                                        {day.events.slice(0, 2).map((event, eventIndex) => {
-                                            const type = getEventType(event);
-                                            const eventType = eventTypes[type];
-                                            return (
+                                                                                 {day.events.slice(0, 2).map((event, eventIndex) => {
+                                             const type = getEventType(event);
+                                             const eventType = eventTypes[type as keyof typeof eventTypes];
+                                             return (
                                                 <div
                                                     key={eventIndex}
                                                     className={`text-xs p-1 rounded bg-gradient-to-r ${eventType.color} text-white font-medium truncate`}
@@ -229,6 +462,7 @@ export default function EventsPreview() {
                     </div>
                 </div>
 
+                {/* Modal de Evento */}
                 {selectedDay && selectedEvent && (
                     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                         <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-y-auto">
@@ -267,10 +501,12 @@ export default function EventsPreview() {
                                         <span>{formatEventTime(selectedEvent)}</span>
                                     </div>
 
-                                    <div className="flex items-center text-[#8b7355]">
-                                        <MapPin className="w-4 h-4 mr-3" />
-                                        <span>{selectedEvent.location}</span>
-                                    </div>
+                                    {selectedEvent.location && (
+                                        <div className="flex items-center text-[#8b7355]">
+                                            <MapPin className="w-4 h-4 mr-3" />
+                                            <span>{selectedEvent.location}</span>
+                                        </div>
+                                    )}
 
                                     {selectedEvent.description && (
                                         <div className="bg-[#faf9f7] rounded-lg p-4">
