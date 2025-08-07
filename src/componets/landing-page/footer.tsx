@@ -2,8 +2,7 @@ export default function Footer(){
     return (
         <footer className="bg-[#492402] text-white py-4">
         <div className="container mx-auto text-center">
-            <p>&copy; {new Date().getFullYear()} Tu Empresa. Todos los derechos reservados.</p>
-            <p>Desarrollado por Tu Nombre</p>
+            <p>&copy; {new Date().getFullYear()} Todos los derechos reservados.</p>
         </div>
         </footer>
     );
