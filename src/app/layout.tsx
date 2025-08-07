@@ -1,25 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/componets/nav-bar";
-import {Shantell_Sans, Zain} from "next/font/google";
-
-const shantell = Shantell_Sans({
-  variable: "--font-shantell",
-  subsets: ["latin"],
-  weight: ["300", "400", "700", "800"], // los pesos que vas a usar
-  display: "swap",
-});
-
-const zain = Zain({
-  variable: "--font-zain",
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "700", "800", "900"],
-  display: "swap",
-});
+import Footer from "@/componets/landing-page/footer";
 
 export const metadata: Metadata = {
   title: "Movimiento de Vida en Gracia",
-  description: "Jóvenes evangelizando jóvenes",
+  description: "Jóvenes evangelizando jóvenes - Comunidad de jóvenes laicos católicos animados por el carisma dominicano",
 };
 
 export default function RootLayout({
@@ -28,14 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en"
+    <html lang="es"
           suppressHydrationWarning={true}
     >
-      <body
-        className={`${shantell.variable} ${zain.variable} antialiased`}
-      >
+      <body className="antialiased">
       <Navbar />
       <div className="pt-16">{children}</div>
+      <Footer />
       </body>
     </html>
   );

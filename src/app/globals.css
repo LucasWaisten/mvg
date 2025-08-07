@@ -1,50 +1,283 @@
 @import "tailwindcss";
 
-/* Definición de colores claros */
-:root {
-  --background: #ded3ca; /* fondo principal claro */
-  --foreground: #631400; /* texto principal bordó profundo */
-  --color-primary: #ded3ca; /* redundante para claridad semántica */
-  --color-secondary: #d4c3af; /* fondo secciones */
-  --color-text-main: #631400; /* texto principal */
-  --color-accent: #ab832b; /* dorado envejecido */
-  --color-neutral-soft: #f5f1ec; /* beige casi blanco */
-  --color-dark-soft: #2e2e2e; /* negro suave */
+/* Declaraciones de fuentes locales */
+@font-face {
+  font-family: 'Nefelibata Script';
+  src: url('/nefelibata-script.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
-  --font-sans: var(--font-shantell);
-  --font-mono: var(--font-zain);
+@font-face {
+  font-family: 'Belleza';
+  src: url('/belleza.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Now';
+  src: url('/now/Now-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Now Medium';
+  src: url('/now/Now-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Now Bold';
+  src: url('/now/Now-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Now Black';
+  src: url('/now/Now-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Paleta de colores según la guía de estilo FLYERS x Canva */
+:root {
+  --background: #f8f6f3; /* Fondo principal - mármol blanco */
+  --foreground: #2c1810; /* Texto principal - marrón oscuro */
+  
+  /* Nuevos colores de la guía de estilo */
+  --color-red-dark: #681200; /* Rojo oscuro */
+  --color-brown-dark: #492402; /* Marrón oscuro */
+  --color-beige-light: #D3C3AF; /* Beige claro */
+  
+  /* Colores existentes mantenidos para compatibilidad */
+  --color-primary: #d4af37; /* Dorado neoclásico */
+  --color-secondary: #e8e0d5; /* Beige mármol */
+  --color-text-main: #2c1810; /* Texto principal */
+  --color-accent: #b8860b; /* Dorado envejecido */
+  --color-neutral-soft: #faf9f7; /* Blanco hueso */
+  --color-dark-soft: #1a1a1a; /* Negro suave */
+  --color-marble: #f5f2ed; /* Mármol claro */
+  --color-stone: #8b7355; /* Piedra */
+  --color-bronze: #cd7f32; /* Bronce */
+  --color-ivory: #fffff0; /* Marfil */
+
+  /* Nuevas tipografías según la guía de estilo */
+  --font-title: 'Nefelibata Script', serif; /* Nefelibata Script para títulos */
+  --font-subtitle: 'Now', sans-serif; /* Now para subtítulos */
+  --font-subtitle-bold: 'Now Bold', sans-serif;
+  --font-subtitle-black: 'Now Black', sans-serif;
+  --font-text: 'Belleza', sans-serif; /* Belleza para textos */
+  
+  /* Mantener compatibilidad con fuentes existentes */
+  --font-sans: 'Belleza', sans-serif;
+  --font-display: 'Nefelibata Script', serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --font-sans: var(--font-text);
+  --font-display: var(--font-title);
+  --font-subtitle: var(--font-subtitle);
+  
+  /* Nuevos colores */
+  --color-red-dark: var(--color-red-dark);
+  --color-brown-dark: var(--color-brown-dark);
+  --color-beige-light: var(--color-beige-light);
+  
+  /* Colores existentes */
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-text-main: var(--color-text-main);
   --color-accent: var(--color-accent);
   --color-neutral-soft: var(--color-neutral-soft);
   --color-dark-soft: var(--color-dark-soft);
+  --color-marble: var(--color-marble);
+  --color-stone: var(--color-stone);
+  --color-bronze: var(--color-bronze);
+  --color-ivory: var(--color-ivory);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #1a1a1a;
+    --foreground: #f8f6f3;
   }
 }
 
 body {
   background: var(--color-background);
   color: var(--color-text-main);
-  font-family: var(--font-zain);
+  font-family: var(--font-text);
+  line-height: 1.6;
 }
 
-h1,h2,h3,h4,h5,h6 {
-  font-family: var(--font-shantell);
+/* Tipografías según la guía de estilo */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
+/* Clases específicas para cada tipo de texto */
+.text-title {
+  font-family: var(--font-title);
+  font-weight: 600;
+  color: var(--color-brown-dark);
+}
+
+.text-subtitle {
+  font-family: var(--font-subtitle);
+  font-weight: 400;
+  color: var(--color-red-dark);
+}
+
+.text-subtitle-bold {
+  font-family: var(--font-subtitle-bold);
+  font-weight: 700;
+  color: var(--color-red-dark);
+}
+
+.text-subtitle-black {
+  font-family: var(--font-subtitle-black);
+  font-weight: 900;
+  color: var(--color-red-dark);
+}
+
+.text-body {
+  font-family: var(--font-text);
+  font-weight: 400;
+  color: var(--color-text-main);
+}
+
+/* Estilos neoclásicos para elementos decorativos */
+.neoclassical-border {
+  border: 2px solid var(--color-primary);
+  border-radius: 8px;
+  position: relative;
+}
+
+.neoclassical-border::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px solid var(--color-accent);
+  border-radius: 12px;
+  z-index: -1;
+}
+
+.neoclassical-shadow {
+  box-shadow: 
+    0 4px 6px -1px rgba(44, 24, 16, 0.1),
+    0 2px 4px -1px rgba(44, 24, 16, 0.06),
+    0 0 0 1px rgba(212, 175, 55, 0.1);
+}
+
+.neoclassical-gradient {
+  background: linear-gradient(135deg, var(--color-marble) 0%, var(--color-neutral-soft) 100%);
+}
+
+/* Decoraciones neoclásicas */
+.corner-decoration {
+  position: relative;
+}
+
+.corner-decoration::before,
+.corner-decoration::after {
+  content: '❦';
+  position: absolute;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+}
+
+.corner-decoration::before {
+  top: -10px;
+  left: -10px;
+}
+
+.corner-decoration::after {
+  bottom: -10px;
+  right: -10px;
+}
+
+/* Estilos específicos para el navbar neoclásico */
 nav {
-  font-family: var(--font-shantell);
+  font-family: var(--font-subtitle);
+}
+
+.navbar-neoclassical {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--color-primary);
+  box-shadow: 
+    0 4px 6px -1px rgba(44, 24, 16, 0.1),
+    0 2px 4px -1px rgba(44, 24, 16, 0.06);
+}
+
+.nav-link-neoclassical {
+  font-family: var(--font-subtitle);
+  font-weight: 600;
+  color: var(--color-text-main);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link-neoclassical:hover {
+  color: var(--color-primary);
+}
+
+.nav-link-neoclassical::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--color-primary), var(--color-accent));
+  transition: width 0.3s ease;
+}
+
+.nav-link-neoclassical:hover::after {
+  width: 100%;
+}
+
+.nav-dropdown-neoclassical {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  box-shadow: 
+    0 10px 25px -5px rgba(44, 24, 16, 0.1),
+    0 4px 6px -1px rgba(44, 24, 16, 0.06);
+}
+
+/* Scrollbar neoclásica */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-marble);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
 }

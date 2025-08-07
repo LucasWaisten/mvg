@@ -32,7 +32,7 @@ export default function ComunidadGallery() {
                     disableOnInteraction: false,
                 }}
                 modules={[EffectCards, Autoplay]}
-                className="mySwiper w-[360px] h-[450px]"
+                className="mySwiper max-w-[400px] max-h-[450px]"
             >
                 {images.map((src, index) => (
                     <SwiperSlide key={index}>

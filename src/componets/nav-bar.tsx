@@ -2,62 +2,157 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
 const navItems = [
-    { label: "Inicio", href: "/" },
-    { label: "¿Quiénes somos?", href: "quienes-somos" },
-/*    { label: "Retiros", href: "retiros" },
-    { label: "Apostolados", href: "apostolados" },*/
-    { label: "Contacto", href: "contacto" },
+    {   
+        label: "inicio",
+        href: "/" ,
+        submenu:[
+            { label: "sobre nosotros", href: "#sobre-nosotros" },
+            { label: "nuestros apostolados", href: "#apostolados" },
+            { label: "calendario mensual", href: "#calendario-mensual" },
+            { label: "proximos eventos", href: "#proximos" },
+        ]},
+    { 
+        label: "nosotros", 
+        href: "quienes-somos",
+        submenu: [
+            { label: "quiénes somos", href: "quienes-somos" },
+            { label: "apostolados", href: "apostolados" },
+            { label: "retiros", href: "retiros" }
+        ]
+    },
+    { label: "donaciones", href: "donaciones" },
+    { label: "contacto", href: "contacto" },
 ];
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [submenuOpen, setSubmenuOpen] = useState<string | null>(null);
+
+    const toggleSubmenu = (label: string) => {
+        setSubmenuOpen(submenuOpen === label ? null : label);
+    };
 
     return (
-        <header className="fixed top-0 z-50 w-full bg-white/70 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+        <header className="fixed top-0 z-50 w-full navbar-neoclassical">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 items-center justify-between">
+                <div className="flex h-20 items-center justify-between">
+                    {/* Logo y título */}
                     <nav>
-                        <Link href="/" className="flex items-center gap-2 text-xl font-semibold tracking-tight text-gray-900">
-                            <Image
-                                src="/mvg-removebg.webp"
-                                alt="Logo MVG"
-                                width={80}
-                                height={80}
-                                className="h-20 w-auto object-contain"
-                            />
-                            Movimiento de Vida en Gracia
+                        <Link href="/" className="flex items-center gap-3 text-xl font-semibold tracking-tight text-[#2c1810] hover:text-[#d4af37] transition-colors duration-300">
+                            <div className="relative">
+                                <Image
+                                    src="/mvg-removebg.webp"
+                                    alt="Logo MVG"
+                                    width={70}
+                                    height={70}
+                                    className="h-16 w-auto object-contain"
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="font-display text-2xl font-bold">Movimiento de Vida en Gracia</span>
+                                <span className="text-sm text-[#8b7355] font-light">Jóvenes evangelizando jóvenes</span>
+                            </div>
                         </Link>
                     </nav>
-                    <nav className="hidden md:flex gap-6 text-sm font-medium">
+                    
+                    {/* Navegación desktop */}
+                    <nav className="hidden lg:flex gap-8 text-sm font-medium">
                         {navItems.map((item) => (
-                            <Link key={item.href} href={item.href} className="group relative text-gray-700 hover:text-text-main transition">
-                                <span className="relative z-10">{item.label}</span>
-                                <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-text-main transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                            </Link>
+                            <div key={item.href} className="relative">
+                                {item.submenu ? (
+                                    <div className="relative">
+                                        <button
+                                            onClick={() => toggleSubmenu(item.label)}
+                                            className="group flex items-center gap-1 nav-link-neoclassical"
+                                        >
+                                            <span className="relative z-10  ">{item.label}</span>
+                                            <ChevronDown className={`w-4 h-4 text-[#d4af37] transition-transform duration-200 ${submenuOpen === item.label ? 'rotate-180' : ''}`} />
+                                        </button>
+                                        
+                                        {submenuOpen === item.label && (
+                                            <div className="absolute top-full left-0 mt-2 w-48 nav-dropdown-neoclassical py-2 z-50">
+                                                {item.submenu.map((subItem) => (
+                                                    <Link
+                                                        key={subItem.href}
+                                                        href={subItem.href}
+                                                        className="block px-4 py-3 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 font-sans"
+                                                        onClick={() => setSubmenuOpen(null)}
+                                                    >
+                                                        {subItem.label}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <Link 
+                                        href={item.href} 
+                                        className="nav-link-neoclassical"
+                                    >
+                                        <span className="relative z-10 px-3 py-2">{item.label}</span>
+                                    </Link>
+                                )}
+                            </div>
                         ))}
                     </nav>
-                    <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden">
-                        {menuOpen ? <X size={24} /> : <Menu size={24} />}
+                    
+                    {/* Botón menú móvil */}
+                    <button 
+                        onClick={() => setMenuOpen(!menuOpen)} 
+                        className="lg:hidden p-2 rounded-md text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200"
+                    >
+                        {menuOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
                 </div>
             </div>
 
+            {/* Menú móvil */}
             {menuOpen && (
-                <div className="md:hidden bg-white border-t border-gray-200">
-                    <div className="flex flex-col px-4 py-2">
+                <div className="lg:hidden bg-white/98 backdrop-blur-md border-t border-[#d4af37] shadow-lg">
+                    <div className="flex flex-col px-6 py-4 space-y-2">
                         {navItems.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className="py-2 text-gray-700 hover:text-indigo-600 transition"
-                                onClick={() => setMenuOpen(false)}
-                            >
-                                {item.label}
-                            </Link>
+                            <div key={item.href}>
+                                {item.submenu ? (
+                                    <div>
+                                        <button
+                                            onClick={() => toggleSubmenu(item.label)}
+                                            className="w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold flex items-center justify-between"
+                                        >
+                                            {item.label}
+                                            <ChevronDown className={`w-4 h-4 text-[#d4af37] transition-transform duration-200 ${submenuOpen === item.label ? 'rotate-180' : ''}`} />
+                                        </button>
+                                        {submenuOpen === item.label && (
+                                            <div className="ml-4 mt-2 space-y-1">
+                                                {item.submenu.map((subItem) => (
+                                                    <Link
+                                                        key={subItem.href}
+                                                        href={subItem.href}
+                                                        className="block py-2 px-4 text-[#8b7355] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans"
+                                                        onClick={() => {
+                                                            setMenuOpen(false);
+                                                            setSubmenuOpen(null);
+                                                        }}
+                                                    >
+                                                        {subItem.label}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <Link
+                                        href={item.href}
+                                        className="block py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold"
+                                        onClick={() => setMenuOpen(false)}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                )}
+                            </div>
                         ))}
                     </div>
                 </div>

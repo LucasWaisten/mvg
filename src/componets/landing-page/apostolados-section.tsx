@@ -1,12 +1,14 @@
 "use client";
 
-import {Subtitle} from "@/componets/common/title";
+import {Subtitle2} from "@/componets/common/title";
+import Link from "next/link";
 
 type Apostolado = {
     nombre: string;
     descripcion: string;
     horarios: string;
     imagen: string;
+    url: string;
 };
 
 const apostolados: Apostolado[] = [
@@ -15,24 +17,28 @@ const apostolados: Apostolado[] = [
         descripcion: "Salimos a acompañar a personas en situación de calle.",
         horarios: "Todos los miércoles de 16 a 22 hs",
         imagen: "/images/image1.webp",
+        url: "/apostolados/#noche-de-caridad"
     },
     {
         nombre: "Misión",
         descripcion: "Evangelización en comunidades durante el verano.",
         horarios: "Verano - fechas y horarios a definir",
-        imagen: "/images/image2.webp",
+        imagen: "/images/mision/IMG_6984.jpg",
+        url: "/apostolados/#mision"
     },
     {
         nombre: "Grupos de lectura",
         descripcion: "Lectura y reflexión de cartas apostólicas.",
         horarios: "Ver sección de eventos",
-        imagen: "/images/image3.webp",
+        imagen: "/images/IMG_5436.jpg",
+        url: "/apostolados/#grupos-de-lectura"
     },
     {
         nombre: "Ultreya",
         descripcion: "Encuentro mensual de oración, alabanza y formación.",
         horarios: "Primeros viernes de mes de 19 hs a 00 hs",
         imagen: "/images/image4.webp",
+        url: "/apostolados/#ultreya"
     },
 ];
 
@@ -49,13 +55,15 @@ function cn(...classes: (string | undefined | false | null)[]) {
 
 export default function ApostoladosSection() {
     return (
-        <section className="w-full py-16 bg-gray-100">
-            <div className="container mx-auto px-4">
+        <section id="apostolados" className="w-full py-16 bg-gray-100">
+            <div 
+            className="container mx-auto px-4">
                 <div className={"text-center"}>
-                    <Subtitle subtitle={"Nuestros Apostolados"}/>
+                    <Subtitle2 subtitle={"Nuestros Apostolados"}/>
                 </div>
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                     {apostolados.map((a) => (
+                        <Link href={a.url} key={a.nombre}>
                         <div
                             key={a.nombre}
                             className={cn(
@@ -65,11 +73,12 @@ export default function ApostoladosSection() {
                         >
                             <img src={a.imagen} alt={a.nombre} className="w-full h-40 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold mb-1">{a.nombre}</h3>
-                                <p className="text-sm text-gray-600 mb-2">{a.descripcion}</p>
-                                <p className="text-sm text-gray-800 font-medium">{a.horarios}</p>
+                                <h3 className="text-xl text-subtitle-bold text-red-dark mb-1">{a.nombre}</h3>
+                                <p className="text-sm text-body text-gray-600 mb-2">{a.descripcion}</p>
+                                <p className="text-sm text-body text-gray-800 ">{a.horarios}</p>
                             </div>
                         </div>
+                        </Link>
                     ))}
                 </div>
             </div>
