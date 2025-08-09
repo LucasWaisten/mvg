@@ -160,6 +160,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--color-text-main);
 }
 
+.font-text{
+  font-family: var(--font-text);
+}
+
 /* Estilos neoclásicos para elementos decorativos */
 .neoclassical-border {
   border: 2px solid var(--color-primary);

@@ -68,7 +68,7 @@ export default function ContactForm() {
                                         </div>
                                         <div>
                                             <p className="font-semibold text-[#2c1810]">Email</p>
-                                            <p className="text-[#8b7355]">secretaria@mvg.com.ar</p>
+                                            <p className="text-[#8b7355]">difusion.mvg@gmail.com</p>
                                         </div>
                                     </div>
                                     
@@ -78,7 +78,7 @@ export default function ContactForm() {
                                         </div>
                                         <div>
                                             <p className="font-semibold text-[#2c1810]">Ubicación</p>
-                                            <p className="text-[#8b7355]">Convento Santo Domingo</p>
+                                            <a href="https://www.google.com/maps/dir/Convento+Santo+Domingo+-+Bas%C3%ADlica%E2%80%A6/Defensa+422+C1065+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.6128229,-58.3727173,362m/data=!3m1!1e3!4m13!4m12!1m5!1m1!1s0x95bccad52d1cd9df:0xa97592e9cd43434c!2m2!1d-58.3718533!2d-34.6127127!1m5!1m1!1s0x95bccad532b732b1:0xbcd76005f74d313!2m2!1d-58.3717266!2d-34.6127473?entry=ttu&g_ep=EgoyMDI1MDgwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" className="text-[#8b7355]">Convento Santo Domingo</a>
                                         </div>
                                     </div>
                                     
