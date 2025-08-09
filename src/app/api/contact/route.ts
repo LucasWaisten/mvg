@@ -18,17 +18,18 @@ export async function POST(req: Request) {
         });
 
         const mailOptions = {
-            from: email,
-            to: 'waistenlucas@gmail.com',
+            from: `MVG Contacto <${process.env.EMAIL_USER}>`,
+            to: 'difusion.mvg@gmail.com',
+            replyTo: email,
             subject: subject || 'Nuevo mensaje de contacto',
             html: `
         <h2 style="color: #3B82F6;">Nuevo mensaje de contacto</h2>
         <p><strong>Nombre:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Mensaje:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
+        <p>${String(message).replace(/\n/g, '<br>')}</p>
       `,
-        };
+        } as const;
 
         await transporter.sendMail(mailOptions);
 
