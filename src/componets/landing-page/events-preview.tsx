@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import { Subtitle2 } from "@/componets/common/title";
-import { X, Calendar, Clock, MapPin, Users, Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, Calendar, Clock, MapPin, Users, Heart, ChevronLeft, ChevronRight, Grid, List } from "lucide-react";
 
 function cn(...classes: (string | undefined | false | null)[]) {
     return classes.filter(Boolean).join(" ");
@@ -204,6 +204,7 @@ export default function EventsPreview() {
     const [selectedDay, setSelectedDay] = useState<CalendarDay | null>(null);
     const [currentEventIndex, setCurrentEventIndex] = useState(0);
     const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [viewMode, setViewMode] = useState<'calendar' | 'list'>('calendar');
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -267,6 +268,23 @@ export default function EventsPreview() {
     };
 
     const selectedEvent = selectedDay?.events[currentEventIndex];
+
+    // Función para obtener eventos del mes actual
+    const getCurrentMonthEvents = () => {
+        const year = currentMonth.getFullYear();
+        const month = currentMonth.getMonth();
+        const startDate = new Date(year, month, 1);
+        const endDate = new Date(year, month + 1, 0);
+        
+        return events.filter(event => {
+            const eventDate = new Date(event.start.dateTime || event.start.date!);
+            return eventDate >= startDate && eventDate <= endDate;
+        }).sort((a, b) => {
+            const dateA = new Date(a.start.dateTime || a.start.date!);
+            const dateB = new Date(b.start.dateTime || b.start.date!);
+            return dateA.getTime() - dateB.getTime();
+        });
+    };
 
     if (isLoading) {
         return (
@@ -392,72 +410,163 @@ export default function EventsPreview() {
                 </div>
 
                 <div className="max-w-6xl mx-auto">
-                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8">
-                        <div className="flex justify-between items-center mb-8">
-                            <button
-                                onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
-                                className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#d4af37] hover:text-white transition-colors duration-300"
-                            >
-                                ←
-                            </button>
-                            <h2 className="text-3xl text-subtitle-bold text-[#2c1810]">
-                                {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
-                            </h2>
-                            <button
-                                onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
-                                className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#d4af37] hover:text-white transition-colors duration-300"
-                            >
-                                →
-                            </button>
-                        </div>
-
-                        <div className="grid grid-cols-7 gap-2 mb-4">
-                            {weekDays.map(day => (
-                                <div key={day} className="text-center p-3 font-sans font-semibold text-[#8b7355]">
-                                    {day}
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="grid grid-cols-7 gap-2">
-                            {generateCalendarDays(currentMonth, events).map((day, index) => (
-                                <div
-                                    key={index}
-                                    className={`min-h-[100px] p-2 rounded-lg border transition-all duration-300 ${
-                                        day.isToday 
-                                            ? 'bg-gradient-to-br from-[#d4af37] to-[#b8860b] text-white border-[#d4af37]' 
-                                            : day.isPast 
-                                                ? 'bg-[#f5f2ed] text-[#8b7355] border-[#e8e0d5]' 
-                                                : day.isCurrentMonth
-                                                    ? 'bg-white hover:bg-[#faf9f7] text-[#2c1810] border-[#e8e0d5] hover:border-[#d4af37]'
-                                                    : 'bg-[#faf9f7] text-[#8b7355] border-[#e8e0d5]'
-                                    } ${day.events.length > 0 ? 'cursor-pointer' : ''}`}
-                                    onClick={() => handleDayClick(day)}
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-4 md:p-8">
+                        {/* Header con navegación y selector de vista */}
+                        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+                            <div className="flex items-center gap-4">
+                                <button
+                                    onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
+                                    className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#d4af37] hover:text-white transition-colors duration-300"
                                 >
-                                    <div className="text-sm font-semibold mb-1">{day.day}</div>
-                                    <div className="space-y-1">
-                                                                                 {day.events.slice(0, 2).map((event, eventIndex) => {
-                                             const type = getEventType(event);
-                                             const eventType = eventTypes[type as keyof typeof eventTypes];
-                                             return (
-                                                <div
-                                                    key={eventIndex}
-                                                    className={`text-xs p-1 rounded bg-gradient-to-r ${eventType.color} text-white font-medium truncate`}
-                                                    title={event.summary}
-                                                >
-                                                    <span className="mr-1">{eventType.icon}</span>
-                                                    {event.summary.length > 12 ? event.summary.substring(0, 12) + '...' : event.summary}
-                                                </div>
-                                            );
-                                        })}
-                                        {day.events.length > 2 && (
-                                            <div className="text-xs p-1 rounded bg-gradient-to-r from-[#8b7355] to-[#cd7f32] text-white font-medium text-center">
-                                                +{day.events.length - 2} más
-                                            </div>
-                                        )}
+                                    ←
+                                </button>
+                                <h2 className="text-xl md:text-3xl text-subtitle-bold text-[#2c1810] text-center">
+                                    {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+                                </h2>
+                                <button
+                                    onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
+                                    className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#d4af37] hover:text-white transition-colors duration-300"
+                                >
+                                    →
+                                </button>
+                            </div>
+                            
+                            {/* Selector de vista solo en móvil */}
+                            <div className="flex md:hidden bg-[#f5f2ed] rounded-lg p-1">
+                                <button
+                                    onClick={() => setViewMode('calendar')}
+                                    className={`p-2 rounded-md transition-colors duration-200 ${
+                                        viewMode === 'calendar' 
+                                            ? 'bg-[#d4af37] text-white' 
+                                            : 'text-[#8b7355] hover:bg-[#e8e0d5]'
+                                    }`}
+                                >
+                                    <Grid className="w-4 h-4" />
+                                </button>
+                                <button
+                                    onClick={() => setViewMode('list')}
+                                    className={`p-2 rounded-md transition-colors duration-200 ${
+                                        viewMode === 'list' 
+                                            ? 'bg-[#d4af37] text-white' 
+                                            : 'text-[#8b7355] hover:bg-[#e8e0d5]'
+                                    }`}
+                                >
+                                    <List className="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Vista de Calendario */}
+                        <div className={`${viewMode === 'calendar' ? 'block' : 'hidden md:block'}`}>
+                            <div className="grid grid-cols-7 gap-1 md:gap-2 mb-4">
+                                {weekDays.map(day => (
+                                    <div key={day} className="text-center p-2 md:p-3 font-sans font-semibold text-[#8b7355] text-xs md:text-sm">
+                                        {day}
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
+
+                            <div className="grid grid-cols-7 gap-1 md:gap-2">
+                                {generateCalendarDays(currentMonth, events).map((day, index) => (
+                                    <div
+                                        key={index}
+                                        className={`min-h-[60px] md:min-h-[100px] p-1 md:p-2 rounded-lg border transition-all duration-300 ${
+                                            day.isToday 
+                                                ? 'bg-gradient-to-br from-[#d4af37] to-[#b8860b] text-white border-[#d4af37]' 
+                                                : day.isPast 
+                                                    ? 'bg-[#f5f2ed] text-[#8b7355] border-[#e8e0d5]' 
+                                                    : day.isCurrentMonth
+                                                        ? 'bg-white hover:bg-[#faf9f7] text-[#2c1810] border-[#e8e0d5] hover:border-[#d4af37]'
+                                                        : 'bg-[#faf9f7] text-[#8b7355] border-[#e8e0d5]'
+                                        } ${day.events.length > 0 ? 'cursor-pointer' : ''}`}
+                                        onClick={() => handleDayClick(day)}
+                                    >
+                                        <div className="text-xs md:text-sm font-semibold mb-1">{day.day}</div>
+                                        <div className="space-y-0.5 md:space-y-1">
+                                            {day.events.slice(0, 2).map((event, eventIndex) => {
+                                                const type = getEventType(event);
+                                                const eventType = eventTypes[type as keyof typeof eventTypes];
+                                                return (
+                                                    <div
+                                                        key={eventIndex}
+                                                        className={`text-xs p-0.5 md:p-1 rounded bg-gradient-to-r ${eventType.color} text-white font-medium truncate`}
+                                                        title={event.summary}
+                                                    >
+                                                        <span className="mr-1 hidden md:inline">{eventType.icon}</span>
+                                                        <span className="md:hidden">{eventType.icon}</span>
+                                                        <span className="hidden md:inline">
+                                                            {event.summary.length > 12 ? event.summary.substring(0, 12) + '...' : event.summary}
+                                                        </span>
+                                                    </div>
+                                                );
+                                            })}
+                                            {day.events.length > 2 && (
+                                                <div className="text-xs p-0.5 md:p-1 rounded bg-gradient-to-r from-[#8b7355] to-[#cd7f32] text-white font-medium text-center">
+                                                    <span className="hidden md:inline">+{day.events.length - 2} más</span>
+                                                    <span className="md:hidden">+{day.events.length - 2}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Vista de Lista (solo móvil) */}
+                        <div className={`${viewMode === 'list' ? 'block' : 'hidden'} md:hidden`}>
+                            <div className="space-y-3">
+                                {getCurrentMonthEvents().map((event) => {
+                                    const type = getEventType(event);
+                                    const eventType = eventTypes[type as keyof typeof eventTypes];
+                                    const eventDate = new Date(event.start.dateTime || event.start.date!);
+                                    
+                                    return (
+                                        <div
+                                            key={event.id}
+                                            className="bg-white rounded-lg p-4 border border-[#e8e0d5] shadow-sm"
+                                            onClick={() => {
+                                                const day: CalendarDay = {
+                                                    day: eventDate.getDate(),
+                                                    isCurrentMonth: true,
+                                                    isToday: false,
+                                                    isPast: eventDate < new Date(),
+                                                    events: [event]
+                                                };
+                                                handleDayClick(day);
+                                            }}
+                                        >
+                                            <div className="flex items-start gap-3">
+                                                <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${eventType.color} flex items-center justify-center text-white text-lg flex-shrink-0`}>
+                                                    {eventType.icon}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <h3 className="font-semibold text-[#2c1810] text-sm mb-1 line-clamp-2">
+                                                        {event.summary}
+                                                    </h3>
+                                                    <div className="flex items-center text-[#8b7355] text-xs mb-1">
+                                                        <Calendar className="w-3 h-3 mr-1" />
+                                                        {eventDate.toLocaleDateString("es-AR", {
+                                                            weekday: "short",
+                                                            day: "numeric",
+                                                            month: "short"
+                                                        })}
+                                                    </div>
+                                                    <div className="flex items-center text-[#8b7355] text-xs">
+                                                        <Clock className="w-3 h-3 mr-1" />
+                                                        {formatEventTime(event)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                                
+                                {getCurrentMonthEvents().length === 0 && (
+                                    <div className="text-center py-8">
+                                        <p className="text-[#8b7355] text-sm">No hay eventos programados para este mes.</p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -466,10 +575,10 @@ export default function EventsPreview() {
                 {selectedDay && selectedEvent && (
                     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                         <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-y-auto">
-                            <div className="p-6">
+                            <div className="p-4 md:p-6">
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="flex-1">
-                                        <h3 className="text-2xl font-sans font-bold text-[#2c1810] mb-2">
+                                        <h3 className="text-xl md:text-2xl font-sans font-bold text-[#2c1810] mb-2">
                                             {selectedEvent.summary}
                                         </h3>
                                         <div className="flex items-center text-[#8b7355] text-sm">
@@ -562,7 +671,7 @@ export default function EventsPreview() {
                                             }`}
                                         >
                                             <ChevronLeft className="w-4 h-4" />
-                                            Anterior
+                                            <span className="hidden sm:inline">Anterior</span>
                                         </button>
                                         
                                         <div className="flex gap-2">
@@ -588,7 +697,7 @@ export default function EventsPreview() {
                                                     : 'text-[#d4af37] hover:bg-[#f5f2ed]'
                                             }`}
                                         >
-                                            Siguiente
+                                            <span className="hidden sm:inline">Siguiente</span>
                                             <ChevronRight className="w-4 h-4" />
                                         </button>
                                     </div>
