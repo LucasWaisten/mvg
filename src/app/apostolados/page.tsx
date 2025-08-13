@@ -1,5 +1,6 @@
 import { Title, Subtitle } from "@/componets/common/title";
 import ImageCarousel from "@/componets/common/image-carousel";
+import { PageTransition } from "@/componets/common/PageTransition";
 
 export default function Page(){
     const apostoladosDetallados = [
@@ -63,71 +64,73 @@ export default function Page(){
     ];
 
     return (
-        <div  className="min-h-screen bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
-            <div className="container mx-auto px-4 py-16">
-                <div className="max-w-6xl mx-auto">
-                    {/* Título principal */}
-                    <div className="text-center mb-16">
-                        <Title title="Nuestros Apostolados" />
-                    </div>
-
-                    {/* Introducción */}
-                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-12 mb-16">
-                        <div className="text-center max-w-4xl mx-auto">
-                            <Subtitle subtitle="Servir desde el carisma dominicano" />
-                            <p className="text-xl text-justify leading-relaxed tracking-tight text-[#2c1810] mb-6">
-                                Los apostolados son el corazón misionero de nuestra comunidad. Cada comisión es más que una función organizativa: 
-                                es una forma concreta de evangelizar y vivir el carisma dominicano de &quot;contemplar y predicar desde lo contemplado&quot;.
-                            </p>
-                            <p className="text-lg text-[#8b7355] italic">
-                                &quot;Cada uno según el don que ha recibido, póngalo al servicio de los demás&quot; 
-                                <span className="block text-[#d4af37] mt-2">— 1 Pedro 4, 10</span>
-                            </p>
+        <PageTransition variant="default">
+            <div  className="min-h-screen bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
+                <div className="container mx-auto px-4 py-16">
+                    <div className="max-w-6xl mx-auto">
+                        {/* Título principal */}
+                        <div className="text-center mb-16">
+                            <Title title="Nuestros Apostolados" />
                         </div>
-                    </div>
 
-                    {/* Apostolados detallados */}
-                    <div className="mb-20">
-                        <div className="space-y-12">
-                            {apostoladosDetallados.map((apostolado, index) => (
-                                <div id={apostolado.id} key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8">
-                                    <div className="grid grid-cols-1 md:grid-cols-2  gap-8 items-center">
-                                        <div className="text-center lg:text-left">
-                                            
-                                            <h3 className="text-3xl font-display font-bold text-[#2c1810] mb-4">
-                                                {apostolado.titulo}
-                                            </h3>
-                                            <div className="bg-[#f5f2ed] rounded-lg p-4 inline-block">
-                                                <p className="text-[#8b7355] font-semibold">
-                                                    ⏰ {apostolado.horario}
+                        {/* Introducción */}
+                        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-12 mb-16">
+                            <div className="text-center max-w-4xl mx-auto">
+                                <Subtitle subtitle="Servir desde el carisma dominicano" />
+                                <p className="text-xl text-justify leading-relaxed tracking-tight text-[#2c1810] mb-6">
+                                    Los apostolados son el corazón misionero de nuestra comunidad. Cada comisión es más que una función organizativa: 
+                                    es una forma concreta de evangelizar y vivir el carisma dominicano de &quot;contemplar y predicar desde lo contemplado&quot;.
+                                </p>
+                                <p className="text-lg text-[#8b7355] italic">
+                                    &quot;Cada uno según el don que ha recibido, póngalo al servicio de los demás&quot; 
+                                    <span className="block text-[#d4af37] mt-2">— 1 Pedro 4, 10</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Apostolados detallados */}
+                        <div className="mb-20">
+                            <div className="space-y-12">
+                                {apostoladosDetallados.map((apostolado, index) => (
+                                    <div id={apostolado.id} key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8">
+                                        <div className="grid grid-cols-1 md:grid-cols-2  gap-8 items-center">
+                                            <div className="text-center lg:text-left">
+                                                
+                                                <h3 className="text-3xl font-display font-bold text-[#2c1810] mb-4">
+                                                    {apostolado.titulo}
+                                                </h3>
+                                                <div className="bg-[#f5f2ed] rounded-lg p-4 inline-block">
+                                                    <p className="text-[#8b7355] font-semibold">
+                                                        ⏰ {apostolado.horario}
+                                                    </p>
+                                                </div>
+                                                <p className="text-lg text-justify leading-relaxed tracking-tight text-[#2c1810] mb-6">
+                                                    {apostolado.descripcion}
                                                 </p>
                                             </div>
-                                            <p className="text-lg text-justify leading-relaxed tracking-tight text-[#2c1810] mb-6">
-                                                {apostolado.descripcion}
-                                            </p>
-                                        </div>
-                                            {apostolado.imagenes && (
-                                                <div className="mt-8 sm:mt-0">
+                                                {apostolado.imagenes && (
+                                                    <div className="mt-8 sm:mt-0">
 
-                                                    <div className="flex justify-center md:justify-end ">
-                                                        <div className="w-full md:w-[400px] h-[400px]">
-                                                            <ImageCarousel 
-                                                                images={apostolado.imagenes}
-                                                                interval={4000}
-                                                                className=" w-full h-full"
-                                                            />
+                                                        <div className="flex justify-center md:justify-end ">
+                                                            <div className="w-full md:w-[400px] h-[400px]">
+                                                                <ImageCarousel 
+                                                                    images={apostolado.imagenes}
+                                                                    interval={4000}
+                                                                    className=" w-full h-full"
+                                                                />
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            )}                                        
+                                                )}                                        
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
+        </PageTransition>
     );
 }
