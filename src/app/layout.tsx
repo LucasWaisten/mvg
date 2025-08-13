@@ -4,7 +4,7 @@ import Navbar from "@/componets/nav-bar";
 import Footer from "@/componets/landing-page/footer";
 import { LoadingProvider } from "@/contexts/LoadingContext";
 import { LoadingWrapper } from "@/componets/common/LoadingWrapper";
-import { AnimatePresence } from "framer-motion";
+import { AnimatedPageWrapper } from "@/componets/common/AnimatedPageWrapper";
 
 export const metadata: Metadata = {
   title: "Movimiento de Vida en Gracia",
@@ -25,9 +25,9 @@ export default function RootLayout({
         <LoadingProvider>
           <Navbar />
           <div className="pt-16">
-            <AnimatePresence mode="wait">
+            <AnimatedPageWrapper>
               {children}
-            </AnimatePresence>
+            </AnimatedPageWrapper>
           </div>
           <Footer />
           <LoadingWrapper />
