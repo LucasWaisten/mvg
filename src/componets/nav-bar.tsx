@@ -1,6 +1,5 @@
 'use client';
 
-import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
@@ -40,12 +39,16 @@ export default function Navbar() {
     };
 
     const handleNavigation = (href: string, isAnchor = false) => {
-        if (isAnchor) {
-            // Para enlaces internos (anchors), no mostrar loading
+        // Detectar si es navegación a otra página
+        const isExternalPage = href.includes('/') && href !== '/';
+        const isSamePageAnchor = isAnchor && !isExternalPage;
+        
+        if (isSamePageAnchor) {
+            // Para enlaces internos en la misma página (anchors), no mostrar loading
             return;
         }
         
-        // Para navegación a otras páginas, mostrar loading
+        // Para navegación a otras páginas (con o sin anchor), mostrar loading
         navigateWithLoading(href, true);
         setMenuOpen(false);
         setSubmenuOpen(null);
@@ -127,7 +130,7 @@ export default function Navbar() {
                     <nav>
                         <button 
                             onClick={() => handleNavigation("/")}
-                            className="flex items-center gap-3 text-xl font-semibold tracking-tight text-[#2c1810] hover:text-[#d4af37] transition-colors duration-300"
+                            className="flex items-center  gap-3 text-xl font-semibold tracking-tight text-[#2c1810] hover:text-[#d4af37] transition-colors duration-300"
                         >
                             <div className="relative">
                                 <Image
@@ -135,7 +138,7 @@ export default function Navbar() {
                                     alt="Logo MVG"
                                     width={70}
                                     height={70}
-                                    className="h-16 w-auto md:h-22 md:w-auto object-contain"
+                                    className="h-16 w-auto md:h-22 md:w-auto object-contain cursor-pointer"
                                 />
                             </div>
                             <div className="flex flex-col">

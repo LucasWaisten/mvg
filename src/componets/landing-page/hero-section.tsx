@@ -8,6 +8,7 @@ export default function HeroSection() {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
+        debugger;
         videoRef.current?.play().catch(() => {});
     }, []);
 
@@ -16,11 +17,13 @@ export default function HeroSection() {
             <video
                 ref={videoRef}
                 className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
-                src="https://www.op.org.ar/wp-content/uploads/2025/05/0416.mp4"
+                src="/video-fondo.mp4"
                 autoPlay
                 loop
                 muted
                 playsInline
+                preload="auto"
+                onError={(e) => console.error('Error loading video:', e)}
             />
             
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-0" />

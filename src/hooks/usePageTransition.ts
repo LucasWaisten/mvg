@@ -10,10 +10,12 @@ export function usePageTransition() {
   const navigateWithLoading = (href: string, showLoading = true) => {
     if (showLoading) {
       startLoading();
+      // Tiempo mínimo de loading para que se vea la animación
       setTimeout(() => {
         router.push(href);
-        setTimeout(stopLoading, 500); // Dar tiempo para que la página cargue
-      }, 800);
+        // Dar tiempo para que la nueva página cargue antes de quitar el loading
+        setTimeout(stopLoading, 1000);
+      }, 1200);
     } else {
       router.push(href);
     }
@@ -29,17 +31,29 @@ export function usePageTransition() {
       setTimeout(() => {
         router.push(href);
         if (callback) callback();
-        setTimeout(stopLoading, 500);
-      }, 800);
+        setTimeout(stopLoading, 1000);
+      }, 1200);
     } else {
       router.push(href);
       if (callback) callback();
     }
   };
 
+  // Función para iniciar loading manualmente
+  const startPageLoading = () => {
+    startLoading();
+  };
+
+  // Función para detener loading manualmente
+  const stopPageLoading = () => {
+    stopLoading();
+  };
+
   return { 
     navigateWithLoading, 
     navigateWithLoadingAndCallback,
+    startPageLoading,
+    stopPageLoading,
     startLoading,
     stopLoading 
   };

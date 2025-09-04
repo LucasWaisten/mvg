@@ -7,9 +7,8 @@ export default function Page(){
         {
             id: "noche-de-caridad",
             titulo: "Noche de Caridad",
-            descripcion: "Una experiencia semanal donde los jóvenes del Movimiento salen a las calles para compartir el amor de Dios con los más necesitados. A través de la oración, la escucha y la caridad concreta, llevamos la esperanza del Evangelio a quienes más lo necesitan.",
-
-            horario: "Todos los miercoles desde las 16:00hs hasta las 22:00hs",
+            descripcion: "Salimos a las calles para compartir el amor de Dios con los más necesitados. Oración, escucha y caridad concreta.",
+            horario: "Miércoles 16:00hs - 22:00hs",
             icono: "🕯️",
             color: "from-[#d4af37] to-[#b8860b]",
             imagenes:[
@@ -24,9 +23,8 @@ export default function Page(){
         {
             id: "mision",
             titulo: "Misión",
-            descripcion: "Salidas misioneras a diferentes barrios y comunidades para anunciar el Evangelio y compartir la experiencia de fe. Es una oportunidad para vivir el mandato misionero de Cristo y llevar su mensaje de amor y salvación.",
-
-            horario: "Se organiza los primeros meses de cada año",
+            descripcion: "Salidas misioneras a barrios y comunidades para anunciar el Evangelio. Vivimos el mandato misionero de Cristo.",
+            horario: "Primeros meses del año",
             icono: "🌍",
             color: "from-[#8b7355] to-[#cd7f32]",
             imagenes: [
@@ -41,18 +39,18 @@ export default function Page(){
             ]
         },
         {
-            id: "grupos-de-lectura",
-            titulo: "Grupos de Lectura",
-            descripcion: "Espacios de formación donde los jóvenes profundizan en la Palabra de Dios, la doctrina católica y la espiritualidad dominicana. A través del estudio y la reflexión comunitaria, crecemos en la fe y el conocimiento.",   
-            horario: "Sabado de 18:00hs hasta las 20:00hs",
-            icono: "📖",
+            id: "coro",
+            titulo: "Coro",
+            descripcion: "Alabamos a Dios a través de la música. Participamos en misas y eventos del Movimiento con cantos litúrgicos.",
+            horario: "Sábados 16:00hs - 18:00hs",
+            icono: "🎵",
             color: "from-[#d4af37] to-[#b8860b]"
         },
         {
             id: "ultreya",
             titulo: "Ultreya",
-            descripcion: "Encuentros donde los jóvenes que han vivido las Jornadas se reúnen para compartir su experiencia de fe, orar juntos y apoyarse mutuamente en el camino de conversión. Es el espacio donde se fortalece la comunidad y se sostiene la vida espiritual.",
-            horario: "Cada primer viernes de cada mes a las 19:00hs",
+            descripcion: "Encuentros mensuales para jóvenes que vivieron las Jornadas. Compartimos fe, oramos juntos y fortalecemos la comunidad.",
+            horario: "Primer viernes del mes 19:00hs",
             icono: "🔥",
             color: "from-[#8b7355] to-[#cd7f32]",
             imagenes: [
@@ -60,6 +58,49 @@ export default function Page(){
                 "/images/ultreya/IMG_20250509_212321942.jpg",
                 "/images/ultreya/IMG-20241219-WA0010.jpg"
             ]
+        },
+        {
+            id: "peregrinacion-lujan",
+            titulo: "Peregrinación Luján",
+            descripcion: "Peregrinación anual a la Basílica de Luján. Experiencia de fe y devoción mariana en comunidad.",
+            horario: "Anual (Octubre)",
+            icono: "⛪",
+            color: "from-[#d4af37] to-[#b8860b]"
+        },
+        {
+            id: "cartas-de-lecturas",
+            titulo: "Cartas de Lecturas",
+            descripcion: "Grupos de estudio bíblico y formación en la fe. Profundizamos en la Palabra de Dios y la doctrina católica.",
+            horario: "Sábados 18:00hs - 20:00hs",
+            icono: "📖",
+            color: "from-[#8b7355] to-[#cd7f32]"
+        }
+    ];
+
+    const comisiones = [
+        {
+            titulo: "Comisión de Formación",
+            descripcion: "Organiza retiros, charlas y espacios de crecimiento espiritual. Coordina la formación de los jóvenes del Movimiento.",
+            icono: "📚",
+            color: "from-[#d4af37] to-[#b8860b]"
+        },
+        {
+            titulo: "Comisión de Eventos",
+            descripcion: "Planifica y coordina actividades, encuentros y celebraciones del Movimiento. Asegura que cada evento sea una experiencia significativa.",
+            icono: "🎉",
+            color: "from-[#8b7355] to-[#cd7f32]"
+        },
+        {
+            titulo: "Comisión de Comunicación",
+            descripcion: "Gestiona la difusión del Movimiento en redes sociales y medios. Comparte testimonios y noticias de la comunidad.",
+            icono: "📱",
+            color: "from-[#d4af37] to-[#b8860b]"
+        },
+        {
+            titulo: "Comisión de Caridad",
+            descripcion: "Coordina las actividades de servicio y ayuda a los más necesitados. Organiza la Noche de Caridad y otras iniciativas solidarias.",
+            icono: "❤️",
+            color: "from-[#8b7355] to-[#cd7f32]"
         }
     ];
 
@@ -69,19 +110,20 @@ export default function Page(){
                 <div className="container mx-auto px-4 py-16">
                     <div className="max-w-6xl mx-auto">
                         {/* Título principal */}
-                        <div className="text-center mb-16">
+                        <div className="text-center mb-12">
                             <Title title="Nuestros Apostolados" />
                         </div>
 
                         {/* Introducción */}
-                        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-12 mb-16">
+                        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8 mb-12">
                             <div className="text-center max-w-4xl mx-auto">
                                 <Subtitle subtitle="Servir desde el carisma dominicano" />
-                                <p className="text-xl text-justify leading-relaxed tracking-tight text-[#2c1810] mb-6">
-                                    Los apostolados son el corazón misionero de nuestra comunidad. Cada comisión es más que una función organizativa: 
-                                    es una forma concreta de evangelizar y vivir el carisma dominicano de &quot;contemplar y predicar desde lo contemplado&quot;.
+                                <p className="text-lg text-justify leading-relaxed tracking-tight text-[#2c1810] mb-6">
+                                    Nuestra misión está ligada a nuestra identidad. Queremos vivir lo que anunciamos y anunciar lo que vivimos.
+                                    Como jóvenes bautizados, estamos llamados a ser testigos del amor del Padre y a compartir la Buena Noticia de Cristo.
+                                    El corazón de nuestra misión son las Jornadas, espacios donde experimentamos la obra de la gracia de Cristo.
                                 </p>
-                                <p className="text-lg text-[#8b7355] italic">
+                                <p className="text-base text-[#8b7355] italic">
                                     &quot;Cada uno según el don que ha recibido, póngalo al servicio de los demás&quot; 
                                     <span className="block text-[#d4af37] mt-2">— 1 Pedro 4, 10</span>
                                 </p>
@@ -89,40 +131,65 @@ export default function Page(){
                         </div>
 
                         {/* Apostolados detallados */}
-                        <div className="mb-20">
-                            <div className="space-y-12">
+                        <div className="mb-16">
+                            <h2 className="text-2xl font-display font-bold text-[#2c1810] text-center mb-8">
+                                Actividades y Servicios
+                            </h2>
+                            <div className="space-y-8">
                                 {apostoladosDetallados.map((apostolado, index) => (
-                                    <div id={apostolado.id} key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8">
-                                        <div className="grid grid-cols-1 md:grid-cols-2  gap-8 items-center">
+                                    <div id={apostolado.id} key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-6">
+                                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
                                             <div className="text-center lg:text-left">
-                                                
-                                                <h3 className="text-3xl font-display font-bold text-[#2c1810] mb-4">
+                                                <h3 className="text-2xl font-display font-bold text-[#2c1810] mb-3">
                                                     {apostolado.titulo}
                                                 </h3>
-                                                <div className="bg-[#f5f2ed] rounded-lg p-4 inline-block">
-                                                    <p className="text-[#8b7355] font-semibold">
+                                                <div className="bg-[#f5f2ed] rounded-lg p-3 inline-block mb-4">
+                                                    <p className="text-[#8b7355] font-semibold text-sm">
                                                         ⏰ {apostolado.horario}
                                                     </p>
                                                 </div>
-                                                <p className="text-lg text-justify leading-relaxed tracking-tight text-[#2c1810] mb-6">
+                                                <p className="text-base text-justify leading-relaxed tracking-tight text-[#2c1810] mb-4">
                                                     {apostolado.descripcion}
                                                 </p>
                                             </div>
-                                                {apostolado.imagenes && (
-                                                    <div className="mt-8 sm:mt-0">
-
-                                                        <div className="flex justify-center md:justify-end ">
-                                                            <div className="w-full md:w-[400px] h-[400px]">
-                                                                <ImageCarousel 
-                                                                    images={apostolado.imagenes}
-                                                                    interval={4000}
-                                                                    className=" w-full h-full"
-                                                                />
-                                                            </div>
+                                            {apostolado.imagenes && (
+                                                <div className="mt-6 lg:mt-0">
+                                                    <div className="flex justify-center lg:justify-end">
+                                                        <div className="w-full lg:w-[350px] h-[350px]">
+                                                            <ImageCarousel 
+                                                                images={apostolado.imagenes}
+                                                                interval={4000}
+                                                                className="w-full h-full"
+                                                            />
                                                         </div>
                                                     </div>
-                                                )}                                        
+                                                </div>
+                                            )}                                        
                                         </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Comisiones */}
+                        <div className="mb-12">
+                            <h2 className="text-2xl font-display font-bold text-[#2c1810] text-center mb-8">
+                                Comisiones del Movimiento
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {comisiones.map((comision, index) => (
+                                    <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-6">
+                                        <div className="text-center mb-4">
+                                            <div className={`w-16 h-16 bg-gradient-to-br ${comision.color} rounded-full flex items-center justify-center mx-auto mb-3`}>
+                                                <span className="text-white text-2xl">{comision.icono}</span>
+                                            </div>
+                                            <h3 className="text-xl font-display font-bold text-[#2c1810] mb-3">
+                                                {comision.titulo}
+                                            </h3>
+                                        </div>
+                                        <p className="text-[#8b7355] leading-relaxed text-sm text-center">
+                                            {comision.descripcion}
+                                        </p>
                                     </div>
                                 ))}
                             </div>

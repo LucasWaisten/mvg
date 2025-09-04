@@ -3,8 +3,8 @@ import "./globals.css";
 import Navbar from "@/componets/nav-bar";
 import Footer from "@/componets/landing-page/footer";
 import { LoadingProvider } from "@/contexts/LoadingContext";
-import { LoadingWrapper } from "@/componets/common/LoadingWrapper";
-import { AnimatedPageWrapper } from "@/componets/common/AnimatedPageWrapper";
+import { PageTransitionManager } from "@/componets/common/PageTransitionManager";
+import { InitialLoadingHandler } from "@/componets/common/InitialLoadingHandler";
 
 export const metadata: Metadata = {
   title: "Movimiento de Vida en Gracia",
@@ -23,14 +23,14 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <LoadingProvider>
-          <Navbar />
-          <div className="pt-16">
-            <AnimatedPageWrapper>
+          <InitialLoadingHandler />        
+          <Navbar />        
+          <div className="pt-16 flex-1">
+            <PageTransitionManager>
               {children}
-            </AnimatedPageWrapper>
-          </div>
+            </PageTransitionManager>
+          </div>    
           <Footer />
-          <LoadingWrapper />
         </LoadingProvider>
       </body>
     </html>
