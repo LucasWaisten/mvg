@@ -1,10 +1,10 @@
 'use client';
 
-import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePageTransition } from "@/hooks/usePageTransition";
 
 const navItems = [
     {   
@@ -32,9 +32,26 @@ const navItems = [
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [submenuOpen, setSubmenuOpen] = useState<string | null>(null);
+    const { navigateWithLoading } = usePageTransition();
 
     const toggleSubmenu = (label: string) => {
         setSubmenuOpen(submenuOpen === label ? null : label);
+    };
+
+    const handleNavigation = (href: string, isAnchor = false) => {
+        // Detectar si es navegación a otra página
+        const isExternalPage = href.includes('/') && href !== '/';
+        const isSamePageAnchor = isAnchor && !isExternalPage;
+        
+        if (isSamePageAnchor) {
+            // Para enlaces internos en la misma página (anchors), no mostrar loading
+            return;
+        }
+        
+        // Para navegación a otras páginas (con o sin anchor), mostrar loading
+        navigateWithLoading(href, true);
+        setMenuOpen(false);
+        setSubmenuOpen(null);
     };
 
     // Animaciones para el menú móvil
@@ -111,21 +128,24 @@ export default function Navbar() {
                 <div className="flex h-20 items-center justify-between">
                     {/* Logo y título */}
                     <nav>
-                        <Link href="/" className="flex items-center gap-3 text-xl font-semibold tracking-tight text-[#2c1810] hover:text-[#d4af37] transition-colors duration-300">
+                        <button 
+                            onClick={() => handleNavigation("/")}
+                            className="flex items-center  gap-3 text-xl font-semibold tracking-tight text-[#2c1810] hover:text-[#d4af37] transition-colors duration-300"
+                        >
                             <div className="relative">
                                 <Image
                                     src="/mvg-removebg.webp"
                                     alt="Logo MVG"
                                     width={70}
                                     height={70}
-                                    className="h-16 w-auto md:h-22 md:w-auto object-contain"
+                                    className="h-16 w-auto md:h-22 md:w-auto object-contain cursor-pointer"
                                 />
                             </div>
                             <div className="flex flex-col">
                                 <span className="font-display text-xl md:text-2xl font-bold">Movimiento de Vida en Gracia</span>
                                 <span className="text-xs md:text-sm text-[#8b7355] font-light">Jóvenes evangelizando jóvenes</span>
                             </div>
-                        </Link>
+                        </button>
                     </nav>
                     
                     {/* Navegación desktop */}
@@ -168,13 +188,12 @@ export default function Navbar() {
                                                                 ease: "easeInOut"
                                                             }}
                                                         >
-                                                            <Link
-                                                                href={subItem.href}
-                                                                className="block px-4 py-3 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 font-sans"
-                                                                onClick={() => setSubmenuOpen(null)}
+                                                            <button
+                                                                onClick={() => handleNavigation(subItem.href, subItem.href.startsWith('#'))}
+                                                                className="block w-full text-left px-4 py-3 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 font-sans"
                                                             >
                                                                 {subItem.label}
-                                                            </Link>
+                                                            </button>
                                                         </motion.div>
                                                     ))}
                                                 </motion.div>
@@ -182,12 +201,12 @@ export default function Navbar() {
                                         </AnimatePresence>
                                     </div>
                                 ) : (
-                                    <Link 
-                                        href={item.href} 
+                                    <button 
+                                        onClick={() => handleNavigation(item.href)}
                                         className="nav-link-neoclassical"
                                     >
                                         <span className="relative z-10 px-3 py-2">{item.label}</span>
-                                    </Link>
+                                    </button>
                                 )}
                             </div>
                         ))}
@@ -265,16 +284,12 @@ export default function Navbar() {
                                                                     ease: "easeInOut"
                                                                 }}
                                                             >
-                                                                <Link
-                                                                    href={subItem.href}
-                                                                    className="block py-2 px-4 text-[#8b7355] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans"
-                                                                    onClick={() => {
-                                                                        setMenuOpen(false);
-                                                                        setSubmenuOpen(null);
-                                                                    }}
+                                                                <button
+                                                                    onClick={() => handleNavigation(subItem.href, subItem.href.startsWith('#'))}
+                                                                    className="block w-full text-left py-2 px-4 text-[#8b7355] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans"
                                                                 >
                                                                     {subItem.label}
-                                                                </Link>
+                                                                </button>
                                                             </motion.div>
                                                         ))}
                                                     </motion.div>
@@ -282,13 +297,12 @@ export default function Navbar() {
                                             </AnimatePresence>
                                         </div>
                                     ) : (
-                                        <Link
-                                            href={item.href}
-                                            className="block py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold"
-                                            onClick={() => setMenuOpen(false)}
+                                        <button
+                                            onClick={() => handleNavigation(item.href)}
+                                            className="block w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold"
                                         >
                                             {item.label}
-                                        </Link>
+                                        </button>
                                     )}
                                 </motion.div>
                             ))}
