@@ -6,7 +6,7 @@ export default function DonationMethodsSection() {
             <h2 className="text-2xl md:text-3xl font-display font-bold text-[#2c1810] text-center mb-12">
                 Formas de donar
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 w-3/4 mx-auto gap-8">
                 {formasDonacion.map((forma, index) => (
                     <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
                         <div className="text-center mb-6">

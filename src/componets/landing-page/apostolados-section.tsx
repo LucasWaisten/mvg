@@ -1,6 +1,6 @@
 "use client";
 
-import {Subtitle2} from "@/componets/common/title";
+import {Subtitle, Subtitle2} from "@/componets/common/title";
 import { usePageTransition } from "@/hooks/usePageTransition";
 
 type Apostolado = {
@@ -80,9 +80,9 @@ export default function ApostoladosSection() {
         <section id="apostolados" className="w-full py-16 bg-gray-100">
             <div className="container mx-auto px-4">
                 <div className={"text-center mb-8"}>
-                    <Subtitle2 subtitle={"Nuestros Apostolados"}/>
+                    <Subtitle subtitle={"Nuestros Apostolados"}/>
                 </div>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 w-3/4 mx-auto">
                     {apostolados.map((a) => (
                         <button
                             key={a.nombre}
@@ -95,9 +95,9 @@ export default function ApostoladosSection() {
                                     colorShadows[a.nombre] || ""
                                 )}
                             >
-                                <img src={a.imagen} alt={a.nombre} className="w-full h-32 object-cover" />
+                                <img src={a.imagen} alt={a.nombre} className="w-full h-38 sm:h-48 object-cover" />
                                 <div className="p-4">
-                                    <h3 className="text-lg text-subtitle-bold text-red-dark mb-2">{a.nombre}</h3>
+                                    <h3 className="text-base sm:text-lg text-subtitle-bold text-red-dark mb-2">{a.nombre}</h3>
                                     <p className="text-sm text-body text-gray-600 mb-2">{a.descripcion}</p>
                                     <p className="text-xs text-body text-gray-800">{a.horarios}</p>
                                 </div>

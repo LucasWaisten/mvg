@@ -1,6 +1,6 @@
 "use client";
 
-import { Subtitle2 } from "@/componets/common/title";
+import { Subtitle, Subtitle2 } from "@/componets/common/title";
 import { usePageTransition } from "@/hooks/usePageTransition";
 
 type Retiro = {
@@ -22,15 +22,6 @@ const retiros: Retiro[] = [
         icono: "✝",
         destacado: true,
         color: "from-[#d4af37] to-[#b8860b]"
-    },
-    {
-        nombre: "Mini Veritas",
-        descripcion: "Retiro de 3 días para profundizar en la verdad del Evangelio. Formación intensiva en la fe católica.",
-        duracion: "3 días",
-        frecuencia: "Anual",
-        icono: "📚",
-        destacado: false,
-        color: "from-[#8b7355] to-[#cd7f32]"
     },
     {
         nombre: "Triduo Pascual",
@@ -58,10 +49,10 @@ export default function RetirosPreview() {
         <section id="retiros" className="w-full py-16 bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-8">
-                    <Subtitle2 subtitle="Retiros y Jornadas" />
+                    <Subtitle subtitle="Retiros y Jornadas" />
                 </div>
                 
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 w-3/4 mx-auto mb-8">
                     {retiros.map((retiro, index) => (
                         <div
                             key={index}

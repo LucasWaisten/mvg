@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import {Button} from "@/componets/common/button";
-import { Title } from "@/componets/common/title";
+import { Subtitle2, Title } from "@/componets/common/title";
 import { PageTransition } from "@/componets/common/PageTransition";
 
 export default function ContactForm() {
@@ -59,9 +59,7 @@ export default function ContactForm() {
                             {/* Información de contacto */}
                             <div className="space-y-8">
                                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8">
-                                    <h3 className="text-2xl font-display font-bold text-[#2c1810] mb-6 text-center">
-                                        Conectate con nosotros
-                                    </h3>
+                                    <Subtitle2 subtitle="Conectate con nosotros" />
                                     
                                     <div className="space-y-6">
                                         <div className="flex items-center space-x-4 p-4 bg-[#faf9f7] rounded-lg">
@@ -94,16 +92,6 @@ export default function ContactForm() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div className="bg-gradient-to-br from-[#faf9f7] to-[#e8e0d5] rounded-2xl shadow-2xl border border-[#d4af37]/30 p-8 text-center">
-                                    <h4 className="text-xl font-display font-semibold text-[#2c1810] mb-4">
-                                        ¿Te interesa participar?
-                                    </h4>
-                                    <p className="text-[#8b7355] leading-relaxed">
-                                        Si tenés entre 18 y 35 años y querés vivir una experiencia profunda de fe, 
-                                        te invitamos a contactarnos. ¡Estamos para acompañarte en tu camino!
-                                    </p>
                                 </div>
                             </div>
 

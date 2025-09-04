@@ -8,7 +8,6 @@ export default function HeroSection() {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     useEffect(() => {
-        debugger;
         videoRef.current?.play().catch(() => {});
     }, []);
 
