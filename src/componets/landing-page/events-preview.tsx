@@ -316,7 +316,7 @@ export default function EventsPreview() {
             <div className="container mx-auto px-4">
                 
                 {/* Sección de Próximos Eventos */}
-                <div id="proximos" className="mb-16">
+                <div id="proximos" className="mb-16 w-full mx-auto">
                     <div className="text-center mb-8">
                         <Subtitle2 subtitle="Próximos Eventos" />
                     </div>
@@ -361,7 +361,7 @@ export default function EventsPreview() {
 
                                     return (
                                         <SwiperSlide key={event.id} className="overflow-visible">
-                                            <div className="flex h-full min-h-[220px] rounded-xl shadow-lg transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm border border-[#d4af37]/20">
+                                            <div className="flex h-64 rounded-xl shadow-lg transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm border border-[#d4af37]/20">
                                                 {/* Sección A: Fecha */}
                                                 <div
                                                     className={cn(

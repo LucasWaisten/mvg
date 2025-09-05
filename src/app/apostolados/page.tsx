@@ -1,4 +1,4 @@
-import { Title, Subtitle } from "@/componets/common/title";
+import { Title, Subtitle, Subtitle2 } from "@/componets/common/title";
 import ImageCarousel from "@/componets/common/image-carousel";
 import { PageTransition } from "@/componets/common/PageTransition";
 
@@ -77,33 +77,6 @@ export default function Page(){
         }
     ];
 
-    const comisiones = [
-        {
-            titulo: "Comisión de Formación",
-            descripcion: "Organiza retiros, charlas y espacios de crecimiento espiritual. Coordina la formación de los jóvenes del Movimiento.",
-            icono: "📚",
-            color: "from-[#d4af37] to-[#b8860b]"
-        },
-        {
-            titulo: "Comisión de Eventos",
-            descripcion: "Planifica y coordina actividades, encuentros y celebraciones del Movimiento. Asegura que cada evento sea una experiencia significativa.",
-            icono: "🎉",
-            color: "from-[#8b7355] to-[#cd7f32]"
-        },
-        {
-            titulo: "Comisión de Comunicación",
-            descripcion: "Gestiona la difusión del Movimiento en redes sociales y medios. Comparte testimonios y noticias de la comunidad.",
-            icono: "📱",
-            color: "from-[#d4af37] to-[#b8860b]"
-        },
-        {
-            titulo: "Comisión de Caridad",
-            descripcion: "Coordina las actividades de servicio y ayuda a los más necesitados. Organiza la Noche de Caridad y otras iniciativas solidarias.",
-            icono: "❤️",
-            color: "from-[#8b7355] to-[#cd7f32]"
-        }
-    ];
-
     return (
         <PageTransition variant="default">
             <div  className="min-h-screen bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
@@ -118,12 +91,12 @@ export default function Page(){
                         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8 mb-12">
                             <div className="text-center max-w-4xl mx-auto">
                                 <Subtitle subtitle="Servir desde el carisma dominicano" />
-                                <p className="text-lg text-justify leading-relaxed tracking-tight text-[#2c1810] mb-6">
+                                <p className="sm:text-lg text-base text-justify leading-relaxed tracking-tight text-[#2c1810] mb-6">
                                     Nuestra misión está ligada a nuestra identidad. Queremos vivir lo que anunciamos y anunciar lo que vivimos.
                                     Como jóvenes bautizados, estamos llamados a ser testigos del amor del Padre y a compartir la Buena Noticia de Cristo.
                                     El corazón de nuestra misión son las Jornadas, espacios donde experimentamos la obra de la gracia de Cristo.
                                 </p>
-                                <p className="text-base text-[#8b7355] italic">
+                                <p className="sm:text-base text-sm text-[#8b7355] italic">
                                     &quot;Cada uno según el don que ha recibido, póngalo al servicio de los demás&quot; 
                                     <span className="block text-[#d4af37] mt-2">— 1 Pedro 4, 10</span>
                                 </p>
@@ -132,23 +105,19 @@ export default function Page(){
 
                         {/* Apostolados detallados */}
                         <div className="mb-16">
-                            <h2 className="text-2xl font-display font-bold text-[#2c1810] text-center mb-8">
-                                Actividades y Servicios
-                            </h2>
+                            <Subtitle subtitle="Actividades y Servicios" />
                             <div className="space-y-8">
                                 {apostoladosDetallados.map((apostolado, index) => (
                                     <div id={apostolado.id} key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-6">
                                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
                                             <div className="text-center lg:text-left">
-                                                <h3 className="text-2xl font-display font-bold text-[#2c1810] mb-3">
-                                                    {apostolado.titulo}
-                                                </h3>
+                                                <Subtitle2 subtitle={apostolado.titulo} />
                                                 <div className="bg-[#f5f2ed] rounded-lg p-3 inline-block mb-4">
                                                     <p className="text-[#8b7355] font-semibold text-sm">
                                                         ⏰ {apostolado.horario}
                                                     </p>
                                                 </div>
-                                                <p className="text-base text-justify leading-relaxed tracking-tight text-[#2c1810] mb-4">
+                                                <p className="sm:text-base text-base text-justify leading-relaxed tracking-tight text-[#2c1810] mb-4">
                                                     {apostolado.descripcion}
                                                 </p>
                                             </div>
@@ -166,30 +135,6 @@ export default function Page(){
                                                 </div>
                                             )}                                        
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Comisiones */}
-                        <div className="mb-12">
-                            <h2 className="text-2xl font-display font-bold text-[#2c1810] text-center mb-8">
-                                Comisiones del Movimiento
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {comisiones.map((comision, index) => (
-                                    <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-6">
-                                        <div className="text-center mb-4">
-                                            <div className={`w-16 h-16 bg-gradient-to-br ${comision.color} rounded-full flex items-center justify-center mx-auto mb-3`}>
-                                                <span className="text-white text-2xl">{comision.icono}</span>
-                                            </div>
-                                            <h3 className="text-xl font-display font-bold text-[#2c1810] mb-3">
-                                                {comision.titulo}
-                                            </h3>
-                                        </div>
-                                        <p className="text-[#8b7355] leading-relaxed text-sm text-center">
-                                            {comision.descripcion}
-                                        </p>
                                     </div>
                                 ))}
                             </div>

@@ -11,9 +11,8 @@ export default function DonacionesPage() {
                 <div className="container mx-auto px-4 py-16">
                     <div className="max-w-6xl mx-auto">
                         <HeroSection />
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                        <div className="grid grid-cols-1 w-3/4 mx-auto gap-8 mb-16">
                             <MissionSection />
-                            <ProjectsSection />
                         </div>
                         <DonationMethodsSection />
                     </div>

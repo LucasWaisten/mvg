@@ -12,9 +12,8 @@ const navItems = [
         href: "/" ,
         submenu:[
             { label: "sobre nosotros", href: "#sobre-nosotros" },
-            { label: "nuestros apostolados", href: "#apostolados" },
+            { label: "nuestros apostolados", href: "#apostolados" },                    
             { label: "calendario mensual", href: "#calendario-mensual" },
-            { label: "proximos eventos", href: "#proximos" },
         ]},
     { 
         label: "nosotros", 
@@ -22,7 +21,7 @@ const navItems = [
         submenu: [
             { label: "quiénes somos", href: "quienes-somos" },
             { label: "apostolados", href: "apostolados" },
-            { label: "retiros", href: "retiros" }
+            { label: "retiros", href: "retiros" },
         ]
     },
     { label: "donaciones", href: "donaciones" },
@@ -44,7 +43,16 @@ export default function Navbar() {
         const isSamePageAnchor = isAnchor && !isExternalPage;
         
         if (isSamePageAnchor) {
-            // Para enlaces internos en la misma página (anchors), no mostrar loading
+            // Para enlaces internos en la misma página (anchors), hacer scroll suave
+            const element = document.querySelector(href);
+            if (element) {
+                element.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+            setMenuOpen(false);
+            setSubmenuOpen(null);
             return;
         }
         
@@ -156,7 +164,7 @@ export default function Navbar() {
                                     <div className="relative">
                                         <button
                                             onClick={() => toggleSubmenu(item.label)}
-                                            className="group flex items-center gap-1 nav-link-neoclassical"
+                                            className="group flex items-center gap-1 nav-link-neoclassical cursor-pointer"
                                         >
                                             <span className="relative z-10">{item.label}</span>
                                             <motion.div
@@ -190,7 +198,7 @@ export default function Navbar() {
                                                         >
                                                             <button
                                                                 onClick={() => handleNavigation(subItem.href, subItem.href.startsWith('#'))}
-                                                                className="block w-full text-left px-4 py-3 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 font-sans"
+                                                                className="block w-full text-left px-4 py-3 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 font-sans cursor-pointer"
                                                             >
                                                                 {subItem.label}
                                                             </button>
@@ -203,7 +211,7 @@ export default function Navbar() {
                                 ) : (
                                     <button 
                                         onClick={() => handleNavigation(item.href)}
-                                        className="nav-link-neoclassical"
+                                        className="nav-link-neoclassical cursor-pointer"
                                     >
                                         <span className="relative z-10 px-3 py-2">{item.label}</span>
                                     </button>
@@ -215,7 +223,7 @@ export default function Navbar() {
                     {/* Botón menú móvil */}
                     <button 
                         onClick={() => setMenuOpen(!menuOpen)} 
-                        className="lg:hidden p-2 rounded-md text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200"
+                        className="lg:hidden p-2 rounded-md text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 cursor-pointer"
                     >
                         <motion.div
                             animate={menuOpen ? "open" : "closed"}
@@ -253,7 +261,7 @@ export default function Navbar() {
                                         <div>
                                             <button
                                                 onClick={() => toggleSubmenu(item.label)}
-                                                className="w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold flex items-center justify-between"
+                                                className="w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold flex items-center justify-between cursor-pointer"
                                             >
                                                 {item.label}
                                                 <motion.div
@@ -286,7 +294,7 @@ export default function Navbar() {
                                                             >
                                                                 <button
                                                                     onClick={() => handleNavigation(subItem.href, subItem.href.startsWith('#'))}
-                                                                    className="block w-full text-left py-2 px-4 text-[#8b7355] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans"
+                                                                    className="block w-full text-left py-2 px-4 text-[#8b7355] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans cursor-pointer"
                                                                 >
                                                                     {subItem.label}
                                                                 </button>
@@ -299,7 +307,7 @@ export default function Navbar() {
                                     ) : (
                                         <button
                                             onClick={() => handleNavigation(item.href)}
-                                            className="block w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold"
+                                            className="block w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold cursor-pointer"
                                         >
                                             {item.label}
                                         </button>

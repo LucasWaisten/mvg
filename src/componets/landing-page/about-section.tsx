@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {Subtitle2 } from "@/componets/common/title";
+import {Subtitle, Subtitle2 } from "@/componets/common/title";
 
 export default function AboutSection() {
     return (
@@ -21,17 +21,17 @@ export default function AboutSection() {
                 </div>
                 
                 <div className="w-full text-body lg:pl-[360px] z-10">
-                    <Subtitle2 subtitle={"Sobre Nosotros"}/>
-                    <p className="md:text-2xl text-lg text-[--color-text] leading-6 mb-4">
+                    <Subtitle subtitle={"Sobre Nosotros"}/>
+                    <p className="md:text-lg text-base text-[--color-text] leading-6 mb-4">
                         Somos una comunidad de jóvenes que <i>hemos conocido el amor que Dios nos tiene y hemos creído en él</i> (1 Jn 4, 16), y desde ahí queremos vivir y anunciar lo vivido.
                     </p>
-                    <p className="md:text-2xl text-lg text-[--color-text] leading-6 mb-4">
+                    <p className="md:text-lg text-base text-[--color-text] leading-6 mb-4">
                         Nuestra misión nace de lo que hemos contemplado y experimentado: que el encuentro con Cristo transforma la vida. Participamos del carisma de la Orden de Predicadores, que nos impulsa a <i>contemplar y dar de lo contemplado</i>.
                     </p>
                     <p className="md:text-2xl text-lg text-[--color-text] leading-6 mb-4">
                         Por eso, a través de retiros, apostolados y el testimonio cotidiano, queremos llevar este anuncio a otros jóvenes.
                     </p>
-                    <p className="md:text-2xl text-lg text-[--color-text] leading-6">
+                    <p className="md:text-lg text-base text-[--color-text] leading-6">
                         <strong>Jóvenes evangelizando jóvenes.</strong> Esa es nuestra vocación y nuestro camino.
                     </p>
                 </div>
