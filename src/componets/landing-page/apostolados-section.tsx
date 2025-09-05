@@ -23,35 +23,35 @@ const apostolados: Apostolado[] = [
         nombre: "Misión",
         descripcion: "Evangelización en comunidades durante el verano.",
         horarios: "Primeros meses del año",
-        imagen: "/images/mision/IMG_6984.jpg",
+        imagen: "/images/mision/mision7.jpg",
         url: "/apostolados/#mision"
     },
     {
         nombre: "Coro",
         descripcion: "Alabamos a Dios a través de la música litúrgica.",
         horarios: "Sábados 16:00hs - 18:00hs",
-        imagen: "/images/image4.webp",
+        imagen: "/images/foto-coro.jpeg",
         url: "/apostolados/#coro"
     },
     {
         nombre: "Ultreya",
         descripcion: "Encuentro mensual de oración y formación.",
         horarios: "Primer viernes del mes 19:00hs",
-        imagen: "/images/ultreya/20250801_211623.jpg",
+        imagen: "/images/ultreya/IMG-20241219-WA0010.jpg",
         url: "/apostolados/#ultreya"
     },
     {
         nombre: "Peregrinación Luján",
         descripcion: "Experiencia de fe y devoción mariana en comunidad.",
         horarios: "Anual (Octubre)",
-        imagen: "/images/image1.webp",
+        imagen: "/images/foto-lujan2.jpeg",
         url: "/apostolados/#peregrinacion-lujan"
     },
     {
-        nombre: "Cartas de Lecturas",
+        nombre: "Grupos de Lectura",
         descripcion: "Estudio bíblico y formación en la fe católica.",
         horarios: "Sábados 18:00hs - 20:00hs",
-        imagen: "/images/IMG_5436.jpg",
+        imagen: "/images/foto-lectura.jpeg",
         url: "/apostolados/#cartas-de-lecturas"
     }
 ];
@@ -95,7 +95,7 @@ export default function ApostoladosSection() {
                                     colorShadows[a.nombre] || ""
                                 )}
                             >
-                                <img src={a.imagen} alt={a.nombre} className="w-full h-38 sm:h-48 object-cover" />
+                                <img src={a.imagen} alt={a.nombre} className="w-full  sm:h-[450px] object-contain sm:object-cover" />
                                 <div className="p-4">
                                     <h3 className="text-base sm:text-lg text-subtitle-bold text-red-dark mb-2">{a.nombre}</h3>
                                     <p className="text-sm text-body text-gray-600 mb-2">{a.descripcion}</p>

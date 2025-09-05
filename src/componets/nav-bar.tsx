@@ -42,7 +42,10 @@ export default function Navbar() {
         const isExternalPage = href.includes('/') && href !== '/';
         const isSamePageAnchor = isAnchor && !isExternalPage;
         
-        if (isSamePageAnchor) {
+        // Detectar si es un anchor que pertenece al submenú de inicio
+        const isInicioAnchor = isAnchor && (href === '#sobre-nosotros' || href === '#apostolados' || href === '#calendario-mensual');
+        
+        if (isSamePageAnchor && !isInicioAnchor) {
             // Para enlaces internos en la misma página (anchors), hacer scroll suave
             const element = document.querySelector(href);
             if (element) {
@@ -51,6 +54,14 @@ export default function Navbar() {
                     block: 'start'
                 });
             }
+            setMenuOpen(false);
+            setSubmenuOpen(null);
+            return;
+        }
+        
+        if (isInicioAnchor) {
+            // Para anchors del submenú de inicio, navegar a la página principal con el anchor
+            navigateWithLoading(`/${href}`, true);
             setMenuOpen(false);
             setSubmenuOpen(null);
             return;
