@@ -44,7 +44,11 @@ export default function Page(){
             descripcion: "Alabamos a Dios a través de la música. Participamos en misas y eventos del Movimiento con cantos litúrgicos.",
             horario: "Sábados 16:00hs - 18:00hs",
             icono: "🎵",
-            color: "from-[#d4af37] to-[#b8860b]"
+            color: "from-[#d4af37] to-[#b8860b]",
+            imagenes: [
+                "/images/coro/coro.jpeg",
+                "/images/coro/coro2.jpeg",
+            ]
         },
         {
             id: "ultreya",
