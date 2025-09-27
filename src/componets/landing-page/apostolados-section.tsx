@@ -5,8 +5,6 @@ import { usePageTransition } from "@/hooks/usePageTransition";
 
 type Apostolado = {
     nombre: string;
-    descripcion: string;
-    horarios: string;
     imagen: string;
     url: string;
 };
@@ -14,43 +12,36 @@ type Apostolado = {
 const apostolados: Apostolado[] = [
     {
         nombre: "Noche de Caridad",
-        descripcion: "Salimos a acompañar a personas en situación de calle.",
-        horarios: "Miércoles 16:00hs - 22:00hs",
         imagen: "/images/nc/IMG-20240717-WA0020.jpg",
         url: "/apostolados/#noche-de-caridad"
     },
     {
         nombre: "Misión",
-        descripcion: "Evangelización en comunidades durante el verano.",
-        horarios: "Primeros meses del año",
         imagen: "/images/mision/mision7.jpg",
         url: "/apostolados/#mision"
     },
     {
-        nombre: "Coro",
-        descripcion: "Alabamos a Dios a través de la música litúrgica.",
-        horarios: "Sábados 16:00hs - 18:00hs",
+        nombre: "Coro y Liturgia",
         imagen: "/images/foto-coro.jpeg",
         url: "/apostolados/#coro"
     },
     {
-        nombre: "Ultreya",
-        descripcion: "Encuentro mensual de oración y formación.",
-        horarios: "Primer viernes del mes 19:00hs",
-        imagen: "/images/ultreya/IMG-20241219-WA0010.jpg",
-        url: "/apostolados/#ultreya"
+        nombre: "Eventos",
+        imagen: "/images/evento1.jpeg",
+        url: "/apostolados/#eventos"
+    },
+    {
+        nombre: "Difusion",
+        imagen: "/images/difusion2.jpeg",
+        url: "/apostolados/#difusion"
     },
     {
         nombre: "Peregrinación Luján",
-        descripcion: "Experiencia de fe y devoción mariana en comunidad.",
-        horarios: "Anual (Octubre)",
         imagen: "/images/foto-lujan2.jpeg",
         url: "/apostolados/#peregrinacion-lujan"
     },
     {
         nombre: "Grupos de Lectura",
-        descripcion: "Estudio bíblico y formación en la fe católica.",
-        horarios: "Sábados 18:00hs - 20:00hs",
         imagen: "/images/foto-lectura.jpeg",
         url: "/apostolados/#cartas-de-lecturas"
     }
@@ -60,7 +51,8 @@ const colorShadows: { [key: string]: string } = {
     "Noche de Caridad": "hover:shadow-amber-400/50",
     "Misión": "hover:shadow-teal-400/50",
     "Coro": "hover:shadow-indigo-400/50",
-    "Ultreya": "hover:shadow-rose-400/50",
+    "Eventos": "hover:shadow-rose-400/50",
+    "Difusion": "hover:shadow-purple-400/50",
     "Peregrinación Luján": "hover:shadow-purple-400/50",
     "Cartas de Lecturas": "hover:shadow-green-400/50",
 };
@@ -98,8 +90,6 @@ export default function ApostoladosSection() {
                                 <img src={a.imagen} alt={a.nombre} className="w-full  sm:h-[450px] object-contain sm:object-cover" />
                                 <div className="p-4">
                                     <h3 className="text-base sm:text-lg text-subtitle-bold text-red-dark mb-2">{a.nombre}</h3>
-                                    <p className="text-sm text-body text-gray-600 mb-2">{a.descripcion}</p>
-                                    <p className="text-xs text-body text-gray-800">{a.horarios}</p>
                                 </div>
                             </div>
                         </button>

@@ -27,11 +27,11 @@ export const Button: React.FC<ButtonProps> = ({
 
     const variants: Record<string, string> = {
         primary:
-            'bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white hover:from-[#b8860b] hover:to-[#d4af37] focus:ring-[#d4af37]/50',
+            'bg-gradient-to-r from-[#ffde59] to-[#ffde59] text-white hover:from-[#ffde59] hover:to-[#ffde59] focus:ring-[#ffde59]/50',
         secondary:
             'bg-gradient-to-r from-[#8b7355] to-[#cd7f32] text-white hover:from-[#cd7f32] hover:to-[#8b7355] focus:ring-[#8b7355]/50',
         outline:
-            'bg-transparent border-2 border-[#d4af37] text-[#d4af37] hover:bg-[#d4af37] hover:text-white focus:ring-[#d4af37]/50',
+            'bg-transparent border-2 border-[#ffde59] text-[#ffde59] hover:bg-[#ffde59] hover:text-white focus:ring-[#ffde59]/50',
         danger:
             'bg-gradient-to-r from-red-600 to-red-700 text-white hover:from-red-700 hover:to-red-600 focus:ring-red-500/50',
     };

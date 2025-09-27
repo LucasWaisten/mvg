@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -16,22 +16,28 @@ const navItems = [
             { label: "calendario mensual", href: "#calendario-mensual" },
         ]},
     { 
-        label: "nosotros", 
-        href: "quienes-somos",
+        label: "mvg", 
+        href: "/quienes-somos",
         submenu: [
-            { label: "quiénes somos", href: "quienes-somos" },
-            { label: "apostolados", href: "apostolados" },
-            { label: "retiros", href: "retiros" },
+            { label: "quienes somos", href: "/quienes-somos" },
+            { label: "apostolados", href: "/apostolados" },
+            { label: "jornadas", href: "/retiros" },
         ]
     },
-    { label: "donaciones", href: "donaciones" },
-    { label: "contacto", href: "contacto" },
+    { label: "donaciones", href: "/donaciones" },
+    { label: "contacto", href: "/contacto" },
 ];
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [submenuOpen, setSubmenuOpen] = useState<string | null>(null);
+    const [isMounted, setIsMounted] = useState(false);
     const { navigateWithLoading } = usePageTransition();
+
+    // Asegurar que el componente esté montado antes de renderizar contenido dinámico
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const toggleSubmenu = (label: string) => {
         setSubmenuOpen(submenuOpen === label ? null : label);
@@ -149,7 +155,7 @@ export default function Navbar() {
                     <nav>
                         <button 
                             onClick={() => handleNavigation("/")}
-                            className="flex items-center  gap-3 text-xl font-semibold tracking-tight text-[#2c1810] hover:text-[#d4af37] transition-colors duration-300"
+                            className="flex items-center  gap-3 text-xl font-semibold tracking-tight text-[#2c1810] hover:text-[#ffde59] transition-colors duration-300"
                         >
                             <div className="relative">
                                 <Image
@@ -169,7 +175,7 @@ export default function Navbar() {
                     
                     {/* Navegación desktop */}
                     <nav className="hidden lg:flex gap-8 text-sm font-medium">
-                        {navItems.map((item) => (
+                        {isMounted && navItems.map((item) => (
                             <div key={item.href} className="relative">
                                 {item.submenu ? (
                                     <div className="relative">
@@ -183,7 +189,7 @@ export default function Navbar() {
                                                 animate={submenuOpen === item.label ? "open" : "closed"}
                                                 transition={{ duration: 0.2, ease: "easeInOut" }}
                                             >
-                                                <ChevronDown className="w-4 h-4 text-[#d4af37]" />
+                                                <ChevronDown className="w-4 h-4 text-[#ffde59]" />
                                             </motion.div>
                                         </button>
                                         
@@ -209,7 +215,7 @@ export default function Navbar() {
                                                         >
                                                             <button
                                                                 onClick={() => handleNavigation(subItem.href, subItem.href.startsWith('#'))}
-                                                                className="block w-full text-left px-4 py-3 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 font-sans cursor-pointer"
+                                                                className="block w-full text-left px-4 py-3 text-[#2c1810] hover:text-[#ffde59] hover:bg-[#f5f2ed] transition-colors duration-200 font-sans cursor-pointer"
                                                             >
                                                                 {subItem.label}
                                                             </button>
@@ -234,7 +240,7 @@ export default function Navbar() {
                     {/* Botón menú móvil */}
                     <button 
                         onClick={() => setMenuOpen(!menuOpen)} 
-                        className="lg:hidden p-2 rounded-md text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 cursor-pointer"
+                        className="lg:hidden p-2 rounded-md text-[#2c1810] hover:text-[#ffde59] hover:bg-[#f5f2ed] transition-colors duration-200 cursor-pointer"
                     >
                         <motion.div
                             animate={menuOpen ? "open" : "closed"}
@@ -254,10 +260,10 @@ export default function Navbar() {
                         animate="open"
                         exit="closed"
                         variants={mobileMenuVariants}
-                        className="lg:hidden bg-white/98 backdrop-blur-md border-t border-[#d4af37] shadow-lg overflow-hidden"
+                        className="lg:hidden bg-white/98 backdrop-blur-md border-t border-[#ffde59] shadow-lg overflow-hidden"
                     >
                         <div className="flex flex-col px-6 py-4 space-y-2">
-                            {navItems.map((item, itemIndex) => (
+                            {isMounted && navItems.map((item, itemIndex) => (
                                 <motion.div
                                     key={item.href}
                                     initial={{ opacity: 0, y: -10 }}
@@ -272,7 +278,7 @@ export default function Navbar() {
                                         <div>
                                             <button
                                                 onClick={() => toggleSubmenu(item.label)}
-                                                className="w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold flex items-center justify-between cursor-pointer"
+                                                className="w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#ffde59] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold flex items-center justify-between cursor-pointer"
                                             >
                                                 {item.label}
                                                 <motion.div
@@ -280,7 +286,7 @@ export default function Navbar() {
                                                     animate={submenuOpen === item.label ? "open" : "closed"}
                                                     transition={{ duration: 0.2, ease: "easeInOut" }}
                                                 >
-                                                    <ChevronDown className="w-4 h-4 text-[#d4af37]" />
+                                                    <ChevronDown className="w-4 h-4 text-[#ffde59]" />
                                                 </motion.div>
                                             </button>
                                             <AnimatePresence>
@@ -305,7 +311,7 @@ export default function Navbar() {
                                                             >
                                                                 <button
                                                                     onClick={() => handleNavigation(subItem.href, subItem.href.startsWith('#'))}
-                                                                    className="block w-full text-left py-2 px-4 text-[#8b7355] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans cursor-pointer"
+                                                                    className="block w-full text-left py-2 px-4 text-[#8b7355] hover:text-[#ffde59] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans cursor-pointer"
                                                                 >
                                                                     {subItem.label}
                                                                 </button>
@@ -318,7 +324,7 @@ export default function Navbar() {
                                     ) : (
                                         <button
                                             onClick={() => handleNavigation(item.href)}
-                                            className="block w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#d4af37] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold cursor-pointer"
+                                            className="block w-full text-left py-3 px-4 text-[#2c1810] hover:text-[#ffde59] hover:bg-[#f5f2ed] transition-colors duration-200 rounded-md font-sans font-semibold cursor-pointer"
                                         >
                                             {item.label}
                                         </button>

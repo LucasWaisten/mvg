@@ -21,7 +21,7 @@ export const proyectos: Proyecto[] = [
         descripcion: "Ayudanos a sostener los retiros que transforman la vida de cientos de jóvenes cada año. Tu donación cubre gastos de alojamiento, alimentación, materiales y logística.",
         monto: "$50.000",
         icono: "✝",
-        color: "from-[#d4af37] to-[#b8860b]",
+        color: "from-[#ffde59] to-[#ffde59]",
         destacado: true
     },
     {
@@ -37,7 +37,7 @@ export const proyectos: Proyecto[] = [
         descripcion: "Apoyá nuestras salidas misioneras a diferentes barrios para llevar el Evangelio y la caridad a más familias.",
         monto: "$25.000",
         icono: "🌍",
-        color: "from-[#d4af37] to-[#b8860b]",
+        color: "from-[#ffde59] to-[#ffde59]",
         destacado: false
     },
 ];
@@ -51,7 +51,7 @@ export const formasDonacion: FormaDonacion[] = [
             "Datos: Michel Antonio Stavropulos"
         ],
         icono: "🏦",
-        color: "from-[#d4af37] to-[#b8860b]"
+        color: "from-[#ffde59] to-[#ffde59]"
     },
     {
         titulo: "Efectivo",
@@ -62,6 +62,6 @@ export const formasDonacion: FormaDonacion[] = [
             "Mail: secretaria.mv@gmail.com ",
         ],
         icono: "💵",
-        color: "from-[#d4af37] to-[#b8860b]"
+        color: "from-[#ffde59] to-[#ffde59]"
     }
 ]; 

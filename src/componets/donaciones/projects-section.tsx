@@ -8,7 +8,7 @@ export default function ProjectsSection() {
             </h2>
             <div className="space-y-4">
                 {proyectos.map((proyecto, index) => (
-                    <div key={index} className={`bg-[#bc8a3c] backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-6 ${proyecto.destacado ? 'ring-2 ring-[#d4af37]/30' : ''}`}>
+                    <div key={index} className={`bg-[#bc8a3c] backdrop-blur-sm rounded-2xl shadow-2xl border border-[#ffde59]/20 p-6 ${proyecto.destacado ? 'ring-2 ring-[#ffde59]/30' : ''}`}>
                         <div className="flex items-center space-x-4">
                             <div className={`w-16 h-16 bg-gradient-to-r ${proyecto.color} rounded-full flex items-center justify-center shadow-lg flex-shrink-0`}>
                                 <span className="text-white text-2xl">{proyecto.icono}</span>
@@ -18,7 +18,7 @@ export default function ProjectsSection() {
                                     {proyecto.titulo}
                                 </h3>
                                 {proyecto.destacado && (
-                                    <span className="inline-block bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                                    <span className="inline-block bg-gradient-to-r from-[#ffde59] to-[#ffde59] text-white px-3 py-1 rounded-full text-xs font-semibold">
                                         Proyecto Principal
                                     </span>
                                 )}

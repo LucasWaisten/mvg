@@ -1,10 +1,6 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCards, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/effect-cards";
-import "./comunidad-gallery.css";
+import { useState, useEffect } from "react";
 
 const images = [
     "/images/image1.webp",
@@ -21,29 +17,62 @@ const images = [
 ];
 
 export default function ComunidadGallery() {
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 3000); // Cambia cada 3 segundos
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const getImageIndex = (position: 'left' | 'center' | 'right') => {
+        const totalImages = images.length;
+        switch (position) {
+            case 'left':
+                return (currentIndex - 1 + totalImages) % totalImages;
+            case 'center':
+                return currentIndex;
+            case 'right':
+                return (currentIndex + 1) % totalImages;
+            default:
+                return currentIndex;
+        }
+    };
+
     return (
-        <div className="flex justify-center">
-            <Swiper
-                effect="cards"
-                grabCursor={true}
-                loop={true}
-                autoplay={{
-                    delay: 2200,
-                    disableOnInteraction: false,
-                }}
-                modules={[EffectCards, Autoplay]}
-                className="mySwiper max-w-[400px] max-h-[450px]"
-            >
-                {images.map((src, index) => (
-                    <SwiperSlide key={index}>
-                        <img
-                            src={src}
-                            alt={`Foto comunidad ${index + 1}`}
-                            className="w-full h-full object-cover rounded-xl shadow-xl"
-                        />
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+        <div className="flex justify-center items-center w-full py-8">
+            <div className="relative flex items-center justify-center space-x-4">
+                {/* Imagen izquierda */}
+                <div className="w-48 h-64 sm:w-96 sm:h-120 opacity-60 transform scale-75 transition-all duration-500 ease-in-out">
+                    <img
+                        src={images[getImageIndex('left')]}
+                        alt={`Foto comunidad ${getImageIndex('left') + 1}`}
+                        className="w-full h-full object-cover rounded-xl shadow-lg"
+                    />
+                </div>
+
+                {/* Imagen central (más grande) */}
+                <div className="w-64 h-80 sm:w-96 sm:h-120 transform scale-100 transition-all duration-500 ease-in-out relative z-10">
+                    <img
+                        src={images[getImageIndex('center')]}
+                        alt={`Foto comunidad ${getImageIndex('center') + 1}`}
+                        className="w-full h-full object-cover rounded-xl shadow-2xl border-2 border-[#ffde59]/30"
+                    />
+                    {/* Overlay sutil en la imagen central */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl"></div>
+                </div>
+
+                {/* Imagen derecha */}
+                <div className="w-48 h-64 sm:w-96 sm:h-120 opacity-60 transform scale-75 transition-all duration-500 ease-in-out">
+                    <img
+                        src={images[getImageIndex('right')]}
+                        alt={`Foto comunidad ${getImageIndex('right') + 1}`}
+                        className="w-full h-full object-cover rounded-xl shadow-lg"
+                    />
+                </div>
+            </div>
         </div>
     );
 }

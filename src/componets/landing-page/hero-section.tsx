@@ -27,10 +27,10 @@ export default function HeroSection() {
             
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 z-0" />
 
-            <div className="absolute top-8 left-8 text-[#d4af37] text-4xl z-10 opacity-60">❦</div>
-            <div className="absolute top-8 right-8 text-[#d4af37] text-4xl z-10 opacity-60">❦</div>
-            <div className="absolute bottom-8 left-8 text-[#d4af37] text-4xl z-10 opacity-60">❦</div>
-            <div className="absolute bottom-8 right-8 text-[#d4af37] text-4xl z-10 opacity-60">❦</div>
+            <div className="absolute top-8 left-8 text-[#ffde59] text-4xl z-10 opacity-60">❦</div>
+            <div className="absolute top-8 right-8 text-[#ffde59] text-4xl z-10 opacity-60">❦</div>
+            <div className="absolute bottom-8 left-8 text-[#ffde59] text-4xl z-10 opacity-60">❦</div>
+            <div className="absolute bottom-8 right-8 text-[#ffde59] text-4xl z-10 opacity-60">❦</div>
 
             <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
                 <div className="mb-8">
@@ -38,8 +38,8 @@ export default function HeroSection() {
                 </div>
                 
                 <div className="relative mb-8">
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37] via-[#b8860b] to-[#d4af37] rounded-full blur-sm opacity-30"></div>
-                    <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-4 border-2 border-[#d4af37] shadow-2xl">
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#ffde59] via-[#ffde59] to-[#ffde59] rounded-full blur-sm opacity-30"></div>
+                    <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-4 border-2 border-[#ffde59] shadow-2xl">
                         <Image
                             src="/mvg-white.svg"
                             alt="Logo MVG"
@@ -56,12 +56,12 @@ export default function HeroSection() {
                     </h2>
                     
                     <div className="relative">
-                        <div className="absolute left-1/2 transform -translate-x-1/2 -top-4 w-24 h-1 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"></div>
+                        <div className="absolute left-1/2 transform -translate-x-1/2 -top-4 w-24 h-1 bg-gradient-to-r from-transparent via-[#ffde59] to-transparent"></div>
                         <p className="text-2xl md:text-3xl italic text-[#e8e0d5] font-light max-w-3xl mx-auto leading-relaxed">
                             &quot;De su plenitud todos hemos recibido gracia sobre gracia&quot; 
-                            <span className="block text-xl text-[#d4af37] mt-2">— Juan 1,16</span>
+                            <span className="block text-xl text-[#ffde59] mt-2">— Juan 1,16</span>
                         </p>
-                        <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-4 w-24 h-1 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"></div>
+                        <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-4 w-24 h-1 bg-gradient-to-r from-transparent via-[#ffde59] to-transparent"></div>
                     </div>
                 </div>
 
@@ -69,15 +69,15 @@ export default function HeroSection() {
                 <div className="mt-12 flex flex-col sm:flex-row gap-6">
                     <a
                         href="contacto"
-                        className="group relative bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white font-display font-semibold px-8 py-4 rounded-lg text-xl hover:from-[#b8860b] hover:to-[#d4af37] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                        className="group relative bg-gradient-to-r from-[#ffde59] to-[#ffde59] text-white font-display font-semibold px-8 py-4 rounded-lg text-xl hover:from-[#ffde59] hover:to-[#ffde59] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     >
                         <span className="relative z-10">Quiero participar</span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#b8860b] to-[#d4af37] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#ffde59] to-[#ffde59] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </a>
                     
                     <a
                         href="quienes-somos"
-                        className="group relative bg-transparent border-2 border-[#d4af37] text-[#d4af37] font-display font-semibold px-8 py-4 rounded-lg text-xl hover:bg-[#d4af37] hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                        className="group relative bg-transparent border-2 border-[#ffde59] text-[#ffde59] font-display font-semibold px-8 py-4 rounded-lg text-xl hover:bg-[#ffde59] hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     >
                         Conocé más
                     </a>

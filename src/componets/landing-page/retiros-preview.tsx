@@ -1,97 +1,98 @@
 "use client";
 
-import { Subtitle, Subtitle2 } from "@/componets/common/title";
+import { useState, useEffect } from "react";
+import { Subtitle } from "@/componets/common/title";
 import { usePageTransition } from "@/hooks/usePageTransition";
 
-type Retiro = {
-    nombre: string;
-    descripcion: string;
-    duracion: string;
-    frecuencia: string;
-    icono: string;
-    destacado: boolean;
-    color: string;
-};
-
-const retiros: Retiro[] = [
-    {
-        nombre: "Jornada",
-        descripcion: "Retiro intensivo de 3 días para jóvenes de 18 a 35 años. Triple encuentro: con Dios, con uno mismo y con los demás.",
-        duracion: "3 días",
-        frecuencia: "Semestral",
-        icono: "✝",
-        destacado: true,
-        color: "from-[#d4af37] to-[#b8860b]"
-    },
-    {
-        nombre: "Triduo Pascual",
-        descripcion: "Celebración de los tres días santos: Jueves Santo, Viernes Santo y Sábado Santo. Experiencia profunda de la Pasión.",
-        duracion: "3 días",
-        frecuencia: "Anual (Semana Santa)",
-        icono: "🕊️",
-        destacado: false,
-        color: "from-[#8b7355] to-[#cd7f32]"
-    }
+// Imágenes relacionadas con retiros y jornadas
+const retirosImages = [
+    "/images/jornadas/jornada1.png",
+    "/images/jornadas/jornada2.png",
+    "/images/jornadas/jornada3.png",
+    "/images/jornadas/jornada4.png",
+    "/images/jornadas/jornada5.png",
+    "/images/jornadas/jornada6.png",
+    "/images/jornadas/jornada7.png",
 ];
 
-function cn(...classes: (string | undefined | false | null)[]) {
-    return classes.filter(Boolean).join(" ");
-}
-
 export default function RetirosPreview() {
+    const [currentIndex, setCurrentIndex] = useState(0);
     const { navigateWithLoading } = usePageTransition();
 
-    const handleCardClick = () => {
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % retirosImages.length);
+        }, 3500); // Cambia cada 3.5 segundos
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const getImageIndex = (position: 'left' | 'center' | 'right') => {
+        const totalImages = retirosImages.length;
+        switch (position) {
+            case 'left':
+                return (currentIndex - 1 + totalImages) % totalImages;
+            case 'center':
+                return currentIndex;
+            case 'right':
+                return (currentIndex + 1) % totalImages;
+            default:
+                return currentIndex;
+        }
+    };
+
+    const handleButtonClick = () => {
         navigateWithLoading("/retiros", true);
     };
 
     return (
         <section id="retiros" className="w-full py-16 bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
             <div className="container mx-auto px-4">
-                <div className="text-center mb-8">
-                    <Subtitle subtitle="Retiros y Jornadas" />
+                <div className="text-center mb-12">
+                    <Subtitle subtitle="Jornadas" />
                 </div>
                 
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 w-3/4 mx-auto mb-8">
-                    {retiros.map((retiro, index) => (
-                        <div
-                            key={index}
-                            className={cn(
-                                "bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-6 transition-transform duration-300 hover:scale-105",
-                                retiro.destacado && "ring-2 ring-[#d4af37] ring-opacity-50"
-                            )}
-                        >
-                            <div className="text-center mb-4">
-                                <div className={`w-16 h-16 bg-gradient-to-br ${retiro.color} rounded-full flex items-center justify-center mx-auto mb-3`}>
-                                    <span className="text-white text-2xl">{retiro.icono}</span>
-                                </div>
-                                <h3 className="text-xl font-display font-bold text-[#2c1810] mb-2">
-                                    {retiro.nombre}
-                                </h3>
-                            </div>
-                            <p className="text-[#8b7355] leading-relaxed mb-4 text-sm text-center">
-                                {retiro.descripcion}
-                            </p>
-                            <div className="space-y-2 text-xs text-[#8b7355] text-center">
-                                <div className="flex items-center justify-center space-x-2">
-                                    <span>⏰</span>
-                                    <span>{retiro.duracion}</span>
-                                </div>
-                                <div className="flex items-center justify-center space-x-2">
-                                    <span>📅</span>
-                                    <span>{retiro.frecuencia}</span>
-                                </div>
-                            </div>
+                {/* Carrusel de imágenes */}
+                <div className="flex justify-center items-center w-full py-8 mb-12">
+                    <div className="relative flex items-center justify-center space-x-4">
+                        {/* Imagen izquierda */}
+                        <div className="w-48 h-64 sm:w-100 sm:h-120 opacity-60 transform scale-75 transition-all duration-500 ease-in-out">
+                            <img
+                                src={retirosImages[getImageIndex('left')]}
+                                alt={`Retiro ${getImageIndex('left') + 1}`}
+                                className="w-full h-full object-cover rounded-xl shadow-lg"
+                            />
                         </div>
-                    ))}
+
+                        {/* Imagen central (más grande) */}
+                        <div className="w-64 h-80 sm:w-110 sm:h-120 transform scale-100 transition-all duration-500 ease-in-out relative z-10">
+                            <img
+                                src={retirosImages[getImageIndex('center')]}
+                                alt={`Retiro ${getImageIndex('center') + 1}`}
+                                className="w-full h-full object-cover rounded-xl shadow-2xl border-2 border-[#ffde59]/30"
+                            />
+                            {/* Overlay sutil en la imagen central */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-xl"></div>
+                        </div>
+
+                        {/* Imagen derecha */}
+                        <div className="w-48 h-64 sm:w-100 sm:h-120 opacity-60 transform scale-75 transition-all duration-500 ease-in-out">
+                            <img
+                                src={retirosImages[getImageIndex('right')]}
+                                alt={`Retiro ${getImageIndex('right') + 1}`}
+                                className="w-full h-full object-cover rounded-xl shadow-lg"
+                            />
+                        </div>
+                    </div>
                 </div>
 
+                {/* Botón de acción */}
                 <div className="text-center">
                     <button
-                        onClick={handleCardClick}
-                        className="bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white font-display font-semibold px-8 py-3 rounded-lg text-lg hover:from-[#b8860b] hover:to-[#d4af37] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                        onClick={handleButtonClick}
+                        className="bg-gradient-to-r from-[#ffde59] to-[#ffde59] text-white font-display font-semibold px-8 py-3 rounded-lg text-lg hover:from-[#ffde59] hover:to-[#ffde59] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     >
-                        Ver todos los retiros
+                        ¿Qué son las Jornadas?
                     </button>
                 </div>
             </div>

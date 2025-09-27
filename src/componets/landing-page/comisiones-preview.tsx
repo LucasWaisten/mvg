@@ -15,7 +15,7 @@ const comisiones: Comision[] = [
         titulo: "Formación",
         descripcion: "Organiza retiros, charlas y espacios de crecimiento espiritual.",
         icono: "📚",
-        color: "from-[#d4af37] to-[#b8860b]"
+        color: "from-[#ffde59] to-[#ffde59]"
     },
     {
         titulo: "Eventos",
@@ -27,7 +27,7 @@ const comisiones: Comision[] = [
         titulo: "Comunicación",
         descripcion: "Gestiona la difusión del Movimiento en redes sociales.",
         icono: "📱",
-        color: "from-[#d4af37] to-[#b8860b]"
+        color: "from-[#ffde59] to-[#ffde59]"
     },
     {
         titulo: "Caridad",
@@ -59,7 +59,7 @@ export default function ComisionesPreview() {
                     {comisiones.map((comision, index) => (
                         <div
                             key={index}
-                            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-6 transition-transform duration-300 hover:scale-105 text-center"
+                            className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#ffde59]/20 p-6 transition-transform duration-300 hover:scale-105 text-center"
                         >
                             <div className={`w-16 h-16 bg-gradient-to-br ${comision.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
                                 <span className="text-white text-2xl">{comision.icono}</span>

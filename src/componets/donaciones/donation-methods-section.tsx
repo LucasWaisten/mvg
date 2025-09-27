@@ -8,7 +8,7 @@ export default function DonationMethodsSection() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 w-3/4 mx-auto gap-8">
                 {formasDonacion.map((forma, index) => (
-                    <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-8 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div key={index} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#ffde59]/20 p-8 hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2">
                         <div className="text-center mb-6">
                             <div className={`w-16 h-16 bg-gradient-to-r ${forma.color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg`}>
                                 <span className="text-white text-2xl">{forma.icono}</span>

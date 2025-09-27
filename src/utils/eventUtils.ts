@@ -1,15 +1,15 @@
 import { Event } from '@/hooks/useEvents';
 
 export const eventTypes = {
-    ultreya: { icon: "🔥", color: "from-[#d4af37] to-[#b8860b]", label: "Ultreya" },
+    ultreya: { icon: "🔥", color: "from-[#ffde59] to-[#ffde59]", label: "Ultreya" },
     convivencia: { icon: "👥", color: "from-[#8b7355] to-[#cd7f32]", label: "Convivencia" },
-    nocheCaridad: { icon: "🕯️", color: "from-[#d4af37] to-[#b8860b]", label: "Noche de Caridad" },
+    nocheCaridad: { icon: "🕯️", color: "from-[#ffde59] to-[#ffde59]", label: "Noche de Caridad" },
     jornada: { icon: "✝", color: "from-[#8b7355] to-[#cd7f32]", label: "Jornada" },
-    prejornada: { icon: "📚", color: "from-[#d4af37] to-[#b8860b]", label: "Prejornada" },
+    prejornada: { icon: "📚", color: "from-[#ffde59] to-[#ffde59]", label: "Prejornada" },
     gruposLectura: { icon: "📖", color: "from-[#8b7355] to-[#cd7f32]", label: "Grupos de Lectura" },
-    nocheApoyo: { icon: "🤝", color: "from-[#d4af37] to-[#b8860b]", label: "Noche de Apoyo" },
+    nocheApoyo: { icon: "🤝", color: "from-[#ffde59] to-[#ffde59]", label: "Noche de Apoyo" },
     celebracion: { icon: "⛪", color: "from-[#8b7355] to-[#cd7f32]", label: "Celebración" },
-    default: { icon: "📅", color: "from-[#d4af37] to-[#b8860b]", label: "Evento" }
+    default: { icon: "📅", color: "from-[#ffde59] to-[#ffde59]", label: "Evento" }
 };
 
 export function getEventType(event: Event) {

@@ -51,7 +51,7 @@ export function LoadingSpinner({ isLoading }: LoadingSpinnerProps) {
               {[...Array(12)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute inset-0 w-3 h-3 bg-[#d4af37] rounded-sm"
+                  className="absolute inset-0 w-3 h-3 bg-[#ffde59] rounded-sm"
                   initial={{
                     x: 0,
                     y: 0,
@@ -89,7 +89,7 @@ export function LoadingSpinner({ isLoading }: LoadingSpinnerProps) {
               {[...Array(4)].map((_, i) => (
                 <motion.div
                   key={`explosion-${i}`}
-                  className="absolute inset-0 border-2 border-[#d4af37] rounded-full"
+                  className="absolute inset-0 border-2 border-[#ffde59] rounded-full"
                   initial={{
                     scale: 0.3,
                     opacity: 0
@@ -111,7 +111,7 @@ export function LoadingSpinner({ isLoading }: LoadingSpinnerProps) {
               {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={`spark-${i}`}
-                  className="absolute inset-0 w-1 h-4 bg-gradient-to-b from-[#d4af37] to-transparent"
+                  className="absolute inset-0 w-1 h-4 bg-gradient-to-b from-[#ffde59] to-transparent"
                   initial={{
                     x: 0,
                     y: 0,

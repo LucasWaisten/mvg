@@ -60,10 +60,10 @@
   --color-beige-light: #D3C3AF; /* Beige claro */
   
   /* Colores existentes mantenidos para compatibilidad */
-  --color-primary: #d4af37; /* Dorado neoclásico */
+  --color-primary: #ffde59; /* Dorado neoclásico */
   --color-secondary: #e8e0d5; /* Beige mármol */
   --color-text-main: #2c1810; /* Texto principal */
-  --color-accent: #b8860b; /* Dorado envejecido */
+  --color-accent: #ffde59; /* Dorado envejecido */
   --color-neutral-soft: #faf9f7; /* Blanco hueso */
   --color-dark-soft: #1a1a1a; /* Negro suave */
   --color-marble: #f5f2ed; /* Mármol claro */

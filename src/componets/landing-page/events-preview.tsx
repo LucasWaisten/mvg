@@ -291,7 +291,7 @@ export default function EventsPreview() {
             <section className="w-full py-16 bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
                 <div className="container mx-auto px-4">
                     <div className="text-center">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#d4af37] mx-auto"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ffde59] mx-auto"></div>
                         <p className="mt-4 text-[#8b7355]">Cargando eventos...</p>
                     </div>
                 </div>
@@ -361,7 +361,7 @@ export default function EventsPreview() {
 
                                     return (
                                         <SwiperSlide key={event.id} className="overflow-visible">
-                                            <div className="flex h-64 rounded-xl shadow-lg transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm border border-[#d4af37]/20">
+                                            <div className="flex h-64 rounded-xl shadow-lg transition-all duration-300 overflow-hidden bg-white/90 backdrop-blur-sm border border-[#ffde59]/20">
                                                 {/* Sección A: Fecha */}
                                                 <div
                                                     className={cn(
@@ -410,13 +410,13 @@ export default function EventsPreview() {
                 </div>
 
                 <div className="max-w-6xl mx-auto">
-                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#d4af37]/20 p-4 md:p-8">
+                    <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-[#ffde59]/20 p-4 md:p-8">
                         {/* Header con navegación y selector de vista */}
                         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
                             <div className="flex items-center gap-4">
                                 <button
                                     onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
-                                    className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#d4af37] hover:text-white transition-colors duration-300"
+                                    className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#ffde59] hover:text-white transition-colors duration-300"
                                 >
                                     ←
                                 </button>
@@ -425,7 +425,7 @@ export default function EventsPreview() {
                                 </h2>
                                 <button
                                     onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
-                                    className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#d4af37] hover:text-white transition-colors duration-300"
+                                    className="p-2 rounded-lg bg-[#f5f2ed] hover:bg-[#ffde59] hover:text-white transition-colors duration-300"
                                 >
                                     →
                                 </button>
@@ -437,7 +437,7 @@ export default function EventsPreview() {
                                     onClick={() => setViewMode('calendar')}
                                     className={`p-2 rounded-md transition-colors duration-200 ${
                                         viewMode === 'calendar' 
-                                            ? 'bg-[#d4af37] text-white' 
+                                            ? 'bg-[#ffde59] text-white' 
                                             : 'text-[#8b7355] hover:bg-[#e8e0d5]'
                                     }`}
                                 >
@@ -447,7 +447,7 @@ export default function EventsPreview() {
                                     onClick={() => setViewMode('list')}
                                     className={`p-2 rounded-md transition-colors duration-200 ${
                                         viewMode === 'list' 
-                                            ? 'bg-[#d4af37] text-white' 
+                                            ? 'bg-[#ffde59] text-white' 
                                             : 'text-[#8b7355] hover:bg-[#e8e0d5]'
                                     }`}
                                 >
@@ -472,11 +472,11 @@ export default function EventsPreview() {
                                         key={index}
                                         className={`min-h-[60px] md:min-h-[100px] p-1 md:p-2 rounded-lg border transition-all duration-300 ${
                                             day.isToday 
-                                                ? 'bg-gradient-to-br from-[#d4af37] to-[#b8860b] text-white border-[#d4af37]' 
+                                                ? 'bg-gradient-to-br from-[#ffde59] to-[#ffde59] text-white border-[#ffde59]' 
                                                 : day.isPast 
                                                     ? 'bg-[#f5f2ed] text-[#8b7355] border-[#e8e0d5]' 
                                                     : day.isCurrentMonth
-                                                        ? 'bg-white hover:bg-[#faf9f7] text-[#2c1810] border-[#e8e0d5] hover:border-[#d4af37]'
+                                                        ? 'bg-white hover:bg-[#faf9f7] text-[#2c1810] border-[#e8e0d5] hover:border-[#ffde59]'
                                                         : 'bg-[#faf9f7] text-[#8b7355] border-[#e8e0d5]'
                                         } ${day.events.length > 0 ? 'cursor-pointer' : ''}`}
                                         onClick={() => handleDayClick(day)}
@@ -626,9 +626,9 @@ export default function EventsPreview() {
                                     )}
 
                                     {selectedEvent.registrationRequired && (
-                                        <div className="bg-gradient-to-r from-[#d4af37]/10 to-[#b8860b]/10 border border-[#d4af37]/20 rounded-lg p-4">
+                                        <div className="bg-gradient-to-r from-[#ffde59]/10 to-[#ffde59]/10 border border-[#ffde59]/20 rounded-lg p-4">
                                             <div className="flex items-center mb-2">
-                                                <Users className="w-5 h-5 text-[#d4af37] mr-2" />
+                                                <Users className="w-5 h-5 text-[#ffde59] mr-2" />
                                                 <span className="font-semibold text-[#2c1810]">Inscripción requerida</span>
                                             </div>
                                             <p className="text-sm text-[#8b7355] mb-3">
@@ -639,7 +639,7 @@ export default function EventsPreview() {
                                                     href={selectedEvent.formLink}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-block bg-gradient-to-r from-[#d4af37] to-[#b8860b] text-white font-sans font-semibold py-2 px-4 rounded-lg hover:from-[#b8860b] hover:to-[#d4af37] transition-all duration-300"
+                                                    className="inline-block bg-gradient-to-r from-[#ffde59] to-[#ffde59] text-white font-sans font-semibold py-2 px-4 rounded-lg hover:from-[#ffde59] hover:to-[#ffde59] transition-all duration-300"
                                                 >
                                                     Inscribirse
                                                 </a>
@@ -649,7 +649,7 @@ export default function EventsPreview() {
 
                                     <div className="bg-[#f5f2ed] rounded-lg p-4">
                                         <div className="flex items-center mb-2">
-                                            <Heart className="w-5 h-5 text-[#d4af37] mr-2" />
+                                            <Heart className="w-5 h-5 text-[#ffde59] mr-2" />
                                             <span className="font-semibold text-[#2c1810]">Más información</span>
                                         </div>
                                         <div className="text-sm text-[#8b7355] space-y-1">
@@ -667,7 +667,7 @@ export default function EventsPreview() {
                                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
                                                 currentEventIndex === 0
                                                     ? 'text-[#8b7355] cursor-not-allowed'
-                                                    : 'text-[#d4af37] hover:bg-[#f5f2ed]'
+                                                    : 'text-[#ffde59] hover:bg-[#f5f2ed]'
                                             }`}
                                         >
                                             <ChevronLeft className="w-4 h-4" />
@@ -681,8 +681,8 @@ export default function EventsPreview() {
                                                     onClick={() => setCurrentEventIndex(index)}
                                                     className={`w-2 h-2 rounded-full transition-colors duration-200 ${
                                                         index === currentEventIndex
-                                                            ? 'bg-[#d4af37]'
-                                                            : 'bg-[#e8e0d5] hover:bg-[#d4af37]/50'
+                                                            ? 'bg-[#ffde59]'
+                                                            : 'bg-[#e8e0d5] hover:bg-[#ffde59]/50'
                                                     }`}
                                                 />
                                             ))}
@@ -694,7 +694,7 @@ export default function EventsPreview() {
                                             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
                                                 currentEventIndex === selectedDay.events.length - 1
                                                     ? 'text-[#8b7355] cursor-not-allowed'
-                                                    : 'text-[#d4af37] hover:bg-[#f5f2ed]'
+                                                    : 'text-[#ffde59] hover:bg-[#f5f2ed]'
                                             }`}
                                         >
                                             <span className="hidden sm:inline">Siguiente</span>
