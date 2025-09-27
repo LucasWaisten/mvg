@@ -54,35 +54,7 @@ export default function HeroSection() {
                     <h2 className="text-5xl md:text-6xl text-[#faf9f7] font-display font-bold tracking-wide leading-tight">
                         Jóvenes evangelizando jóvenes
                     </h2>
-                    
-                    <div className="relative">
-                        <div className="absolute left-1/2 transform -translate-x-1/2 -top-4 w-24 h-1 bg-gradient-to-r from-transparent via-[#ffde59] to-transparent"></div>
-                        <p className="text-2xl md:text-3xl italic text-[#e8e0d5] font-light max-w-3xl mx-auto leading-relaxed">
-                            &quot;De su plenitud todos hemos recibido gracia sobre gracia&quot; 
-                            <span className="block text-xl text-[#ffde59] mt-2">— Juan 1,16</span>
-                        </p>
-                        <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-4 w-24 h-1 bg-gradient-to-r from-transparent via-[#ffde59] to-transparent"></div>
-                    </div>
                 </div>
-
-                {/*
-                <div className="mt-12 flex flex-col sm:flex-row gap-6">
-                    <a
-                        href="contacto"
-                        className="group relative bg-gradient-to-r from-[#ffde59] to-[#ffde59] text-white font-display font-semibold px-8 py-4 rounded-lg text-xl hover:from-[#ffde59] hover:to-[#ffde59] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                    >
-                        <span className="relative z-10">Quiero participar</span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#ffde59] to-[#ffde59] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </a>
-                    
-                    <a
-                        href="quienes-somos"
-                        className="group relative bg-transparent border-2 border-[#ffde59] text-[#ffde59] font-display font-semibold px-8 py-4 rounded-lg text-xl hover:bg-[#ffde59] hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                    >
-                        Conocé más
-                    </a>
-                </div>
-                */}
             </div>
         </section>
     );
