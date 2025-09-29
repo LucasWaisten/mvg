@@ -316,7 +316,7 @@ export default function EventsPreview() {
             <div className="container mx-auto px-4">
                 
                 {/* Sección de Próximos Eventos */}
-                <div id="proximos" className="mb-16 w-full mx-auto">
+                <div id="proximos" className="mb-16 max-w-6xl mx-auto">
                     <div className="text-center mb-8">
                         <Subtitle2 subtitle="Próximos Eventos" />
                     </div>

@@ -47,7 +47,7 @@ export default function ImageCarousel({
                             alt={`Imagen ${index + 1}`}
                             fill
                             className="object-cover"
-                            sizes="(max-width: 300px) 100vw, 300px"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             priority={index === 0}
                         />
                     </div>

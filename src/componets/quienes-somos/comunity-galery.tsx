@@ -42,10 +42,10 @@ export default function ComunidadGallery() {
     };
 
     return (
-        <div className="flex justify-center items-center w-full py-8">
-            <div className="relative flex items-center justify-center space-x-4">
+        <div className="flex justify-center items-center w-full py-4 sm:py-6 lg:py-8">
+            <div className="relative flex items-center justify-center space-x-2 sm:space-x-4">
                 {/* Imagen izquierda */}
-                <div className="w-48 h-64 sm:w-96 sm:h-120 opacity-60 transform scale-75 transition-all duration-500 ease-in-out">
+                <div className="w-32 h-40 sm:w-48 sm:h-64 md:w-64 md:h-80 lg:w-96 lg:h-120 opacity-60 transform scale-75 transition-all duration-500 ease-in-out">
                     <img
                         src={images[getImageIndex('left')]}
                         alt={`Foto comunidad ${getImageIndex('left') + 1}`}
@@ -54,7 +54,7 @@ export default function ComunidadGallery() {
                 </div>
 
                 {/* Imagen central (más grande) */}
-                <div className="w-64 h-80 sm:w-96 sm:h-120 transform scale-100 transition-all duration-500 ease-in-out relative z-10">
+                <div className="w-40 h-48 sm:w-64 sm:h-80 md:w-80 md:h-96 lg:w-96 lg:h-120 transform scale-100 transition-all duration-500 ease-in-out relative z-10">
                     <img
                         src={images[getImageIndex('center')]}
                         alt={`Foto comunidad ${getImageIndex('center') + 1}`}
@@ -65,7 +65,7 @@ export default function ComunidadGallery() {
                 </div>
 
                 {/* Imagen derecha */}
-                <div className="w-48 h-64 sm:w-96 sm:h-120 opacity-60 transform scale-75 transition-all duration-500 ease-in-out">
+                <div className="w-32 h-40 sm:w-48 sm:h-64 md:w-64 md:h-80 lg:w-96 lg:h-120 opacity-60 transform scale-75 transition-all duration-500 ease-in-out">
                     <img
                         src={images[getImageIndex('right')]}
                         alt={`Foto comunidad ${getImageIndex('right') + 1}`}

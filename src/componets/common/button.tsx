@@ -41,9 +41,9 @@ export const Button: React.FC<ButtonProps> = ({
             type={type}
             onClick={onClick}
             disabled={disabled || loading}
-            className={cn(baseStyles, variants[variant], className, 'px-6 py-3 text-lg')}
+            className={cn(baseStyles, variants[variant], className, 'px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base lg:text-lg')}
         >
-            {loading && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
+            {loading && <Loader2 className="animate-spin mr-2 w-4 h-4 sm:w-5 sm:h-5" />}
             {children}
         </button>
     );

@@ -27,7 +27,7 @@ export default function Page() {
     return (
         <PageTransition variant="slide">
             <div className="min-h-screen bg-gradient-to-b from-[#f8f6f3] to-[#f5f2ed]">
-                <div className="container mx-auto px-4 py-16">
+                <div className="container mx-auto sm:px-4 py-16">
                     <div className="max-w-6xl mx-auto">
                         {/* Hero Section - Jornada como corazón del movimiento */}
                         <div className="text-center mb-20">
@@ -43,7 +43,7 @@ export default function Page() {
 
                         {/* Card dorada principal - Jornada destacada */}
                         <div className="mb-20">
-                            <div className="bg-gradient-to-br from-[#ffde59] to-[#e3bd25] rounded-3xl shadow-2xl p-12 text-black relative overflow-hidden">
+                            <div className="bg-gradient-to-br from-[#ffde59] to-[#e3bd25] rounded-3xl shadow-2xl p-4 sm:p-12 text-black relative overflow-hidden">
                                 {/* Efectos decorativos de fondo */}
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-32 translate-x-32"></div>
                                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-24 -translate-x-24"></div>
@@ -97,7 +97,7 @@ export default function Page() {
                                         </div>
 
                                         {/* Carrusel de equipos integrado */}
-                                        <div className="text-center">
+                                        <div className="text-center  ">
                                             <h3 className="text-2xl font-display font-bold mb-6">
                                                 Equipos
                                             </h3>
@@ -147,10 +147,10 @@ export default function Page() {
                                 <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#ffde59]/10 rounded-full translate-y-12 -translate-x-12"></div>
                                 
                                 <div className="relative z-10">
-                                    <h4 className="text-3xl font-display font-bold text-[#2c1810] mb-4">
+                                    <h4 className="text-2xl sm:text-3xl font-display font-bold text-[#2c1810] mb-4">
                                         ¿Te interesa vivir una Jornada?
                                     </h4>
-                                    <p className="text-[#8b7355] leading-relaxed mb-6 text-lg">
+                                    <p className="text-[#8b7355] leading-relaxed mb-6 text-base sm:text-lg">
                                         Viví una experiencia profunda de fe y encuentro con Dios. 
                                         ¡Oportunidad única para crecer espiritualmente!
                                     </p>

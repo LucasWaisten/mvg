@@ -24,25 +24,25 @@ export default function Footer() {
         }
     };
     return (
-        <footer className="bg-[#492402] text-white py-8">
+        <footer className="bg-[#492402] text-white py-6 sm:py-8">
             <div className="container mx-auto px-4">
-                <div className="flex flex-col md:flex-row items-start md:items-center md:justify-center gap-8 md:gap-16">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-center gap-6 sm:gap-8 md:gap-16">
                     {/* Logo */}
-                    <div className="flex-shrink-0">
+                    <div className="flex-shrink-0 mx-auto sm:mx-0">
                         <Image 
                             src="/mvg-white.svg" 
                             onClick={() => router.push('/')} 
                             alt="MVG Logo" 
                             width={120} 
                             height={60}
-                            className="w-20 md:w-28 cursor-pointer"
+                            className="w-16 sm:w-20 md:w-28 cursor-pointer"
                         />
                     </div>
 
                     {/* Location */}
-                    <div className="text-left">
-                        <h3 className="font-text mb-2">Ubicación</h3>
-                        <p className="text-sm opacity-90">
+                    <div className="text-center sm:text-left">
+                        <h3 className="font-text mb-2 text-sm sm:text-base">Ubicación</h3>
+                        <p className="text-xs sm:text-sm opacity-90">
                             <a href="https://www.google.com/maps/dir/Convento+Santo+Domingo+-+Bas%C3%ADlica%E2%80%A6/Defensa+422+C1065+Cdad.+Aut%C3%B3noma+de+Buenos+Aires/@-34.6128229,-58.3727173,362m/data=!3m1!1e3!4m13!4m12!1m5!1m1!1s0x95bccad52d1cd9df:0xa97592e9cd43434c!2m2!1d-58.3718533!2d-34.6127127!1m5!1m1!1s0x95bccad532b732b1:0xbcd76005f74d313!2m2!1d-58.3717266!2d-34.6127473?entry=ttu&g_ep=EgoyMDI1MDgwNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" className="hover:underline transition-colors" rel="noopener noreferrer">
                                 Buenos Aires<br />
                                 Convento San Pedro Telmo<br />
@@ -52,9 +52,9 @@ export default function Footer() {
                     </div>
 
                     {/* Social Media */}
-                    <div className="text-left md:text-center">
-                        <h3 className="font-text mb-4">Síguenos</h3>
-                        <ul className="social-list flex gap-2 md:justify-center">
+                    <div className="text-center sm:text-left">
+                        <h3 className="font-text mb-3 sm:mb-4 text-sm sm:text-base">Síguenos</h3>
+                        <ul className="social-list flex gap-2 justify-center sm:justify-start">
                             <li>
                                 <a href="https://www.instagram.com/difusion.mvg" className="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                                     <i className="fab fa-instagram icon"></i>
@@ -73,8 +73,8 @@ export default function Footer() {
                 </div>
 
                 {/* Copyright */}
-                <div className="text-center mt-8 pt-6 border-t border-white/20">
-                    <p className="text-sm opacity-80">
+                <div className="text-center mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-white/20">
+                    <p className="text-xs sm:text-sm opacity-80">
                         &copy; {new Date().getFullYear()} Todos los derechos reservados.
                     </p>
                 </div>
@@ -82,12 +82,12 @@ export default function Footer() {
 
             <style jsx>{`
                 .social-link {
-                    width: 50px;
-                    height: 50px;
+                    width: 40px;
+                    height: 40px;
                     background-color: #fff;
                     text-align: center;
-                    line-height: 50px;
-                    font-size: 20px;
+                    line-height: 40px;
+                    font-size: 16px;
                     display: block;
                     border-radius: 50%;
                     position: relative;
@@ -96,6 +96,15 @@ export default function Footer() {
                     padding: 0;
                     z-index: 1;
                     transition: all 0.3s ease;
+                }
+                
+                @media (min-width: 640px) {
+                    .social-link {
+                        width: 50px;
+                        height: 50px;
+                        line-height: 50px;
+                        font-size: 20px;
+                    }
                 }
 
                 .social-link .icon {

@@ -174,7 +174,7 @@ export default function Navbar() {
                     </nav>
                     
                     {/* Navegación desktop */}
-                    <nav className="hidden lg:flex gap-8 text-sm font-medium">
+                    <nav className="hidden md:flex gap-8 text-sm font-medium">
                         {isMounted && navItems.map((item) => (
                             <div key={item.href} className="relative">
                                 {item.submenu ? (
@@ -240,7 +240,7 @@ export default function Navbar() {
                     {/* Botón menú móvil */}
                     <button 
                         onClick={() => setMenuOpen(!menuOpen)} 
-                        className="lg:hidden p-2 rounded-md text-[#2c1810] hover:text-[#ffde59] hover:bg-[#f5f2ed] transition-colors duration-200 cursor-pointer"
+                        className="md:hidden p-2 rounded-md text-[#2c1810] hover:text-[#ffde59] hover:bg-[#f5f2ed] transition-colors duration-200 cursor-pointer bg-white/20 backdrop-blur-sm border border-[#ffde59]/30"
                     >
                         <motion.div
                             animate={menuOpen ? "open" : "closed"}
@@ -260,7 +260,7 @@ export default function Navbar() {
                         animate="open"
                         exit="closed"
                         variants={mobileMenuVariants}
-                        className="lg:hidden bg-white/98 backdrop-blur-md border-t border-[#ffde59] shadow-lg overflow-hidden"
+                        className="md:hidden bg-white/98 backdrop-blur-md border-t border-[#ffde59] shadow-lg overflow-hidden"
                     >
                         <div className="flex flex-col px-6 py-4 space-y-2">
                             {isMounted && navItems.map((item, itemIndex) => (

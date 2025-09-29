@@ -28,14 +28,14 @@ export default function Page(){
             icono: "🌍",
             color: "from-[#8b7355] to-[#cd7f32]",
             imagenes: [
-                "/images/mision/IMG_6984.jpg",
-                "/images/mision/IMG_20250109_104033523.jpg",
-                "/images/mision/IMG-20250112-WA0050.jpg",
-                "/images/mision/IMG-20250111-WA0020.jpg",
-                "/images/mision/IMG-20250111-WA0009.jpg",
-                "/images/mision/20250106_174247.jpg",
-                "/images/mision/20250105_190150.jpg",
-                "/images/mision/20250105_182122.jpg"
+                "/images/mision/mision.jpeg",
+                "/images/mision/mision2.jpg",
+                "/images/mision/mision3.jpg",
+                "/images/mision/mision5.jpg",
+                "/images/mision/mision6.jpg",
+                "/images/mision/mision7.jpg",
+                "/images/mision/mision8.jpg",
+                "/images/mision/mision9.jpg"
             ]
         },
         {
