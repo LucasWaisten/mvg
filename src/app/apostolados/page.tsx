@@ -82,9 +82,8 @@ export default function Page(){
             icono: "📱",
             color: "from-[#8b7355] to-[#cd7f32]",
             imagenes: [
-                "/images/difusion2.jpeg",
-                "/images/difusion1.jpeg",
-                "/images/difusion3.jpeg",
+                "/images/difusion/difusion4.jpeg",
+                "/images/difusion/difusion3.jpeg",
             ]
         },
         {
