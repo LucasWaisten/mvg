@@ -101,7 +101,7 @@ export default function Page() {
                                             <h3 className="text-2xl font-display font-bold mb-6">
                                                 Equipos
                                             </h3>
-                                            <div className="relative sm:w-120 sm:h-96 w-96 h-96  mx-auto">
+                                            <div className="relative sm:w-120 sm:h-96  h-96  mx-auto">
                                                 <Image
                                                     src={equiposImages[currentEquipoIndex]}
                                                     alt={`Equipo organizador ${currentEquipoIndex + 1}`}

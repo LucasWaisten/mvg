@@ -32,7 +32,7 @@ const apostolados: Apostolado[] = [
     },
     {
         nombre: "Difusion",
-        imagen: "/images/difusion4.jpeg",
+        imagen: "/images/difusion/difusion4.jpeg",
         url: "/apostolados/#difusion"
     },
     {
