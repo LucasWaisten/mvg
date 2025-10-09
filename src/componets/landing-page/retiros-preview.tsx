@@ -10,7 +10,6 @@ const retirosImages = [
     "/images/jornadas/jornada2.png",
     "/images/jornadas/jornada3.png",
     "/images/jornadas/jornada4.png",
-    "/images/jornadas/jornada5.png",
     "/images/jornadas/jornada6.png",
     "/images/jornadas/jornada7.png",
 ];
