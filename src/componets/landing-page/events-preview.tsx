@@ -212,6 +212,11 @@ export default function EventsPreview() {
                 setIsLoading(true);
                 setError(null);
                 
+                // Verificar que las variables de entorno estén configuradas
+                if (!process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_URL || !process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY) {
+                    throw new Error("Variables de entorno de Google Calendar no configuradas");
+                }
+                
                 const now = new Date();
                 const year = now.getFullYear();
                 const start = new Date(year, 0, 1).toISOString();

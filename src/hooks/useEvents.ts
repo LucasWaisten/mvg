@@ -32,6 +32,13 @@ export const useEvents = () => {
                 setIsLoading(true);
                 setError(null);
 
+                // Verificar que las variables de entorno estén configuradas
+                if (!process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_URL || !process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_API_KEY) {
+                    console.log("Variables de entorno no configuradas, usando eventos de ejemplo");
+                    setEvents(sampleEvents);
+                    return;
+                }
+
                 // Intentar cargar eventos del Google Calendar
                 const now = new Date();
                 const year = now.getFullYear();
@@ -58,7 +65,7 @@ export const useEvents = () => {
                     setEvents(enhancedEvents);
                 } else {
                     // Si no se pueden cargar los eventos, usar los datos de ejemplo
-                    console.log("Usando eventos de ejemplo");
+                    console.log("Error en la respuesta del API, usando eventos de ejemplo");
                     setEvents(sampleEvents);
                 }
             } catch (e) {

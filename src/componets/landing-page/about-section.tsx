@@ -15,6 +15,7 @@ export default function AboutSection() {
                             width={320}
                             height={444}
                             className="object-cover w-full h-auto"
+                            style={{ width: 'auto', height: 'auto' }}
                             priority
                         />
                     </div>
