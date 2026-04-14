@@ -12,12 +12,12 @@ export default function OrganizationSection() {
                         <div className="relative">
                             <div className="absolute inset-0 bg-gradient-to-r from-[#ffde59] to-[#ffde59] rounded-2xl blur-sm opacity-30"></div>
                             <img
-                                src="/images/secretaria.webp"
+                                src="/images/secretaria.jpeg"
                                 alt="Secretaría del Movimiento"
                                 className="relative rounded-2xl shadow-xl w-full"
                             />
                             <p className="text-base sm:text-lg leading-relaxed text-[#8b7355] italic mt-3 sm:mt-4 text-center">
-                                Miembros de la secretaría 2025 del Movimiento de Vida en Gracia.
+                                Miembros de la secretaría 2026 del Movimiento de Vida en Gracia.
                             </p>
                         </div>
                         <div className="space-y-4 sm:space-y-6 text-sm leading-relaxed text-[#2c1810]">
