@@ -5,6 +5,7 @@ import Footer from "@/componets/landing-page/footer";
 import { LoadingProvider } from "@/contexts/LoadingContext";
 import { PageTransitionManager } from "@/componets/common/PageTransitionManager";
 import { InitialLoadingHandler } from "@/componets/common/InitialLoadingHandler";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Movimiento de Vida en Gracia",
@@ -28,6 +29,7 @@ export default function RootLayout({
           <div className="pt-16 flex-1">
             <PageTransitionManager>
               {children}
+              <Analytics />
             </PageTransitionManager>
           </div>    
           <Footer />
